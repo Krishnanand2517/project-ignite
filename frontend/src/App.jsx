@@ -1,8 +1,10 @@
+import { Hero } from "./components";
+
 const App = () => {
   return (
-    <>
-      <h1 className="text-3xl text-orange-400">Radhe Radhe</h1>
-    </>
+    <div className="w-full py-4 px-20 bg-[#2D3E50]">
+      <Hero />
+    </div>
   );
 };
 
