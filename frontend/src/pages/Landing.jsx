@@ -1,4 +1,4 @@
-import { Hero, Resource, CTA } from "../components";
+import { Hero, Resource, CTA, About } from "../components";
 
 const Landing = () => {
   return (
@@ -6,10 +6,13 @@ const Landing = () => {
       <div className="w-full py-4 px-20 bg-primary">
         <Hero />
       </div>
-      <div className="w-full py-16 px-20 bg-secondary">
-        <Resource />
+      <div className="w-full pt-36 pb-10 px-20 bg-secondary">
+        <About />
       </div>
       <div className="w-full py-16 px-20 bg-primary">
+        <Resource />
+      </div>
+      <div className="w-full py-16 px-20 bg-secondary">
         <CTA />
       </div>
     </>
