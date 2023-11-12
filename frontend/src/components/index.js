@@ -1,4 +1,7 @@
-import Hero from "./Hero";
 import Button from "./Button";
+import ImageCard from "./ImageCard";
+import ResourceItem from "./ResourceItem";
+import Hero from "./Hero";
+import Resource from "./Resource";
 
-export { Hero, Button };
+export { Button, ImageCard, ResourceItem, Hero, Resource };
