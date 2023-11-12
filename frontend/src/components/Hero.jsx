@@ -2,7 +2,7 @@ import { Button } from "./index";
 
 const Hero = () => {
   return (
-    <div className="font-mono flex justify-evenly">
+    <div className="font-fira flex justify-evenly">
       <div className="flex flex-col justify-evenly">
         <h1 className="text-7xl 2xl:text-9xl font-black text-white">
           Project
@@ -16,7 +16,7 @@ const Hero = () => {
           <br />
           For the coders.
         </h3>
-        <Button className="font-semibold">Start Learning!</Button>
+        <Button className="font-extrabold">Start Learning!</Button>
       </div>
 
       <div className="flex justify-end">

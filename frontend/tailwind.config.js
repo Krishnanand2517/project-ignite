@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        fira: ["Fira Code", "monospace"],
+        inconsolata: ["Inconsolata", "monospace"],
+      },
+    },
   },
   plugins: [],
 };

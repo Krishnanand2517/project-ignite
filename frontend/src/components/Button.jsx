@@ -3,8 +3,9 @@ const Button = ({
   type = "button",
   bgColor = "bg-green-500",
   hoverColor = "hover:bg-green-700",
-  textSize = "text-lg 2xl:text-3xl",
-  textColor = "text-[#2D3E50]",
+  textSize = "text-xl 2xl:text-4xl",
+  textColor = "text-[#282C34]",
+  fontFamily = "font-inconsolata",
   hoverTextColor = "hover:text-[#ECF0F1]",
   className = "",
   ...props
@@ -12,7 +13,7 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`py-4 px-8 rounded-lg transition duration-200 ${bgColor} ${textSize} ${hoverColor} ${textColor} ${hoverTextColor} ${className}`}
+      className={`py-4 px-8 rounded-lg transition duration-200 ${bgColor} ${textSize} ${hoverColor} ${textColor} ${hoverTextColor} ${fontFamily} ${className}`}
       {...props}
     >
       {children}
