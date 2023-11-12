@@ -1,4 +1,4 @@
-import { Hero, Resource } from "../components";
+import { Hero, Resource, CTA } from "../components";
 
 const Landing = () => {
   return (
@@ -8,6 +8,9 @@ const Landing = () => {
       </div>
       <div className="w-full py-16 px-20 bg-secondary">
         <Resource />
+      </div>
+      <div className="w-full py-16 px-20 bg-primary">
+        <CTA />
       </div>
     </>
   );
