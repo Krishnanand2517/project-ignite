@@ -15,6 +15,10 @@ export default {
         fira: ["Fira Code", "monospace"],
         inconsolata: ["Inconsolata", "monospace"],
       },
+      gradientColorStops: {
+        primary: "#282C34",
+        secondary: "#2D3E50",
+      },
     },
   },
   plugins: [],
