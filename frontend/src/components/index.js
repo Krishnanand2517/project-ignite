@@ -6,6 +6,7 @@ import Hero from "./Hero";
 import Resource from "./Resource";
 import CTA from "./CTA";
 import About from "./About";
+import Footer from "./Footer/Footer";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   Resource,
   CTA,
   About,
+  Footer,
 };
