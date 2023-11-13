@@ -10,6 +10,7 @@ import Resource from "./Resource";
 import CTA from "./CTA";
 import About from "./About";
 import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 import Footer from "./Footer/Footer";
 
 export {
@@ -25,5 +26,6 @@ export {
   CTA,
   About,
   LoginForm,
+  RegisterForm,
   Footer,
 };
