@@ -1,13 +1,11 @@
+import { Logo } from "../index";
+
 const Footer = () => {
   return (
     <footer className="text-secondary font-inconsolata">
       <div className="flex justify-between">
         <div>
-          <h2 className="text-2xl 2xl:text-4xl font-fira font-black text-primary">
-            Project
-            <br />
-            IGNITE
-          </h2>
+          <Logo />
         </div>
 
         <div>

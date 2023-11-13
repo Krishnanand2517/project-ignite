@@ -1,4 +1,4 @@
-import { Hero, Resource, CTA, About, Footer } from "../components";
+import { Hero, Resource, CTA, About } from "../components";
 
 const Landing = () => {
   return (
@@ -14,9 +14,6 @@ const Landing = () => {
       </div>
       <div className="w-full pt-16 pb-36 px-20 bg-gradient-to-t from-primary via-slate-800 to-secondary">
         <CTA />
-      </div>
-      <div className="w-full pt-24 pb-8 px-20 bg-gradient-to-t from-secondary via-slate-800 to-primary">
-        <Footer />
       </div>
     </>
   );
