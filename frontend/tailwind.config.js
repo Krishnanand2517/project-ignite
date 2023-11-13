@@ -17,7 +17,7 @@ export default {
       },
       gradientColorStops: {
         primary: "#282C34",
-        secondary: "#2D3E50",
+        secondary: "#202C34",
       },
     },
   },
