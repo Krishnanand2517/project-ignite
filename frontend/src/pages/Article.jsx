@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Prism from "prismjs";
 import "../prism.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.js";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import { CodeBlock } from "../components";
 import { Likes } from "../components";
 
@@ -261,17 +263,19 @@ const Article = () => {
   console.log(splitContent);
 
   return (
-    <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+    <div className="w-full line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
       <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         {article.title}
       </h1>
-      <div className="w-full 2xl:text-2xl">
+      <div className="w-full 2xl:text-xl">
         {splitContent.map((paragraph, index) => (
           <div key={index} className="my-4">
             {paragraph.startsWith("```jsx") ? (
               <CodeBlock paragraph={paragraph} language="javascript" />
             ) : (
-              <p className="text-secondary font-inconsolata">{paragraph}</p>
+              <p className="text-secondary text-lg 2xl:text-2xl font-inconsolata">
+                {paragraph}
+              </p>
             )}
           </div>
         ))}
