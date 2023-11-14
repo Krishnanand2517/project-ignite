@@ -12,6 +12,7 @@ import About from "./About";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import ArticleCard from "./ArticleCard";
+import Likes from "./Likes";
 import Footer from "./Footer/Footer";
 
 export {
@@ -29,5 +30,6 @@ export {
   LoginForm,
   RegisterForm,
   ArticleCard,
+  Likes,
   Footer,
 };
