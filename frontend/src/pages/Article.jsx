@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Prism from "prismjs";
 import "../prism.css";
+import { CodeBlock } from "../components";
 import { Likes } from "../components";
 
 const Article = () => {
@@ -268,11 +269,7 @@ const Article = () => {
         {splitContent.map((paragraph, index) => (
           <div key={index} className="my-4">
             {paragraph.startsWith("```jsx") ? (
-              <pre className="line-numbers my-8">
-                <code className="language-javascript">
-                  {paragraph.replace("```jsx", "").replace("```", "")}
-                </code>
-              </pre>
+              <CodeBlock paragraph={paragraph} language="javascript" />
             ) : (
               <p className="text-secondary font-inconsolata">{paragraph}</p>
             )}
