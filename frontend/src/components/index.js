@@ -11,6 +11,7 @@ import CTA from "./CTA";
 import About from "./About";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import ArticleCard from "./ArticleCard";
 import Footer from "./Footer/Footer";
 
 export {
@@ -27,5 +28,6 @@ export {
   About,
   LoginForm,
   RegisterForm,
+  ArticleCard,
   Footer,
 };

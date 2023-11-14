@@ -1,3 +1,5 @@
+import { ArticleCard } from "../components";
+
 const Articles = () => {
   const articles = [
     {
@@ -39,23 +41,12 @@ const Articles = () => {
       <ul className="flex flex-col gap-y-8">
         {articles.map((article) => (
           <li key={article.slug}>
-            <a href={article.slug}>
-              <div className="px-12 py-6 flex gap-x-4 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
-                <div className="max-w-xs flex justify-center items-center">
-                  <img
-                    src={article.imgPath}
-                    alt={article.title}
-                    className="w-3/4 2xl:w-11/12"
-                  />
-                </div>
-                <div className="flex flex-wrap">
-                  <h3 className="w-full font-fira font-semibold text-xl 2xl:text-3xl">
-                    {article.title}
-                  </h3>
-                  <p className="w-full 2xl:text-2xl">{article.content}</p>
-                </div>
-              </div>
-            </a>
+            <ArticleCard
+              slug={article.slug}
+              imgPath={article.imgPath}
+              content={article.content}
+              title={article.title}
+            />
           </li>
         ))}
       </ul>
