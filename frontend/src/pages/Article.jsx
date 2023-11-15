@@ -13,6 +13,7 @@ const Article = () => {
 
   const article = {
     title: "6 React Hooks You Need to Know",
+    imgPath: "/HashNode-Hooks-Blog.jpg",
     content: `React has revolutionized the way we build user interfaces by introducing hooks, which allow us to manage states, side effects, and other React concepts more elegantly and efficiently. In this article, we'll dive into the six most important React hooks:
 
       useState
@@ -264,7 +265,10 @@ const Article = () => {
 
   return (
     <div className="w-full line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+      <div className="w-full border border-white rounded-lg shadow-xl shadow-blue-400 mb-20">
+        <img src={article.imgPath} alt={article.title} className="rounded-lg" />
+      </div>
+      <h1 className="mb-16 text-6xl 2xl:text-8xl text- font-fira font-bold text-primary">
         {article.title}
       </h1>
       <div className="w-full 2xl:text-xl">
