@@ -14,6 +14,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
+import ProjectCard from "./ProjectCard";
 import CodeBlock from "./CodeBlock";
 import Likes from "./Likes";
 import Footer from "./Footer/Footer";
@@ -35,6 +36,7 @@ export {
   RegisterForm,
   ArticleCard,
   QuestionCard,
+  ProjectCard,
   CodeBlock,
   Likes,
   Footer,
