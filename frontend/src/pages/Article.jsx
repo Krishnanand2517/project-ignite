@@ -261,7 +261,6 @@ const Article = () => {
   const splitContent = article.content.split(
     /(\n\s*\n\s*\n|```jsx\n[\s\S]+?```)/
   );
-  console.log(splitContent);
 
   return (
     <div className="w-full line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
