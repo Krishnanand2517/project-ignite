@@ -1,4 +1,5 @@
 import { Logo } from "../index";
+import { LogoutBtn } from "../index";
 
 const Header = () => {
   const navItems = [
@@ -32,6 +33,7 @@ const Header = () => {
             <Logo className="text-lg 2xl:text-2xl" />
           </a>
         </div>
+
         <ul className="flex gap-x-4 text-secondary 2xl:text-xl">
           {navItems.map((item) => (
             <li key={item.name}>
@@ -41,6 +43,8 @@ const Header = () => {
             </li>
           ))}
         </ul>
+
+        <LogoutBtn />
       </nav>
     </header>
   );

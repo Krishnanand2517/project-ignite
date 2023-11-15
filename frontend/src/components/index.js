@@ -1,6 +1,7 @@
 import Button from "./Button";
 import Input from "./Input";
 import Logo from "./Logo";
+import LogoutBtn from "./Header/LogoutBtn";
 import ImageCard from "./ImageCard";
 import ResourceItem from "./ResourceItem";
 import AboutItem from "./AboutItem";
@@ -21,6 +22,7 @@ export {
   Button,
   Input,
   Logo,
+  LogoutBtn,
   ImageCard,
   ResourceItem,
   AboutItem,
