@@ -1,4 +1,4 @@
-import { ProjectCard } from "../components";
+import { ProjectCategoryCard } from "../components";
 
 const Projects = () => {
   const projects = [
@@ -37,7 +37,7 @@ const Projects = () => {
       <ul className="flex flex-wrap gap-8">
         {projects.map((project) => (
           <li key={project.slug}>
-            <ProjectCard slug={project.slug} title={project.title} />
+            <ProjectCategoryCard slug={project.slug} title={project.title} />
           </li>
         ))}
       </ul>

@@ -267,7 +267,7 @@ const Article = () => {
       <div className="w-full border border-white rounded-lg shadow-xl shadow-blue-400 mb-20">
         <img src={article.imgPath} alt={article.title} className="rounded-lg" />
       </div>
-      <h1 className="mb-16 text-6xl 2xl:text-8xl text- font-fira font-bold text-primary">
+      <h1 className="mb-16 text-6xl 2xl:text-8xl font-fira font-bold text-primary">
         {article.title}
       </h1>
       <div className="w-full 2xl:text-xl">
