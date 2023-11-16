@@ -16,6 +16,7 @@ import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
 import ProjectCard from "./ProjectCard";
+import CourseCard from "./CourseCard";
 import CodeBlock from "./CodeBlock";
 import Likes from "./Likes";
 import Footer from "./Footer/Footer";
@@ -39,6 +40,7 @@ export {
   QuestionCard,
   ProjectCategoryCard,
   ProjectCard,
+  CourseCard,
   CodeBlock,
   Likes,
   Footer,

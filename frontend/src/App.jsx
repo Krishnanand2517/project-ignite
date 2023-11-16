@@ -1,6 +1,7 @@
 import { Footer, Header } from "./components";
 import Article from "./pages/Article";
 import Articles from "./pages/Articles";
+import Courses from "./pages/Courses";
 import Login from "./pages/Login";
 import ProjectCategory from "./pages/ProjectCategory";
 import Projects from "./pages/Projects";
@@ -13,7 +14,7 @@ const App = () => {
       <div className="w-full">
         <Header />
       </div>
-      <ProjectCategory />
+      <Courses />
       <div className="w-full pt-36 pb-10 px-20 bg-gradient-to-t from-primary via-slate-800 to-secondary">
         <Footer />
       </div>
