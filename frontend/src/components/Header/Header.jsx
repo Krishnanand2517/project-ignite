@@ -1,8 +1,10 @@
 import { Logo } from "../index";
 import { LogoutBtn } from "../index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const navItems = [
     {
       name: "Home",
@@ -38,7 +40,10 @@ const Header = () => {
         <ul className="flex gap-x-4 text-secondary 2xl:text-xl">
           {navItems.map((item) => (
             <li key={item.name}>
-              <button className="inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-orange-400 rounded-2xl">
+              <button
+                onClick={() => navigate(item.slug)}
+                className="inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-orange-400 rounded-2xl"
+              >
                 {item.name}
               </button>
             </li>
