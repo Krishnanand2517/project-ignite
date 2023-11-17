@@ -1,26 +1,32 @@
 import { Logo } from "../index";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="text-secondary font-inconsolata">
       <div className="flex justify-between">
         <div>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
 
         <div>
           <ul className="flex space-x-4">
             <li className="hover:text-orange-300">
-              <a href="#">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="hover:text-orange-300">
-              <a href="#">Articles</a>
+              <Link to="/articles">Articles</Link>
             </li>
             <li className="hover:text-orange-300">
-              <a href="#">Projects</a>
+              <Link to="/projects">Projects</Link>
             </li>
             <li className="hover:text-orange-300">
-              <a href="#">Questions</a>
+              <Link to="/courses">Courses</Link>
+            </li>
+            <li className="hover:text-orange-300">
+              <Link to="/questions">Questions</Link>
             </li>
           </ul>
         </div>

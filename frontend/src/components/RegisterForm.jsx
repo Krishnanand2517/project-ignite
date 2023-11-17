@@ -1,4 +1,5 @@
 import { Button, Input } from "./index";
+import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
   return (
@@ -31,9 +32,9 @@ const RegisterForm = () => {
         Create New Account
       </Button>
       <p className="text-secondary text-center">
-        <a href="#" className="hover:text-orange-400 2xl:text-lg">
+        <Link to="/login" className="hover:text-orange-400 2xl:text-lg">
           Already have an account? Log In
-        </a>
+        </Link>
       </p>
     </form>
   );

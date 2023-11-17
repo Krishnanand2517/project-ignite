@@ -4,18 +4,22 @@ const Questions = () => {
   const questions = [
     {
       title: "Subarray with given sum",
+      slug: "subarray-with-given-sum",
       difficulty: "Easy",
     },
     {
       title: "Kadane's Algorithm",
+      slug: "kadanes-algorithm",
       difficulty: "Medium",
     },
     {
       title: "Longest valid parentheses",
+      slug: "longest-valid-parentheses",
       difficulty: "Hard",
     },
     {
       title: "Max circular subarray sum",
+      slug: "max-circular-subarray-sum",
       difficulty: "Hard",
     },
   ];
@@ -30,6 +34,7 @@ const Questions = () => {
         {questions.map((question) => (
           <li key={question.title}>
             <QuestionCard
+              slug={question.slug}
               title={question.title}
               difficulty={question.difficulty}
             />

@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const ArticleCard = ({ slug, imgPath, content, title }) => {
   return (
-    <a href={slug}>
+    <Link to={`/articles/${slug}`}>
       <div className="px-12 py-6 flex gap-x-4 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
         <div className="max-w-xs flex justify-center items-center">
           <img src={imgPath} alt={title} className="w-3/4 2xl:w-11/12" />
@@ -12,7 +14,7 @@ const ArticleCard = ({ slug, imgPath, content, title }) => {
           <p className="w-full 2xl:text-2xl">{content}</p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 

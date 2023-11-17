@@ -4,28 +4,28 @@ const Courses = () => {
   const courses = [
     {
       title: "C++: Beginner to Advanced",
-      slug: "/cpp-beginner-to-advanced",
+      slug: "cpp-beginner-to-advanced",
       duration: "30 hours",
       difficulty: "Beginner",
       imgPath: "/dev.png",
     },
     {
       title: "Python: Beginner to Advanced",
-      slug: "/python-beginner-to-advanced",
+      slug: "python-beginner-to-advanced",
       duration: "20 hours",
       difficulty: "Beginner",
       imgPath: "/dev.png",
     },
     {
       title: "Build Smart Contracts with Solana",
-      slug: "/solana-smart-contracts",
+      slug: "solana-smart-contracts",
       duration: "50 hours",
       difficulty: "Intermediate",
       imgPath: "/dev.png",
     },
     {
       title: "Low Latency Programming with Rust",
-      slug: "/rust-low-latency",
+      slug: "rust-low-latency",
       duration: "45 hours",
       difficulty: "Intermediate",
       imgPath: "/dev.png",

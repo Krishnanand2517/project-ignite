@@ -4,27 +4,27 @@ const Projects = () => {
   const projects = [
     {
       title: "AI & ML",
-      slug: "/ai-ml",
+      slug: "ai-ml",
     },
     {
       title: "Blockchain",
-      slug: "/blockchain",
+      slug: "blockchain",
     },
     {
       title: "Flutter",
-      slug: "/flutter",
+      slug: "flutter",
     },
     {
       title: "NodeJS",
-      slug: "/nodejs",
+      slug: "nodejs",
     },
     {
       title: "ReactJS",
-      slug: "/reactjs",
+      slug: "reactjs",
     },
     {
       title: "React Native",
-      slug: "/react-native",
+      slug: "react-native",
     },
   ];
 

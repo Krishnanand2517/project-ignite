@@ -1,5 +1,6 @@
 import { Logo } from "../index";
 import { LogoutBtn } from "../index";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const navItems = [
@@ -29,9 +30,9 @@ const Header = () => {
     <header className="w-full py-4 px-10 font-fira bg-black bg-opacity-20 backdrop-blur-lg fixed z-10">
       <nav className="flex justify-between items-center">
         <div>
-          <a href="/">
+          <Link to="/">
             <Logo className="text-lg 2xl:text-2xl" />
-          </a>
+          </Link>
         </div>
 
         <ul className="flex gap-x-4 text-secondary 2xl:text-xl">

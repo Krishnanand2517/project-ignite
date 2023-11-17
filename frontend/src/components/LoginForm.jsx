@@ -1,4 +1,5 @@
 import { Input, Button } from "./index";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   return (
@@ -21,9 +22,9 @@ const LoginForm = () => {
         Log In
       </Button>
       <p className="text-secondary text-center">
-        <a href="#" className="hover:text-orange-400 2xl:text-lg">
+        <Link to="/register" className="hover:text-orange-400 2xl:text-lg">
           Are you new here? Create a New Account
-        </a>
+        </Link>
       </p>
     </form>
   );
