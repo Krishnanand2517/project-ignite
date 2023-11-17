@@ -1,12 +1,13 @@
 import { Button } from "./index";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
   return (
     <div className="w-72 2xl:w-96 h-96 flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
       <div>
-        <a href={slug} className="flex justify-center items-center">
+        <Link to={slug} className="flex justify-center items-center">
           <img src={imgPath} alt={title} className="w-1/2" />
-        </a>
+        </Link>
       </div>
       <hr className="my-4" />
       <div>
@@ -18,8 +19,8 @@ const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
           <p className="2xl:text-xl opacity-80">Difficulty: {difficulty}</p>
         </div>
 
-        <a
-          href={slug}
+        <Link
+          to={slug}
           className="mx-12 2xl:mx-20 mt-4 flex justify-center items-center"
         >
           <Button
@@ -28,7 +29,7 @@ const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
           >
             Check
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   );

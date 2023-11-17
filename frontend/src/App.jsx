@@ -1,12 +1,5 @@
+import { Outlet } from "react-router-dom";
 import { Footer, Header } from "./components";
-import Article from "./pages/Article";
-import Articles from "./pages/Articles";
-import Courses from "./pages/Courses";
-import Login from "./pages/Login";
-import ProjectCategory from "./pages/ProjectCategory";
-import Projects from "./pages/Projects";
-import Questions from "./pages/Questions";
-import Register from "./pages/Register";
 
 const App = () => {
   return (
@@ -14,7 +7,7 @@ const App = () => {
       <div className="w-full">
         <Header />
       </div>
-      <Courses />
+      <Outlet />
       <div className="w-full pt-36 pb-10 px-20 bg-gradient-to-t from-primary via-slate-800 to-secondary">
         <Footer />
       </div>
