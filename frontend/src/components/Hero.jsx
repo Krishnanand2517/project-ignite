@@ -1,6 +1,9 @@
 import { Button } from "./index";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="font-fira flex justify-evenly">
       <div className="flex flex-col justify-evenly">
@@ -16,7 +19,12 @@ const Hero = () => {
           <br />
           For the coders.
         </h3>
-        <Button className="font-extrabold">Start Learning!</Button>
+        <Button
+          className="font-extrabold"
+          onClick={() => navigate("/register")}
+        >
+          Start Learning!
+        </Button>
       </div>
 
       <div className="flex justify-end">
