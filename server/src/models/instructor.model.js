@@ -11,6 +11,12 @@ const instructorSchema = new mongoose.Schema({
     ref: "Account",
     required: true,
   },
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+    },
+  ],
 });
 
 export const Instructor = mongoose.model("Instructor", instructorSchema);
