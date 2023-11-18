@@ -17,6 +17,9 @@ const articleSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  coverImage: {
+    type: String, // Link
+  },
   author: {
     type: authorSchema,
     required: true,

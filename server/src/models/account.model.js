@@ -20,6 +20,9 @@ const accountSchema = new mongoose.Schema(
       enum: ["admin", "instructor", "student"],
       required: true,
     },
+    avatarImage: {
+      type: String, // Link
+    },
   },
   {
     timestamps: true,

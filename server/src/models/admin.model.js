@@ -11,6 +11,9 @@ const adminSchema = new mongoose.Schema({
     ref: "Account",
     required: true,
   },
+  avatarImage: {
+    type: String, // Link
+  },
 });
 
 export const Admin = mongoose.model("Admin", adminSchema);

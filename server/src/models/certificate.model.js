@@ -11,6 +11,10 @@ const certificateSchema = new mongoose.Schema({
     ref: "Course",
     required: true,
   },
+  issueDate: {
+    type: Date,
+    required: true,
+  },
 });
 
 export const Certificate = mongoose.model("Certificate", certificateSchema);

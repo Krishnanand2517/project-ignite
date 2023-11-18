@@ -6,6 +6,9 @@ const courseSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  courseImage: {
+    type: String, // Link
+  },
   duration: {
     type: String,
     required: true,

@@ -25,6 +25,9 @@ const studentSchema = new mongoose.Schema({
     ref: "Account",
     required: true,
   },
+  avatarImage: {
+    type: String, // Link
+  },
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,
