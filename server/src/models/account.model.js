@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const accountSchema = new mongoose.Schema(
@@ -11,9 +12,22 @@ const accountSchema = new mongoose.Schema(
       trim: true,
       index: true,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
+    },
+    fullName: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
     },
     accountType: {
       type: String,
@@ -22,6 +36,9 @@ const accountSchema = new mongoose.Schema(
     },
     avatarImage: {
       type: String, // Link
+    },
+    refreshToken: {
+      type: String,
     },
   },
   {
@@ -38,6 +55,33 @@ accountSchema.pre("save", async function (next) {
 
 accountSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+accountSchema.methods.generateAccessToken = function () {
+  jwt.sign(
+    {
+      _id: this._id,
+      email: this.email,
+      username: this.username,
+      fullName: this.fullName,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
+  );
+};
+
+accountSchema.methods.generateRefreshToken = function () {
+  jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    }
+  );
 };
 
 export const Account = mongoose.model("Account", accountSchema);
