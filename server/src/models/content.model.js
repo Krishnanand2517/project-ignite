@@ -11,6 +11,10 @@ const contentSchema = new mongoose.Schema({
     enum: ["video", "document", "exercise"],
     required: true,
   },
+  contentUrl: {
+    type: String,
+    required: true,
+  },
   course: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
