@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Account } from "../models/account.model.js";
+import { Instructor } from "../models/instructor.model.js";
+import { Student } from "../models/student.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -24,7 +26,16 @@ const generateAccessAndRefreshTokens = async (accountId) => {
 };
 
 const registerAccount = asyncHandler(async (req, res) => {
-  const { username, email, password, fullName, accountType } = req.body;
+  const {
+    username,
+    email,
+    password,
+    fullName,
+    accountType,
+    collegeName,
+    collegeProgramme,
+    year,
+  } = req.body;
   console.log("email:", email);
 
   if (
@@ -78,6 +89,42 @@ const registerAccount = asyncHandler(async (req, res) => {
       500,
       "Something went wrong while registering the account"
     );
+  }
+
+  switch (account.accountType) {
+    case "instructor": {
+      const instructor = await Instructor.create({
+        instructorName: fullName,
+        avatarImage: avatar.url,
+        account: createdAccount._id,
+      });
+
+      break;
+    }
+
+    case "student": {
+      if (
+        [collegeName, collegeProgramme, year].some(
+          (field) => field?.trim() === ""
+        )
+      ) {
+        throw new ApiError(400, "All fields are required");
+      }
+
+      const student = await Student.create({
+        studentName: fullName,
+        collegeName,
+        collegeProgramme,
+        year,
+        avatarImage: avatar.url,
+        account: createdAccount._id,
+      });
+
+      break;
+    }
+
+    default:
+      throw new ApiError(400, "Invalid account type");
   }
 
   return res

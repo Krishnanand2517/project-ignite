@@ -10,7 +10,7 @@ const getAllCourses = asyncHandler(async (_req, res) => {
       instructorName: 1,
       avatarImage: 1,
     })
-    .populate("contents", {
+    .populate("content", {
       contentTitle: 1,
     });
 
@@ -24,7 +24,7 @@ const getCourse = asyncHandler(async (req, res) => {
       instructorName: 1,
       avatarImage: 1,
     })
-    .populate("contents");
+    .populate("content");
 
   res.json(course);
 });

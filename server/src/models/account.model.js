@@ -31,7 +31,7 @@ const accountSchema = new mongoose.Schema(
     },
     accountType: {
       type: String,
-      enum: ["admin", "instructor", "student"],
+      enum: ["instructor", "student"],
       required: true,
     },
     avatarImage: {
