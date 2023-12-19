@@ -58,7 +58,7 @@ accountSchema.methods.isPasswordCorrect = async function (password) {
 };
 
 accountSchema.methods.generateAccessToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
       _id: this._id,
       email: this.email,
@@ -73,7 +73,7 @@ accountSchema.methods.generateAccessToken = function () {
 };
 
 accountSchema.methods.generateRefreshToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
       _id: this._id,
     },
