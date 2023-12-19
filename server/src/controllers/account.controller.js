@@ -4,6 +4,24 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
+const generateAccessAndRefreshTokens = async (accountId) => {
+  try {
+    const account = await Account.findById(accountId);
+    const accessToken = account.generateAccessToken();
+    const refreshToken = account.generateRefreshToken();
+
+    account.refreshToken = refreshToken;
+    await account.save({ validateBeforeSave: false });
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(
+      500,
+      "Something went wrong while generating access and refresh token"
+    );
+  }
+};
+
 const registerAccount = asyncHandler(async (req, res) => {
   const { username, email, password, fullName, accountType } = req.body;
   console.log("email:", email);
@@ -66,4 +84,56 @@ const registerAccount = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, createdAccount, "User registered successfully"));
 });
 
-export { registerAccount };
+const loginAccount = asyncHandler(async (req, res) => {
+  const { email, username, password } = req.body;
+
+  if (!(username || email)) {
+    throw new ApiError(400, "Username or email is required");
+  }
+
+  const account = await Account.findOne({ $or: [{ username }, { email }] });
+
+  if (!account) {
+    throw new ApiError(404, "Account does not exist");
+  }
+
+  // password check
+  const isPasswordValid = await account.isPasswordCorrect(password);
+
+  if (!isPasswordValid) {
+    throw new ApiError(401, "Invalid account credentials");
+  }
+
+  // access and refresh tokens
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    account._id
+  );
+
+  // send secure cookie
+  const loggedInAccount = await Account.findById(account._id).select(
+    "-password -refreshToken"
+  );
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          account: loggedInAccount,
+          accessToken,
+          refreshToken,
+        },
+        "Logged in successfully"
+      )
+    );
+});
+
+export { registerAccount, loginAccount };
