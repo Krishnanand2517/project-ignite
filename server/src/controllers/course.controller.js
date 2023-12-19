@@ -1,4 +1,6 @@
 import asyncHandler from "../utils/asyncHandler.js";
+import { Content } from "../models/content.model.js";
+import { Instructor } from "../models/instructor.model.js";
 import { Course } from "../models/course.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -10,7 +12,7 @@ const getAllCourses = asyncHandler(async (_req, res) => {
       instructorName: 1,
       avatarImage: 1,
     })
-    .populate("content", {
+    .populate("contents", {
       contentTitle: 1,
     });
 
@@ -24,7 +26,7 @@ const getCourse = asyncHandler(async (req, res) => {
       instructorName: 1,
       avatarImage: 1,
     })
-    .populate("content");
+    .populate("contents");
 
   res.json(course);
 });
@@ -63,7 +65,9 @@ const createCourse = asyncHandler(async (req, res) => {
   }
 
   // create course object for DB
-  const instructorId = req.account._id;
+  const instructorAccountId = req.account._id;
+
+  const instructor = await Instructor.findOne({ account: instructorAccountId });
 
   const course = await Course.create({
     courseName,
@@ -71,7 +75,7 @@ const createCourse = asyncHandler(async (req, res) => {
     duration,
     category,
     difficulty,
-    instructor: instructorId,
+    instructor: instructor._id,
   });
 
   const createdCourse = await Course.findById(course._id);
@@ -79,6 +83,9 @@ const createCourse = asyncHandler(async (req, res) => {
   if (!createdCourse) {
     throw new ApiError(500, "Something went wrong while creating the course");
   }
+
+  instructor.courses = instructor.courses.concat(createdCourse._id);
+  await instructor.save({ validateBeforeSave: false });
 
   return res
     .status(201)
