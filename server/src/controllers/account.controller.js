@@ -258,4 +258,43 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerAccount, loginAccount, logoutAccount, refreshAccessToken };
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const account = await Account.findById(req.account?._id);
+  const isPasswordCorrect = await account.isPasswordCorrect(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "Invalid old password");
+  }
+
+  account.password = newPassword;
+  await account.save({ validateBeforeSave: false });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"));
+});
+
+const getCurrentAccount = asyncHandler(async (req, res) => {
+  const account = req.account;
+
+  if (!account) {
+    throw new ApiError(400, "Account not logged in");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, account, "Current account fetched successfully")
+    );
+});
+
+export {
+  registerAccount,
+  loginAccount,
+  logoutAccount,
+  refreshAccessToken,
+  changeCurrentPassword,
+  getCurrentAccount,
+};
