@@ -32,7 +32,7 @@ const getCourse = asyncHandler(async (req, res) => {
 });
 
 const createCourse = asyncHandler(async (req, res) => {
-  if (req.account.accountType !== "instructor") {
+  if (req.account?.accountType !== "instructor") {
     throw new ApiError(
       403,
       "Permission denied. Only instructors can add courses."
@@ -65,7 +65,7 @@ const createCourse = asyncHandler(async (req, res) => {
   }
 
   // create course object for DB
-  const instructorAccountId = req.account._id;
+  const instructorAccountId = req.account?._id;
 
   const instructor = await Instructor.findOne({ account: instructorAccountId });
 
@@ -92,4 +92,47 @@ const createCourse = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, createdCourse, "Course created successfully"));
 });
 
-export { getAllCourses, getCourse, createCourse };
+const updateCourseDetails = asyncHandler(async (req, res) => {
+  if (req.account?.accountType !== "instructor") {
+    throw new ApiError(
+      403,
+      "Permission denied. Only instructors can update a course."
+    );
+  }
+
+  const { courseName, duration, category, difficulty } = req.body;
+  console.log(courseName);
+
+  if (
+    [courseName, duration, category, difficulty].some(
+      (field) => field?.trim() === ""
+    )
+  ) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const instructorAccountId = req.account?._id;
+  const instructor = await Instructor.findOne({ account: instructorAccountId });
+
+  const courseId = req.params?.id;
+  const course = await Course.findById(courseId);
+
+  if (course.instructor.toString() !== instructor._id.toString()) {
+    throw new ApiError(403, "This instructor cannot edit this course");
+  }
+
+  await course.updateOne({
+    $set: {
+      courseName,
+      duration,
+      category,
+      difficulty,
+    },
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Course details updated successfully"));
+});
+
+export { getAllCourses, getCourse, createCourse, updateCourseDetails };
