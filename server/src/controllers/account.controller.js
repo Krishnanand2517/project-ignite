@@ -290,6 +290,59 @@ const getCurrentAccount = asyncHandler(async (req, res) => {
     );
 });
 
+const updateAccountDetails = asyncHandler(async (req, res) => {
+  const { username, fullName } = req.body;
+
+  if (!(username && fullName)) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const account = await Account.findByIdAndUpdate(
+    req.account?._id,
+    {
+      $set: {
+        username,
+        fullName,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, account, "Account details updated successfully")
+    );
+});
+
+const updateAccountAvatar = asyncHandler(async (req, res) => {
+  const avatarLocalPath = req.files?.avatar[0]?.path;
+
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "Avatar file is missing");
+  }
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+
+  if (!avatar.url) {
+    throw new ApiError(400, "Failed to upload avatar file");
+  }
+
+  const account = await Account.findByIdAndUpdate(
+    req.account?._id,
+    {
+      $set: {
+        avatarImage: avatar.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, account, "Avatar updated successfully!"));
+});
+
 export {
   registerAccount,
   loginAccount,
@@ -297,4 +350,6 @@ export {
   refreshAccessToken,
   changeCurrentPassword,
   getCurrentAccount,
+  updateAccountDetails,
+  updateAccountAvatar,
 };
