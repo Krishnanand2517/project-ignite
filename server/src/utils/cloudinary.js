@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { extractPublicId } from "cloudinary-build-url";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -25,4 +26,26 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-export { uploadOnCloudinary };
+const deleteFromCloudinary = async (remoteFileUrl) => {
+  try {
+    if (!remoteFileUrl) return false;
+
+    const remoteFilePublicId = extractPublicId(remoteFileUrl);
+
+    const response = await cloudinary.uploader.destroy(
+      remoteFilePublicId,
+      (err, result) => {
+        console.log(result, err);
+      }
+    );
+
+    console.log("File deleted from cloudinary", response);
+
+    return true;
+  } catch (error) {
+    console.log("Cloudinary Error:", error.message || "Deletion failed");
+    return false;
+  }
+};
+
+export { uploadOnCloudinary, deleteFromCloudinary };

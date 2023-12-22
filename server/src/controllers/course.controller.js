@@ -4,7 +4,10 @@ import { Instructor } from "../models/instructor.model.js";
 import { Course } from "../models/course.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} from "../utils/cloudinary.js";
 
 const getAllCourses = asyncHandler(async (_req, res) => {
   const courses = await Course.find({})
@@ -145,23 +148,27 @@ const updateCourseImage = asyncHandler(async (req, res) => {
   const courseImage = await uploadOnCloudinary(courseImageLocalPath);
 
   if (!courseImage.url) {
-    throw new ApiError(400, "Failed to upload course image file");
+    throw new ApiError(500, "Failed to upload course image file");
   }
 
   const courseId = req.params?.id;
-  const course = await Course.findByIdAndUpdate(
-    courseId,
-    {
-      $set: {
-        courseImage: courseImage.url,
-      },
+  const course = await Course.findById(courseId);
+
+  const isOldImageDeleted = await deleteFromCloudinary(course.courseImage);
+
+  if (!isOldImageDeleted) {
+    throw new ApiError(500, "Could not delete the old image");
+  }
+
+  await course.updateOne({
+    $set: {
+      courseImage: courseImage.url,
     },
-    { new: true }
-  );
+  });
 
   return res
     .status(200)
-    .json(new ApiResponse(200, course, "Course image updated successfully!"));
+    .json(new ApiResponse(200, {}, "Course image updated successfully!"));
 });
 
 export {

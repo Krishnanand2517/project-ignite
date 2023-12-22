@@ -5,7 +5,10 @@ import { Instructor } from "../models/instructor.model.js";
 import { Student } from "../models/student.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} from "../utils/cloudinary.js";
 
 const generateAccessAndRefreshTokens = async (accountId) => {
   try {
@@ -325,22 +328,26 @@ const updateAccountAvatar = asyncHandler(async (req, res) => {
   const avatar = await uploadOnCloudinary(avatarLocalPath);
 
   if (!avatar.url) {
-    throw new ApiError(400, "Failed to upload avatar file");
+    throw new ApiError(500, "Failed to upload avatar file");
   }
 
-  const account = await Account.findByIdAndUpdate(
-    req.account?._id,
-    {
-      $set: {
-        avatarImage: avatar.url,
-      },
+  const account = await Account.findById(req.account?._id);
+
+  const isOldAvatarDeleted = await deleteFromCloudinary(account.avatarImage);
+
+  if (!isOldAvatarDeleted) {
+    throw new ApiError(500, "Could not delete the old avatar");
+  }
+
+  await account.updateOne({
+    $set: {
+      avatarImage: avatar.url,
     },
-    { new: true }
-  ).select("-password");
+  });
 
   return res
     .status(200)
-    .json(new ApiResponse(200, account, "Avatar updated successfully!"));
+    .json(new ApiResponse(200, {}, "Avatar updated successfully!"));
 });
 
 export {
