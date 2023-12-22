@@ -135,4 +135,39 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Course details updated successfully"));
 });
 
-export { getAllCourses, getCourse, createCourse, updateCourseDetails };
+const updateCourseImage = asyncHandler(async (req, res) => {
+  const courseImageLocalPath = req.files?.courseImage[0]?.path;
+
+  if (!courseImageLocalPath) {
+    throw new ApiError(400, "Course image file is missing");
+  }
+
+  const courseImage = await uploadOnCloudinary(courseImageLocalPath);
+
+  if (!courseImage.url) {
+    throw new ApiError(400, "Failed to upload course image file");
+  }
+
+  const courseId = req.params?.id;
+  const course = await Course.findByIdAndUpdate(
+    courseId,
+    {
+      $set: {
+        courseImage: courseImage.url,
+      },
+    },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, course, "Course image updated successfully!"));
+});
+
+export {
+  getAllCourses,
+  getCourse,
+  createCourse,
+  updateCourseDetails,
+  updateCourseImage,
+};

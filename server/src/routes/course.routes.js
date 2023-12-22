@@ -4,6 +4,7 @@ import {
   getCourse,
   createCourse,
   updateCourseDetails,
+  updateCourseImage,
 } from "../controllers/course.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -26,5 +27,16 @@ router.route("/create").post(
 );
 
 router.route("/update-details/:id").post(verifyJWT, updateCourseDetails);
+
+router.route("/update-image/:id").post(
+  verifyJWT,
+  upload.fields([
+    {
+      name: "courseImage",
+      maxCount: 1,
+    },
+  ]),
+  updateCourseImage
+);
 
 export default router;
