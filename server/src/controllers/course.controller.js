@@ -153,18 +153,19 @@ const updateCourseImage = asyncHandler(async (req, res) => {
 
   const courseId = req.params?.id;
   const course = await Course.findById(courseId);
-
-  const isOldImageDeleted = await deleteFromCloudinary(course.courseImage);
-
-  if (!isOldImageDeleted) {
-    throw new ApiError(500, "Could not delete the old image");
-  }
+  const oldCourseImage = course.courseImage;
 
   await course.updateOne({
     $set: {
       courseImage: courseImage.url,
     },
   });
+
+  const isOldImageDeleted = await deleteFromCloudinary(oldCourseImage);
+
+  if (!isOldImageDeleted) {
+    throw new ApiError(500, "Could not delete the old image");
+  }
 
   return res
     .status(200)

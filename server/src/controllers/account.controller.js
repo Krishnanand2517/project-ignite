@@ -332,18 +332,19 @@ const updateAccountAvatar = asyncHandler(async (req, res) => {
   }
 
   const account = await Account.findById(req.account?._id);
-
-  const isOldAvatarDeleted = await deleteFromCloudinary(account.avatarImage);
-
-  if (!isOldAvatarDeleted) {
-    throw new ApiError(500, "Could not delete the old avatar");
-  }
+  const oldAvatar = account.avatarImage;
 
   await account.updateOne({
     $set: {
       avatarImage: avatar.url,
     },
   });
+
+  const isOldAvatarDeleted = await deleteFromCloudinary(oldAvatar);
+
+  if (!isOldAvatarDeleted) {
+    throw new ApiError(500, "Could not delete the old avatar");
+  }
 
   return res
     .status(200)
