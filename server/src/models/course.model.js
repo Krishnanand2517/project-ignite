@@ -8,6 +8,7 @@ const courseSchema = new mongoose.Schema({
   },
   courseImage: {
     type: String, // Link
+    required: true,
   },
   duration: {
     type: String,

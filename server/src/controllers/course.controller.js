@@ -31,7 +31,7 @@ const getCourse = asyncHandler(async (req, res) => {
     })
     .populate("contents");
 
-  res.json(course);
+  return res.json(course);
 });
 
 const createCourse = asyncHandler(async (req, res) => {
@@ -172,10 +172,41 @@ const updateCourseImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Course image updated successfully!"));
 });
 
+const deleteCourse = asyncHandler(async (req, res) => {
+  if (req.account?.accountType !== "instructor") {
+    throw new ApiError(
+      403,
+      "Permission denied. Only instructors can delete a course"
+    );
+  }
+
+  const instructor = await Instructor.findOne({ account: req.account?._id });
+  const course = await Course.findById(req.params.id);
+
+  const oldCourseImage = course.courseImage;
+
+  if (course.instructor.toString() !== instructor._id.toString()) {
+    throw new ApiError(403, "This instructor cannot delete this course");
+  }
+
+  await course.deleteOne();
+
+  const isOldImageDeleted = await deleteFromCloudinary(oldCourseImage);
+
+  if (!isOldImageDeleted) {
+    throw new ApiError(500, "Could not delete the old image");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Course deleted successfully!"));
+});
+
 export {
   getAllCourses,
   getCourse,
   createCourse,
   updateCourseDetails,
   updateCourseImage,
+  deleteCourse,
 };

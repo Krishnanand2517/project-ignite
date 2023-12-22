@@ -5,6 +5,7 @@ import {
   createCourse,
   updateCourseDetails,
   updateCourseImage,
+  deleteCourse,
 } from "../controllers/course.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -38,5 +39,7 @@ router.route("/update-image/:id").post(
   ]),
   updateCourseImage
 );
+
+router.route("/delete/:id").delete(verifyJWT, deleteCourse);
 
 export default router;
