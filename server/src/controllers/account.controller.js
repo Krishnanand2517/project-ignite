@@ -351,6 +351,40 @@ const updateAccountAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Avatar updated successfully!"));
 });
 
+const deleteAccount = asyncHandler(async (req, res) => {
+  const account = await Account.findById(req.account?._id);
+  const oldAvatar = account.avatarImage;
+
+  switch (account.accountType) {
+    case "instructor":
+      await Instructor.findOneAndDelete({ account: req.account?._id });
+    case "student":
+      await Student.findOneAndDelete({ account: req.account?._id });
+
+    default:
+      console.log("Invalid account type");
+  }
+
+  await account.deleteOne();
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  res.clearCookie("accessToken", options).clearCookie("refreshToken", options);
+
+  const isOldAvatarDeleted = await deleteFromCloudinary(oldAvatar);
+
+  if (!isOldAvatarDeleted) {
+    throw new ApiError(500, "Could not delete the old avatar");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Account deleted successfully!"));
+});
+
 export {
   registerAccount,
   loginAccount,
@@ -360,4 +394,5 @@ export {
   getCurrentAccount,
   updateAccountDetails,
   updateAccountAvatar,
+  deleteAccount,
 };

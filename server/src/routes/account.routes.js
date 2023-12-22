@@ -8,6 +8,7 @@ import {
   getCurrentAccount,
   updateAccountDetails,
   updateAccountAvatar,
+  deleteAccount,
 } from "../controllers/account.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -44,5 +45,7 @@ router.route("/update-avatar").post(
   ]),
   updateAccountAvatar
 );
+
+router.route("/delete").delete(verifyJWT, deleteAccount);
 
 export default router;
