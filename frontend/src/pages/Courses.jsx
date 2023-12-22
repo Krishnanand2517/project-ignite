@@ -1,36 +1,34 @@
+import { useEffect, useState } from "react";
+import courseService from "../services/courses";
 import { CourseCard } from "../components";
 
 const Courses = () => {
-  const courses = [
-    {
-      title: "C++: Beginner to Advanced",
-      slug: "cpp-beginner-to-advanced",
-      duration: "30 hours",
-      difficulty: "Beginner",
-      imgPath: "/dev.png",
-    },
-    {
-      title: "Python: Beginner to Advanced",
-      slug: "python-beginner-to-advanced",
-      duration: "20 hours",
-      difficulty: "Beginner",
-      imgPath: "/dev.png",
-    },
-    {
-      title: "Build Smart Contracts with Solana",
-      slug: "solana-smart-contracts",
-      duration: "50 hours",
-      difficulty: "Intermediate",
-      imgPath: "/dev.png",
-    },
-    {
-      title: "Low Latency Programming with Rust",
-      slug: "rust-low-latency",
-      duration: "45 hours",
-      difficulty: "Intermediate",
-      imgPath: "/dev.png",
-    },
-  ];
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const coursesData = await courseService.getAll();
+
+        const courseObjects = coursesData.map((course) =>
+          Object({
+            title: course.courseName,
+            slug: course._id, // TO BE CHANGED IN DATABASE AND BACKEND
+            duration: course.duration,
+            difficulty:
+              course.difficulty[0].toUpperCase() + course.difficulty.slice(1),
+            imgPath: course.courseImage,
+          })
+        );
+
+        setCourses(courseObjects);
+      } catch (error) {
+        console.log("Error fetching course data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full line-numbers pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
