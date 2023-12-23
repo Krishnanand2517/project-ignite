@@ -16,6 +16,7 @@ const questionSchema = new mongoose.Schema({
       type: String,
       enum: [
         "arrays",
+        "strings",
         "hashmaps",
         "linked lists",
         "stacks",
@@ -24,6 +25,7 @@ const questionSchema = new mongoose.Schema({
         "graphs",
         "heaps",
         "recursion",
+        "backtracking",
         "dynamic programming",
         "tries",
         "others",
@@ -43,6 +45,11 @@ const questionSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Account",
+    required: true,
+  },
 });
 
 export const Question = mongoose.model("Question", questionSchema);
