@@ -45,4 +45,49 @@ const addQuestion = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, createdQuestion, "Question added successfully"));
 });
 
-export { getAllQuestions, addQuestion };
+const editQuestion = asyncHandler(async (req, res) => {
+  const {
+    questionTitle,
+    difficulty,
+    topics,
+    problemLink,
+    solutionLink,
+    companyTags,
+  } = req.body;
+
+  if (
+    [
+      questionTitle,
+      difficulty,
+      topics,
+      problemLink,
+      solutionLink,
+      companyTags,
+    ].some((field) =>
+      Array.isArray(field) ? field.length <= 0 : field.trim() === ""
+    )
+  ) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const question = await Question.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        questionTitle,
+        difficulty,
+        topics,
+        problemLink,
+        solutionLink,
+        companyTags,
+      },
+    },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, question, "Question edited successfully"));
+});
+
+export { getAllQuestions, addQuestion, editQuestion };
