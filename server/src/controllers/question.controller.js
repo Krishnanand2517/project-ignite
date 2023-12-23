@@ -3,7 +3,7 @@ import { Question } from "../models/question.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-const getAllQuestions = asyncHandler(async (req, res) => {
+const getAllQuestions = asyncHandler(async (_req, res) => {
   const questions = await Question.find({}).populate("addedBy", {
     fullName: 1,
     avatarImage: 1,
@@ -90,4 +90,21 @@ const editQuestion = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, question, "Question edited successfully"));
 });
 
-export { getAllQuestions, addQuestion, editQuestion };
+const deleteQuestion = asyncHandler(async (req, res) => {
+  const accountId = req.account?._id.toString();
+
+  const question = await Question.findById(req.params.id);
+  const questionOwnerId = question.addedBy.toString();
+
+  if (accountId !== questionOwnerId) {
+    throw new ApiError(403, "This account cannot delete this course");
+  }
+
+  await question.deleteOne();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Question deleted successfully"));
+});
+
+export { getAllQuestions, addQuestion, editQuestion, deleteQuestion };

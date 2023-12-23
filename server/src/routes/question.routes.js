@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addQuestion,
+  deleteQuestion,
   editQuestion,
   getAllQuestions,
 } from "../controllers/question.controller.js";
@@ -13,5 +14,6 @@ router.route("/").get(getAllQuestions);
 // PROTECTED ROUTES - authorization required
 router.route("/add").post(verifyJWT, addQuestion);
 router.route("/edit/:id").post(verifyJWT, editQuestion);
+router.route("/delete/:id").delete(verifyJWT, deleteQuestion);
 
 export default router;
