@@ -6,6 +6,14 @@ const courseSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  courseSlug: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    index: true,
+  },
   courseImage: {
     type: String, // Link
     required: true,

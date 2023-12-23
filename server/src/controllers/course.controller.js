@@ -23,8 +23,8 @@ const getAllCourses = asyncHandler(async (_req, res) => {
 });
 
 const getCourse = asyncHandler(async (req, res) => {
-  const courseId = req.params.id;
-  const course = await Course.findById(courseId)
+  const courseSlug = req.params.slug;
+  const course = await Course.findOne({ courseSlug })
     .populate("instructor", {
       instructorName: 1,
       avatarImage: 1,
@@ -42,11 +42,11 @@ const createCourse = asyncHandler(async (req, res) => {
     );
   }
 
-  const { courseName, duration, category, difficulty } = req.body;
+  const { courseName, courseSlug, duration, category, difficulty } = req.body;
   console.log("course name:", courseName); // for debugging
 
   if (
-    [courseName, duration, category, difficulty].some(
+    [courseName, courseSlug, duration, category, difficulty].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -74,6 +74,7 @@ const createCourse = asyncHandler(async (req, res) => {
 
   const course = await Course.create({
     courseName,
+    courseSlug,
     courseImage: courseImage.url,
     duration,
     category,
@@ -103,11 +104,11 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
     );
   }
 
-  const { courseName, duration, category, difficulty } = req.body;
+  const { courseName, courseSlug, duration, category, difficulty } = req.body;
   console.log(courseName);
 
   if (
-    [courseName, duration, category, difficulty].some(
+    [courseName, courseSlug, duration, category, difficulty].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -117,8 +118,8 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
   const instructorAccountId = req.account?._id;
   const instructor = await Instructor.findOne({ account: instructorAccountId });
 
-  const courseId = req.params?.id;
-  const course = await Course.findById(courseId);
+  const courseSlugToChange = req.params.slug;
+  const course = await Course.findOne({ courseSlug: courseSlugToChange });
 
   if (course.instructor.toString() !== instructor._id.toString()) {
     throw new ApiError(403, "This instructor cannot edit this course");
@@ -127,6 +128,7 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
   await course.updateOne({
     $set: {
       courseName,
+      courseSlug,
       duration,
       category,
       difficulty,
@@ -151,8 +153,8 @@ const updateCourseImage = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to upload course image file");
   }
 
-  const courseId = req.params?.id;
-  const course = await Course.findById(courseId);
+  const courseSlug = req.params.slug;
+  const course = await Course.findOne({ courseSlug });
   const oldCourseImage = course.courseImage;
 
   await course.updateOne({
@@ -181,7 +183,9 @@ const deleteCourse = asyncHandler(async (req, res) => {
   }
 
   const instructor = await Instructor.findOne({ account: req.account?._id });
-  const course = await Course.findById(req.params.id);
+
+  const courseSlug = req.params.slug;
+  const course = await Course.findOne({ courseSlug });
 
   const oldCourseImage = course.courseImage;
 

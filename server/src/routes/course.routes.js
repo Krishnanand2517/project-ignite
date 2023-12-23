@@ -13,7 +13,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 
 router.route("/").get(getAllCourses);
-router.route("/:id").get(getCourse);
+router.route("/:slug").get(getCourse);
 
 // PROTECTED ROUTES - authorization required
 router.route("/create").post(
@@ -27,9 +27,9 @@ router.route("/create").post(
   createCourse
 );
 
-router.route("/update-details/:id").post(verifyJWT, updateCourseDetails);
+router.route("/update-details/:slug").post(verifyJWT, updateCourseDetails);
 
-router.route("/update-image/:id").post(
+router.route("/update-image/:slug").post(
   verifyJWT,
   upload.fields([
     {
@@ -40,6 +40,6 @@ router.route("/update-image/:id").post(
   updateCourseImage
 );
 
-router.route("/delete/:id").delete(verifyJWT, deleteCourse);
+router.route("/delete/:slug").delete(verifyJWT, deleteCourse);
 
 export default router;
