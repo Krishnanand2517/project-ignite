@@ -1,28 +1,34 @@
+import { useState, useEffect } from "react";
+import questionService from "../services/questions";
 import { QuestionCard } from "../components";
 
 const Questions = () => {
-  const questions = [
-    {
-      title: "Subarray with given sum",
-      slug: "subarray-with-given-sum",
-      difficulty: "Easy",
-    },
-    {
-      title: "Kadane's Algorithm",
-      slug: "kadanes-algorithm",
-      difficulty: "Medium",
-    },
-    {
-      title: "Longest valid parentheses",
-      slug: "longest-valid-parentheses",
-      difficulty: "Hard",
-    },
-    {
-      title: "Max circular subarray sum",
-      slug: "max-circular-subarray-sum",
-      difficulty: "Hard",
-    },
-  ];
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const questionsData = await questionService.getAll();
+
+        const questionsObjects = questionsData.map((question) =>
+          Object({
+            title: question.questionTitle,
+            problemLink: question.problemLink,
+            solutionLink: question.solutionLink,
+            topics: question.topics,
+            companyTags: question.companyTags,
+            difficulty: question.difficulty,
+          })
+        );
+
+        setQuestions(questionsObjects);
+      } catch (error) {
+        console.log("Error fetching questions data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
@@ -34,8 +40,11 @@ const Questions = () => {
         {questions.map((question) => (
           <li key={question.title}>
             <QuestionCard
-              slug={question.slug}
               title={question.title}
+              problemLink={question.problemLink}
+              solutionLink={question.solutionLink}
+              topics={question.topics}
+              companyTags={question.companyTags}
               difficulty={question.difficulty}
             />
           </li>
