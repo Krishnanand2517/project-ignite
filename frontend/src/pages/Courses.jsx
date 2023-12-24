@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import courseService from "../services/courses";
 import { CourseCard } from "../components";
+import { Loader } from "../components";
 
 const Courses = () => {
+  const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const Courses = () => {
         );
 
         setCourses(courseObjects);
+        setLoading(false);
       } catch (error) {
         console.log("Error fetching course data:", error);
       }
@@ -29,6 +32,18 @@ const Courses = () => {
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full line-numbers pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+          Courses
+        </h1>
+
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full line-numbers pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">

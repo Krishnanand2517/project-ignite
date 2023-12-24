@@ -1,3 +1,4 @@
+import Loader from "./Loader";
 import Button from "./Button";
 import Input from "./Input";
 import Logo from "./Logo";
@@ -22,6 +23,7 @@ import Likes from "./Likes";
 import Footer from "./Footer/Footer";
 
 export {
+  Loader,
   Button,
   Input,
   Logo,

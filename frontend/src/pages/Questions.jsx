@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import questionService from "../services/questions";
 import { QuestionCard } from "../components";
+import { Loader } from "../components";
 
 const Questions = () => {
+  const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const Questions = () => {
         );
 
         setQuestions(questionsObjects);
+        setLoading(false);
       } catch (error) {
         console.log("Error fetching questions data:", error);
       }
@@ -29,6 +32,18 @@ const Questions = () => {
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+          Questions
+        </h1>
+
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
