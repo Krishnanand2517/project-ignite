@@ -1,6 +1,8 @@
 import Loader from "./Loader";
 import Button from "./Button";
 import Input from "./Input";
+import ImageInput from "./ImageInput/ImageInput";
+import ImageCropper from "./ImageInput/ImageCropper";
 import Logo from "./Logo";
 import LogoutBtn from "./Header/LogoutBtn";
 import ImageCard from "./ImageCard";
@@ -26,6 +28,8 @@ export {
   Loader,
   Button,
   Input,
+  ImageInput,
+  ImageCropper,
   Logo,
   LogoutBtn,
   ImageCard,

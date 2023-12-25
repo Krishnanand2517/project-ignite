@@ -1,4 +1,4 @@
-import { Button, Input } from "./index";
+import { Button, Input, ImageInput } from "./index";
 import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
@@ -20,7 +20,16 @@ const RegisterForm = () => {
         <Input label="Course Pursuing (e.g. B.Tech, M.Sc.)" />
       </div>
       <div>
-        <Input label="Year of Study (e.g. 3)" type="number" className="mb-6" />
+        <Input
+          label="Year of Study (e.g. 3)"
+          type="number"
+          min={1}
+          max={6}
+          className="mb-6"
+        />
+      </div>
+      <div>
+        <ImageInput label="Profile Picture" className="text-primary" />
       </div>
       <div>
         <Input label="Password" type="password" />
