@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import ReactModal from "react-modal";
 import { ImageCropper } from "../index";
+import { dataURItoBlob } from "./dataUriToBlob";
 
 const defaultSrc = "/user_placeholder.png";
 
-const ImageInput = ({ label, className = "", ...props }) => {
+const ImageInput = ({ label, className = "", setOutputImage, ...props }) => {
   const imageUploader = useRef(null);
   const [image, setImage] = useState(defaultSrc);
   const [isCropperOpen, setIsCropperOpen] = useState(false);
@@ -12,6 +13,10 @@ const ImageInput = ({ label, className = "", ...props }) => {
   const getImage = (url) => {
     setImage(url);
     setIsCropperOpen(false);
+
+    const blob = dataURItoBlob(url);
+    const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+    setOutputImage(file);
   };
 
   const onInputChange = (e) => {

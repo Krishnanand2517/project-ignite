@@ -8,7 +8,11 @@ const ImageCropper = ({ image, getImage }) => {
 
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
-      getImage(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+      getImage(
+        cropperRef.current?.cropper
+          .getCroppedCanvas()
+          .toDataURL("image/jpeg", 0.7)
+      );
     }
   };
 
@@ -18,7 +22,7 @@ const ImageCropper = ({ image, getImage }) => {
       <div className="w-60 h-60 lg:w-80 lg:h-80 relative">
         <ReactCropper
           ref={cropperRef}
-          zoomTo={0.5}
+          zoomTo={0.1}
           preview=".img-preview"
           src={image}
           aspectRatio={1}

@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Input, ImageInput } from "./index";
 import { Link } from "react-router-dom";
+import accountService from "../services/accounts";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [isStudent, setIsStudent] = useState(true);
 
   const [fullName, setFullName] = useState("");
@@ -10,10 +16,44 @@ const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
 
   const [institutionName, setInstitutionName] = useState("");
   const [institutionCourse, setInstitutionCourse] = useState("");
   const [institutionYear, setInstitutionYear] = useState("");
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+
+    const registerFormData = new FormData();
+    registerFormData.append("username", username);
+    registerFormData.append("email", email);
+    registerFormData.append("password", password);
+    registerFormData.append("fullName", fullName);
+
+    registerFormData.append(
+      "accountType",
+      isStudent ? "student" : "instructor"
+    );
+
+    registerFormData.append("avatar", avatar);
+
+    if (isStudent) {
+      registerFormData.append("collegeName", institutionName);
+      registerFormData.append("collegeProgramme", institutionCourse);
+      registerFormData.append("year", Number(institutionYear));
+    }
+
+    setIsLoading(true);
+
+    const response = await accountService.register(registerFormData);
+
+    setIsLoading(false);
+
+    if (response.status === 201) {
+      navigate("/articles");
+    }
+  };
 
   const renderStudentInputFields = () => {
     if (!isStudent) return null;
@@ -49,7 +89,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <form className="p-14 my-32 2xl:my-48 w-full max-w-lg 2xl:max-w-2xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl">
+    <form
+      onSubmit={handleRegister}
+      className="p-14 my-32 2xl:my-48 w-full max-w-lg 2xl:max-w-2xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
+    >
       <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
         Create New Account
       </h2>
@@ -63,6 +106,7 @@ const RegisterForm = () => {
       <div>
         <Input
           label="E-mail"
+          type="email"
           value={email}
           onChange={({ target }) => setEmail(target.value)}
         />
@@ -88,7 +132,11 @@ const RegisterForm = () => {
       {renderStudentInputFields()}
 
       <div>
-        <ImageInput label="Profile Picture" className="text-primary mt-6" />
+        <ImageInput
+          label="Profile Picture"
+          className="text-primary mt-6"
+          setOutputImage={setAvatar}
+        />
       </div>
       <div>
         <Input
@@ -111,8 +159,15 @@ const RegisterForm = () => {
           }`}
         />
       </div>
-      <Button textSize="text-lg 2xl:text-2xl" className="font-bold my-5 py-3">
-        Create New Account
+      <Button
+        textSize="text-lg 2xl:text-2xl"
+        className={`font-bold my-5 py-3 ${
+          isLoading && "bg-green-800 hover:bg-green-800"
+        }`}
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Creating Account..." : "Create New Account"}
       </Button>
       <p className="text-secondary text-center">
         <Link to="/login" className="hover:text-orange-400 2xl:text-lg">

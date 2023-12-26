@@ -59,7 +59,7 @@ const registerAccount = asyncHandler(async (req, res) => {
   }
 
   // handle images
-  const avatarLocalPath = req.files?.avatar[0]?.path;
+  const avatarLocalPath = req.file?.path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
@@ -319,7 +319,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 });
 
 const updateAccountAvatar = asyncHandler(async (req, res) => {
-  const avatarLocalPath = req.files?.avatar[0]?.path;
+  const avatarLocalPath = req.file?.path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is missing");

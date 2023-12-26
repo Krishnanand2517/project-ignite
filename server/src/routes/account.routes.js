@@ -15,15 +15,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(
-  upload.fields([
-    {
-      name: "avatar",
-      maxCount: 1,
-    },
-  ]),
-  registerAccount
-);
+router.route("/register").post(upload.single("avatar"), registerAccount);
 
 router.route("/login").post(loginAccount);
 
@@ -35,16 +27,9 @@ router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 router.route("/get-account").get(verifyJWT, getCurrentAccount);
 router.route("/update-details").post(verifyJWT, updateAccountDetails);
 
-router.route("/update-avatar").post(
-  verifyJWT,
-  upload.fields([
-    {
-      name: "avatar",
-      maxCount: 1,
-    },
-  ]),
-  updateAccountAvatar
-);
+router
+  .route("/update-avatar")
+  .post(verifyJWT, upload.single("avatar"), updateAccountAvatar);
 
 router.route("/delete").delete(verifyJWT, deleteAccount);
 
