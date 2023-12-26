@@ -35,40 +35,20 @@ const ImageInput = ({ label, className = "", ...props }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      className={className}
-    >
+    <div className={`flex flex-col items-center justify-center ${className}`}>
       <input
         type="file"
         ref={imageUploader}
         accept="image/png, image/jpeg"
         onChange={onInputChange}
-        style={{ display: "none" }}
+        className="hidden"
       />
       <div
-        style={{
-          height: "60px",
-          width: "60px",
-          border: "2px solid white",
-          borderRadius: "50%",
-        }}
+        className="h-14 w-14 2xl:h-16 2xl:w-16 rounded-full border-2 border-solid border-white hover:border-orange-500 cursor-pointer"
         onClick={() => imageUploader.current.click()}
         {...props}
       >
-        <img
-          src={image}
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "50%",
-          }}
-        />
+        <img src={image} className="w-full h-full rounded-full" />
       </div>
       {label}
 
