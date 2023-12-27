@@ -11,4 +11,18 @@ const register = async (formData) => {
   return response;
 };
 
-export default { register };
+const login = async (obj) => {
+  const response = await axios.post(`${baseUrl}/login`, obj, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+const logout = async () => {
+  const response = await axios.post(`${baseUrl}/logout`);
+  return response;
+};
+
+export default { register, login, logout };
