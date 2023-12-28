@@ -19,7 +19,7 @@ const LogoutBtn = () => {
     const response = await accountService.logout();
     setIsLoading(false);
 
-    if (response.status === 200) {
+    if (response.statusCode === 200) {
       dispatch(storeLogout());
       navigate("/");
     }

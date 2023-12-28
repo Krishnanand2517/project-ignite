@@ -4,6 +4,7 @@ import Input from "./Input";
 import ImageInput from "./ImageInput/ImageInput";
 import ImageCropper from "./ImageInput/ImageCropper";
 import Logo from "./Logo";
+import AvatarIcon from "./Header/AvatarIcon";
 import LogoutBtn from "./Header/LogoutBtn";
 import ImageCard from "./ImageCard";
 import ResourceItem from "./ResourceItem";
@@ -31,6 +32,7 @@ export {
   ImageInput,
   ImageCropper,
   Logo,
+  AvatarIcon,
   LogoutBtn,
   ImageCard,
   ResourceItem,

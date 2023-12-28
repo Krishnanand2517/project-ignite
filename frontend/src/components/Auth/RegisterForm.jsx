@@ -52,7 +52,7 @@ const RegisterForm = () => {
 
     const response = await accountService.register(registerFormData);
 
-    if (response.status === 201) {
+    if (response.statusCode === 201) {
       const loginObject = {
         username: username,
         password: password,
@@ -62,7 +62,7 @@ const RegisterForm = () => {
 
       setIsLoading(false);
 
-      if (loginResponse.status === 200) {
+      if (loginResponse.statusCode === 200) {
         dispatch(storeLogin(loginResponse.data.account));
         navigate("/articles");
       }

@@ -8,7 +8,7 @@ const register = async (formData) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return response;
+  return response.data;
 };
 
 const login = async (obj) => {
@@ -17,12 +17,12 @@ const login = async (obj) => {
       "Content-Type": "application/json",
     },
   });
-  return response;
+  return response.data;
 };
 
 const logout = async () => {
   const response = await axios.post(`${baseUrl}/logout`);
-  return response;
+  return response.data;
 };
 
 export default { register, login, logout };

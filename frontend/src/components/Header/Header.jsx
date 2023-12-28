@@ -1,30 +1,33 @@
-import { Logo } from "../index";
-import { LogoutBtn } from "../index";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { Button, Logo, LogoutBtn, AvatarIcon } from "../index";
 
 const Header = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userImg = useSelector((state) => state.auth.userData?.avatarImage);
   const navigate = useNavigate();
 
   const navItems = [
     {
       name: "Home",
-      slug: "/",
+      path: "/",
     },
     {
       name: "Articles",
-      slug: "/articles",
+      path: "/articles",
     },
     {
       name: "Projects",
-      slug: "/projects",
+      path: "/projects",
     },
     {
       name: "Courses",
-      slug: "/courses",
+      path: "/courses",
     },
     {
       name: "Questions",
-      slug: "/questions",
+      path: "/questions",
     },
   ];
 
@@ -41,7 +44,7 @@ const Header = () => {
           {navItems.map((item) => (
             <li key={item.name}>
               <button
-                onClick={() => navigate(item.slug)}
+                onClick={() => navigate(item.path)}
                 className="inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-orange-400 rounded-2xl"
               >
                 {item.name}
@@ -50,7 +53,20 @@ const Header = () => {
           ))}
         </ul>
 
-        <LogoutBtn />
+        {isAuthenticated ? (
+          <div className="flex justify-around items-center gap-x-6">
+            <AvatarIcon image={userImg} />
+            <LogoutBtn />
+          </div>
+        ) : (
+          <Button
+            textSize="text-xl 2xl:text-4xl"
+            className="font-bold"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Button>
+        )}
       </nav>
     </header>
   );

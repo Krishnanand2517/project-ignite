@@ -31,7 +31,7 @@ const LoginForm = () => {
 
     setIsLoading(false);
 
-    if (response.status === 200) {
+    if (response.statusCode === 200) {
       dispatch(storeLogin(response.data.account));
       navigate("/articles");
     }
