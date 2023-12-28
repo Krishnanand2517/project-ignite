@@ -1,35 +1,32 @@
 import { Button } from "./index";
-import { useNavigate } from "react-router-dom";
 
-const CTA = () => {
-  const navigate = useNavigate();
-
+const Contribution = () => {
   return (
     <div className="font-inconsolata text-secondary text-xl 2xl:text-3xl flex justify-evenly">
       <div className="flex flex-col items-stretch justify-between gap-8 w-full max-w-xs">
-        <p>{"I'm new here. I want to start learning!"}</p>
+        <p>{"I want to contribute a new coding question to Project IGNITE!"}</p>
         <Button
           textSize="text-xl 2xl:text-4xl"
           className="font-bold"
-          onClick={() => navigate("/register")}
+          // onClick={() => navigate("/register")}
         >
-          Register
+          Contribute Question
         </Button>
       </div>
       <div className="flex flex-col items-stretch justify-between gap-8 w-full max-w-xs">
-        <p>{"I already have an account (and I love this platform)."}</p>
+        <p>
+          {"I have an article that will help the community on Project IGNITE!"}
+        </p>
         <Button
-          bgColor="bg-orange-400"
-          hoverBgColor="hover:bg-orange-500"
           textSize="text-xl 2xl:text-4xl"
           className="font-bold"
-          onClick={() => navigate("/login")}
+          // onClick={() => navigate("/login")}
         >
-          Log In
+          Contribute Article
         </Button>
       </div>
     </div>
   );
 };
 
-export default CTA;
+export default Contribution;

@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     if (response.statusCode === 200) {
       dispatch(storeLogin(response.data.account));
-      navigate("/articles");
+      navigate("/");
     }
   };
 

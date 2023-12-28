@@ -14,8 +14,11 @@ import Hero from "./Hero";
 import Resource from "./Resource";
 import CTA from "./CTA";
 import About from "./About";
+import ProfileCard from "./ProfileCard";
+import Contribution from "./Contribution";
 import LoginForm from "./Auth/LoginForm";
 import RegisterForm from "./Auth/RegisterForm";
+import QuestionAddForm from "./QuestionAddForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
@@ -42,8 +45,11 @@ export {
   Resource,
   CTA,
   About,
+  ProfileCard,
+  Contribution,
   LoginForm,
   RegisterForm,
+  QuestionAddForm,
   ArticleCard,
   QuestionCard,
   ProjectCategoryCard,

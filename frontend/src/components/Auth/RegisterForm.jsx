@@ -64,7 +64,7 @@ const RegisterForm = () => {
 
       if (loginResponse.statusCode === 200) {
         dispatch(storeLogin(loginResponse.data.account));
-        navigate("/articles");
+        navigate("/");
       }
     }
 
@@ -162,14 +162,14 @@ const RegisterForm = () => {
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <div>
+      <div className="flex items-center">
         <Input
           label="Confirm Password"
           type="password"
           value={confirmPassword}
           onChange={({ target }) => setConfirmPassword(target.value)}
           className={`border-2 border-white ${
-            password && password === confirmPassword
+            password === confirmPassword
               ? "border-green-500 outline-green-500"
               : confirmPassword && "border-red-500 outline-red-500"
           }`}
@@ -178,10 +178,11 @@ const RegisterForm = () => {
       <Button
         textSize="text-lg 2xl:text-2xl"
         className={`font-bold my-5 py-3 ${
-          isLoading && "bg-green-800 hover:bg-green-800"
+          (!password || isLoading || password !== confirmPassword) &&
+          "bg-green-800 hover:bg-green-800"
         }`}
         type="submit"
-        disabled={isLoading}
+        disabled={!password || isLoading || password !== confirmPassword}
       >
         {isLoading ? "Creating Account..." : "Create New Account"}
       </Button>
