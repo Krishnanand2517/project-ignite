@@ -7,4 +7,13 @@ const getAll = async () => {
   return response.data;
 };
 
-export default { getAll };
+const addOne = async (obj) => {
+  const response = await axios.post(`${baseUrl}/add`, obj, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
+export default { getAll, addOne };

@@ -1,6 +1,7 @@
 import Loader from "./Loader";
 import Button from "./Button";
 import Input from "./Input";
+import SelectInput from "./SelectInput";
 import ImageInput from "./ImageInput/ImageInput";
 import ImageCropper from "./ImageInput/ImageCropper";
 import Logo from "./Logo";
@@ -32,6 +33,7 @@ export {
   Loader,
   Button,
   Input,
+  SelectInput,
   ImageInput,
   ImageCropper,
   Logo,

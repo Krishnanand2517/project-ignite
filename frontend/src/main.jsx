@@ -16,6 +16,7 @@ import Projects from "./pages/Projects.jsx";
 import Questions from "./pages/Questions.jsx";
 import Article from "./pages/Article.jsx";
 import ProjectCategory from "./pages/ProjectCategory.jsx";
+import QuestionAdd from "./pages/QuestionAdd.jsx";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/questions",
         element: <Questions />,
+      },
+      {
+        path: "/add-question",
+        element: <QuestionAdd />,
       },
     ],
   },

@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./index";
 
 const Contribution = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="font-inconsolata text-secondary text-xl 2xl:text-3xl flex justify-evenly">
       <div className="flex flex-col items-stretch justify-between gap-8 w-full max-w-xs">
@@ -8,7 +11,7 @@ const Contribution = () => {
         <Button
           textSize="text-xl 2xl:text-4xl"
           className="font-bold"
-          // onClick={() => navigate("/register")}
+          onClick={() => navigate("/add-question")}
         >
           Contribute Question
         </Button>
