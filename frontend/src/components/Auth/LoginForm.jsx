@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input, Button } from "./index";
+import { useDispatch } from "react-redux";
+
+import { login as storeLogin } from "../../store/authSlice";
+import { Input, Button } from "../index";
 import { Link } from "react-router-dom";
-import accountService from "../services/accounts";
+import accountService from "../../services/accounts";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +32,7 @@ const LoginForm = () => {
     setIsLoading(false);
 
     if (response.status === 200) {
+      dispatch(storeLogin(response.data.account));
       navigate("/articles");
     }
   };

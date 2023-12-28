@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, ImageInput } from "./index";
+import { useDispatch } from "react-redux";
+
+import { login as storeLogin } from "../../store/authSlice";
+import { Button, Input, ImageInput } from "../index";
 import { Link } from "react-router-dom";
-import accountService from "../services/accounts";
+import accountService from "../../services/accounts";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,11 +52,23 @@ const RegisterForm = () => {
 
     const response = await accountService.register(registerFormData);
 
-    setIsLoading(false);
-
     if (response.status === 201) {
-      navigate("/articles");
+      const loginObject = {
+        username: username,
+        password: password,
+      };
+
+      const loginResponse = await accountService.login(loginObject);
+
+      setIsLoading(false);
+
+      if (loginResponse.status === 200) {
+        dispatch(storeLogin(loginResponse.data.account));
+        navigate("/articles");
+      }
     }
+
+    setIsLoading(false);
   };
 
   const renderStudentInputFields = () => {

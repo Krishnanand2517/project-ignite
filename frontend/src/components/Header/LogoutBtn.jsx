@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { logout as storeLogout } from "../../store/authSlice";
 import { Button } from "../index";
 import accountService from "../../services/accounts";
 
 const LogoutBtn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,6 +20,7 @@ const LogoutBtn = () => {
     setIsLoading(false);
 
     if (response.status === 200) {
+      dispatch(storeLogout());
       navigate("/");
     }
   };
