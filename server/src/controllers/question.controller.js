@@ -12,6 +12,15 @@ const getAllQuestions = asyncHandler(async (_req, res) => {
   return res.json(questions);
 });
 
+const getQuestion = asyncHandler(async (req, res) => {
+  const question = await Question.findById(req.params.id).populate("addedBy", {
+    fullName: 1,
+    avatarImage: 1,
+  });
+
+  return res.json(question);
+});
+
 const addQuestion = asyncHandler(async (req, res) => {
   const {
     questionTitle,
@@ -63,15 +72,9 @@ const editQuestion = asyncHandler(async (req, res) => {
   } = req.body;
 
   if (
-    [
-      questionTitle,
-      difficulty,
-      topics,
-      problemLink,
-      solutionLink,
-      companyTags,
-    ].some((field) =>
-      Array.isArray(field) ? field.length <= 0 : field.trim() === ""
+    [questionTitle, difficulty, topics, problemLink, companyTags].some(
+      (field) =>
+        Array.isArray(field) ? field.length <= 0 : field.trim() === ""
     )
   ) {
     throw new ApiError(400, "All fields are required");
@@ -114,4 +117,10 @@ const deleteQuestion = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Question deleted successfully"));
 });
 
-export { getAllQuestions, addQuestion, editQuestion, deleteQuestion };
+export {
+  getAllQuestions,
+  getQuestion,
+  addQuestion,
+  editQuestion,
+  deleteQuestion,
+};
