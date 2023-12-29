@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./index";
 
 const QuestionCard = ({
+  id,
   problemLink,
   solutionLink,
   topics,
@@ -11,6 +12,7 @@ const QuestionCard = ({
   title,
   difficulty,
   addedById,
+  deleteQuestion,
 }) => {
   const userId = useSelector((state) => state.auth.userData?._id);
 
@@ -33,6 +35,7 @@ const QuestionCard = ({
             textColor="text-white"
             textSize="text-xs"
             className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100"
+            onClick={() => deleteQuestion(id)}
           >
             Delete
           </Button>

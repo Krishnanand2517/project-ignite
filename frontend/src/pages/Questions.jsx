@@ -17,6 +17,7 @@ const Questions = () => {
 
         const questionsObjects = questionsData.map((question) =>
           Object({
+            id: question._id,
             title: question.questionTitle,
             problemLink: question.problemLink,
             solutionLink: question.solutionLink,
@@ -36,6 +37,18 @@ const Questions = () => {
 
     fetchData();
   }, []);
+
+  const deleteQuestion = async (id) => {
+    try {
+      const response = await questionService.deleteOne(id);
+
+      if (response.statusCode === 200) {
+        setQuestions(questions.filter((question) => question.id !== id));
+      }
+    } catch (error) {
+      console.log("Error deleting the question:", error);
+    }
+  };
 
   if (loading) {
     return (
@@ -59,6 +72,7 @@ const Questions = () => {
         {questions.map((question) => (
           <li key={question.title}>
             <QuestionCard
+              id={question.id}
               title={question.title}
               problemLink={question.problemLink}
               solutionLink={question.solutionLink}
@@ -66,6 +80,7 @@ const Questions = () => {
               companyTags={question.companyTags}
               difficulty={question.difficulty}
               addedById={question.addedBy}
+              deleteQuestion={deleteQuestion}
             />
           </li>
         ))}

@@ -16,4 +16,9 @@ const addOne = async (obj) => {
   return response.data;
 };
 
-export default { getAll, addOne };
+const deleteOne = async (id) => {
+  const response = await axios.delete(`${baseUrl}/delete/${id}`);
+  return response.data;
+};
+
+export default { getAll, addOne, deleteOne };
