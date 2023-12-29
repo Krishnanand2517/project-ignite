@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "./index";
 
@@ -14,6 +14,7 @@ const QuestionCard = ({
   addedById,
   deleteQuestion,
 }) => {
+  const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.userData?._id);
 
   const renderEditOptions = () => {
@@ -26,6 +27,7 @@ const QuestionCard = ({
             textColor="text-white"
             textSize="text-xs"
             className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+            onClick={() => navigate(`/edit-question/${id}`)}
           >
             Edit
           </Button>

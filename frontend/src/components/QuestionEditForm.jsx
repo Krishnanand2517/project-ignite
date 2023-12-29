@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
@@ -20,7 +20,7 @@ const companiesOptions = companiesListInitial.map((company) => ({
   label: company,
 }));
 
-const QuestionAddForm = () => {
+const QuestionEditForm = ({ id }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +31,40 @@ const QuestionAddForm = () => {
   const [problemLink, setProblemLink] = useState("");
   const [solutionLink, setSolutionLink] = useState("");
   const [companyTags, setCompanyTags] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const questionData = await questionService.getOne(id);
+
+        setTitle(questionData.questionTitle);
+        setDifficulty(questionData.difficulty);
+        setProblemLink(questionData.problemLink);
+        setSolutionLink(questionData?.solutionLink);
+
+        setTopics(
+          questionData.topics.map((topic) => ({
+            value: topic,
+            label: topic
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" "),
+          }))
+        );
+
+        setCompanyTags(
+          questionData.companyTags.map((company) => ({
+            value: company,
+            label: company,
+          }))
+        );
+      } catch (error) {
+        console.log("Error fetching question data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,11 +80,11 @@ const QuestionAddForm = () => {
 
     setIsLoading(true);
 
-    const response = await questionService.addOne(newQuestionObject);
+    const response = await questionService.updateOne(id, newQuestionObject);
 
     setIsLoading(false);
 
-    if (response.statusCode === 201) {
+    if (response.statusCode === 200) {
       navigate("/questions");
     }
   };
@@ -61,7 +95,7 @@ const QuestionAddForm = () => {
       className="p-14 my-32 2xl:my-48 w-full max-w-md 2xl:max-w-xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
     >
       <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
-        Add Question
+        Edit Question
       </h2>
       <div>
         <Input
@@ -124,10 +158,10 @@ const QuestionAddForm = () => {
         type="submit"
         disabled={isLoading}
       >
-        {isLoading ? "Adding..." : "Add Question"}
+        {isLoading ? "Editing..." : "Edit Question"}
       </Button>
     </form>
   );
 };
 
-export default QuestionAddForm;
+export default QuestionEditForm;

@@ -20,6 +20,7 @@ import Contribution from "./Contribution";
 import LoginForm from "./Auth/LoginForm";
 import RegisterForm from "./Auth/RegisterForm";
 import QuestionAddForm from "./QuestionAddForm";
+import QuestionEditForm from "./QuestionEditForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
@@ -52,6 +53,7 @@ export {
   LoginForm,
   RegisterForm,
   QuestionAddForm,
+  QuestionEditForm,
   ArticleCard,
   QuestionCard,
   ProjectCategoryCard,

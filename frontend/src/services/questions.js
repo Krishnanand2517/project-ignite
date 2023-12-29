@@ -7,6 +7,11 @@ const getAll = async () => {
   return response.data;
 };
 
+const getOne = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 const addOne = async (obj) => {
   const response = await axios.post(`${baseUrl}/add`, obj, {
     headers: {
@@ -21,4 +26,13 @@ const deleteOne = async (id) => {
   return response.data;
 };
 
-export default { getAll, addOne, deleteOne };
+const updateOne = async (id, obj) => {
+  const response = await axios.post(`${baseUrl}/edit/${id}`, obj, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
+export default { getAll, getOne, addOne, deleteOne, updateOne };
