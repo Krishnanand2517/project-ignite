@@ -13,8 +13,14 @@ const getAllQuestions = asyncHandler(async (_req, res) => {
 });
 
 const addQuestion = asyncHandler(async (req, res) => {
-  const { questionTitle, difficulty, topics, problemLink, companyTags } =
-    req.body;
+  const {
+    questionTitle,
+    difficulty,
+    topics,
+    problemLink,
+    solutionLink,
+    companyTags,
+  } = req.body;
 
   if (
     [questionTitle, difficulty, topics, problemLink, companyTags].some(
@@ -30,6 +36,7 @@ const addQuestion = asyncHandler(async (req, res) => {
     difficulty,
     topics,
     problemLink,
+    solutionLink,
     companyTags,
     addedBy: req.account?._id,
   });
