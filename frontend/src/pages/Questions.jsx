@@ -65,7 +65,7 @@ const Questions = () => {
               topics={question.topics}
               companyTags={question.companyTags}
               difficulty={question.difficulty}
-              addedBy={question.addedBy}
+              addedById={question.addedBy}
             />
           </li>
         ))}
