@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import questionService from "../services/questions";
-import { QuestionCard } from "../components";
-import { Loader } from "../components";
+import { Button, QuestionCard, Loader } from "../components";
 
 const Questions = () => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
 
@@ -20,6 +23,7 @@ const Questions = () => {
             topics: question.topics,
             companyTags: question.companyTags,
             difficulty: question.difficulty,
+            addedBy: question.addedBy._id,
           })
         );
 
@@ -61,10 +65,21 @@ const Questions = () => {
               topics={question.topics}
               companyTags={question.companyTags}
               difficulty={question.difficulty}
+              addedBy={question.addedBy}
             />
           </li>
         ))}
       </ul>
+
+      <div className="mt-12">
+        <Button
+          textSize="text-sm 2xl:text-lg"
+          className="font-bold"
+          onClick={() => navigate("/add-question")}
+        >
+          Contribute Question
+        </Button>
+      </div>
     </div>
   );
 };

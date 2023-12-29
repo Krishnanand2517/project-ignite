@@ -8,6 +8,7 @@ const QuestionCard = ({
   companyTags,
   title,
   difficulty,
+  addedBy,
 }) => {
   return (
     <div className="px-8 py-3 flex justify-between items-center font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
