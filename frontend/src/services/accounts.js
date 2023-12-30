@@ -39,4 +39,20 @@ const updatePassword = async (obj) => {
   return response.data;
 };
 
-export default { register, login, logout, getCurrent, updatePassword };
+const updateAvatar = async (formData) => {
+  const response = await axios.post(`${baseUrl}/update-avatar`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};
+
+export default {
+  register,
+  login,
+  logout,
+  getCurrent,
+  updatePassword,
+  updateAvatar,
+};

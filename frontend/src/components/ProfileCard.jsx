@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { Button, Input } from "./index";
+import { login as storeLogin } from "../store/authSlice";
+import { Button, Input, ImageInput } from "./index";
 import accountService from "../services/accounts";
 
 const ProfileCard = ({ userData }) => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdateImageClicked, setIsUpdateImageClicked] = useState(false);
   const [isUpdatePasswordClicked, setIsUpdatePasswordClicked] = useState(false);
@@ -11,6 +15,8 @@ const ProfileCard = ({ userData }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
+
+  const [avatar, setAvatar] = useState(null);
 
   const updatePassword = async (event) => {
     event.preventDefault();
@@ -31,11 +37,33 @@ const ProfileCard = ({ userData }) => {
     }
   };
 
+  const updateAvatar = async (event) => {
+    event.preventDefault();
+
+    const avatarFormData = new FormData();
+    avatarFormData.append("avatar", avatar);
+
+    setIsLoading(true);
+
+    const response = await accountService.updateAvatar(avatarFormData);
+
+    setIsLoading(false);
+
+    if (response.statusCode === 200) {
+      const getUserResponse = await accountService.getCurrent();
+
+      if (getUserResponse.data.statusCode === 200) {
+        dispatch(storeLogin(getUserResponse.data.data));
+        setIsUpdateImageClicked(false);
+      }
+    }
+  };
+
   return (
     <div
       className={`w-4/5 mx-auto px-12 py-8 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
         isUpdateImageClicked
-          ? "h-44 2xl:h-52"
+          ? "h-56 2xl:h-64"
           : isUpdatePasswordClicked
           ? "h-72 2xl:h-80"
           : "h-32 2xl:h-40"
@@ -135,21 +163,39 @@ const ProfileCard = ({ userData }) => {
 
           {/* UPDATE IMAGE */}
           {isUpdateImageClicked ? (
-            <div className="flex flex-col gap-y-2 w-full">
+            <form
+              onSubmit={updateAvatar}
+              className="flex flex-col gap-y-2 w-full items-center"
+            >
               <div>
-                <img
-                  className="h-20 w-20 2xl:h-24 2xl:w-24 rounded-full border-2 border-solid border-white hover:border-orange-500"
-                  src={userData.avatarImage}
-                  alt="profile picture"
+                <ImageInput
+                  defaultSrc={userData.avatarImage}
+                  label="Profile Picture"
+                  className="text-primary"
+                  setOutputImage={setAvatar}
                 />
               </div>
+
+              <Button
+                bgColor="bg-orange-400"
+                hoverBgColor="hover:bg-orange-500"
+                textSize="text-sm 2xl:text-lg"
+                className={`my-1 py-1 font-bold rounded-2xl ${
+                  (isLoading || !avatar) && "bg-orange-800 hover:bg-orange-800"
+                }`}
+                type="submit"
+                disabled={isLoading || !avatar}
+              >
+                {isLoading ? "Updating..." : "Update"}
+              </Button>
+
               <div
-                className="text-center cursor-pointer hover:text-orange-400 hover:bg-black/30 mt-4 rounded-md"
+                className="text-center cursor-pointer hover:text-orange-400 hover:bg-black/30 rounded-md"
                 onClick={() => setIsUpdateImageClicked(false)}
               >
                 Cancel
               </div>
-            </div>
+            </form>
           ) : (
             <Button
               bgColor="bg-orange-400"

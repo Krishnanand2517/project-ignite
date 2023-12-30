@@ -3,9 +3,13 @@ import ReactModal from "react-modal";
 import { ImageCropper } from "../index";
 import { dataURItoBlob } from "./dataUriToBlob";
 
-const defaultSrc = "/user_placeholder.png";
-
-const ImageInput = ({ label, className = "", setOutputImage, ...props }) => {
+const ImageInput = ({
+  defaultSrc = "/user_placeholder.png",
+  label,
+  className = "",
+  setOutputImage,
+  ...props
+}) => {
   const imageUploader = useRef(null);
   const [image, setImage] = useState(defaultSrc);
   const [isCropperOpen, setIsCropperOpen] = useState(false);
