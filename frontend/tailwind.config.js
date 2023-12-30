@@ -30,6 +30,10 @@ export default {
           },
         },
       },
+      transitionProperty: {
+        width: "width",
+        height: "height",
+      },
     },
   },
   plugins: [],

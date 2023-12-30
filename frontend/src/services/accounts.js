@@ -30,4 +30,13 @@ const getCurrent = async () => {
   return response;
 };
 
-export default { register, login, logout, getCurrent };
+const updatePassword = async (obj) => {
+  const response = await axios.post(`${baseUrl}/change-password`, obj, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
+export default { register, login, logout, getCurrent, updatePassword };
