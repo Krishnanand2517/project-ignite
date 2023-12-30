@@ -69,6 +69,7 @@ const ProfileCard = ({ userData }) => {
           : "h-32 2xl:h-40"
       }`}
     >
+      {/* TOP SECTION */}
       <div className="flex justify-between">
         <div>
           <div className="flex gap-x-4 items-center">
@@ -87,6 +88,8 @@ const ProfileCard = ({ userData }) => {
             </p>
           </div>
         </div>
+
+        {/* UPDATE BUTTONS */}
         <div className="flex gap-x-4 w-80 2xl:w-96">
           {/* UPDATE PASSWORD */}
           {isUpdatePasswordClicked ? (
