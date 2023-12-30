@@ -25,4 +25,9 @@ const logout = async () => {
   return response.data;
 };
 
-export default { register, login, logout };
+const getCurrent = async () => {
+  const response = await axios.get(`${baseUrl}/get-account`);
+  return response;
+};
+
+export default { register, login, logout, getCurrent };

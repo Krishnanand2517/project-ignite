@@ -22,3 +22,26 @@ export const companiesListInitial = [
   "Adobe",
   "Google",
 ];
+
+export const navItems = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Articles",
+    path: "/articles",
+  },
+  {
+    name: "Projects",
+    path: "/projects",
+  },
+  {
+    name: "Courses",
+    path: "/courses",
+  },
+  {
+    name: "Questions",
+    path: "/questions",
+  },
+];

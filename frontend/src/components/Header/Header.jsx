@@ -1,35 +1,30 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { logout as storeLogout } from "../../store/authSlice";
 
 import { Button, Logo, LogoutBtn, AvatarIcon } from "../index";
+import accountService from "../../services/accounts";
+import { navItems } from "../../constants";
 
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userImg = useSelector((state) => state.auth.userData?.avatarImage);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const navItems = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "Articles",
-      path: "/articles",
-    },
-    {
-      name: "Projects",
-      path: "/projects",
-    },
-    {
-      name: "Courses",
-      path: "/courses",
-    },
-    {
-      name: "Questions",
-      path: "/questions",
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await accountService.getCurrent();
+
+      if (response.status === 401) {
+        dispatch(storeLogout());
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   return (
     <header className="w-full py-4 px-10 font-fira bg-black bg-opacity-20 backdrop-blur-lg fixed z-10">
