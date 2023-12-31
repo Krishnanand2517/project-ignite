@@ -16,14 +16,15 @@ const Header = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await accountService.getCurrent();
-
-      if (response.status === 401) {
-        dispatch(storeLogout());
-      }
+      await accountService.getCurrent();
     };
 
-    fetchData();
+    try {
+      fetchData();
+    } catch (error) {
+      console.log("Logging out with error:", error);
+      dispatch(storeLogout());
+    }
   }, [dispatch]);
 
   return (

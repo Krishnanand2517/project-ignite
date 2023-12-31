@@ -13,13 +13,19 @@ const LogoutBtn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async (event) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    setIsLoading(true);
-    const response = await accountService.logout();
-    setIsLoading(false);
+      setIsLoading(true);
+      const response = await accountService.logout();
+      setIsLoading(false);
 
-    if (response.statusCode === 200) {
+      if (response.statusCode === 200) {
+        dispatch(storeLogout());
+        navigate("/");
+      }
+    } catch {
+      console.log("Logging out due to error");
       dispatch(storeLogout());
       navigate("/");
     }
