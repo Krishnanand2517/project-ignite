@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { login as storeLogin } from "../store/authSlice";
 import { Button, Input, ImageInput } from "./index";
 import accountService from "../services/accounts";
+import studentService from "../services/students";
 
 const ProfileCard = ({ userData }) => {
   const dispatch = useDispatch();
 
+  const [studentData, setStudentData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdateImageClicked, setIsUpdateImageClicked] = useState(false);
   const [isUpdatePasswordClicked, setIsUpdatePasswordClicked] = useState(false);
@@ -17,6 +19,21 @@ const ProfileCard = ({ userData }) => {
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
 
   const [avatar, setAvatar] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userData.accountType === "student") {
+        const response = await studentService.getCurrent();
+        console.log(response);
+
+        if (response.statusCode === 200) {
+          setStudentData(response.data);
+        }
+      }
+    };
+
+    fetchData();
+  }, [userData]);
 
   const updatePassword = async (event) => {
     event.preventDefault();
@@ -59,6 +76,21 @@ const ProfileCard = ({ userData }) => {
     }
   };
 
+  const renderStudentDetails = () => {
+    if (!studentData) return null;
+
+    return (
+      <>
+        <p className="2xl:text-xl">
+          {studentData.collegeProgramme} (Year {studentData.year})
+        </p>
+        <p className="text-lg 2xl:text-2xl font-bold">
+          {studentData.collegeName}
+        </p>
+      </>
+    );
+  };
+
   return (
     <div
       className={`w-4/5 mx-auto px-12 py-8 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
@@ -66,11 +98,11 @@ const ProfileCard = ({ userData }) => {
           ? "h-56 2xl:h-64"
           : isUpdatePasswordClicked
           ? "h-72 2xl:h-80"
-          : "h-32 2xl:h-40"
+          : "h-48 2xl:h-56"
       }`}
     >
-      {/* TOP SECTION */}
-      <div className="flex justify-between">
+      <div className="flex justify-between items-start">
+        {/* TOP SECTION */}
         <div>
           <div className="flex gap-x-4 items-center">
             <h3 className="font-fira font-bold text-2xl 2xl:text-4xl">
@@ -86,6 +118,13 @@ const ProfileCard = ({ userData }) => {
             <p className="text-sm 2xl:text-base opacity-70">
               {userData.accountType}
             </p>
+          </div>
+
+          {/* BOTTOM SECTION */}
+          <div className="mt-4">
+            {userData.accountType === "instructor"
+              ? ""
+              : renderStudentDetails()}
           </div>
         </div>
 
