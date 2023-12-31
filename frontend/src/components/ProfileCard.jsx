@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { login as storeLogin } from "../store/authSlice";
+import { login as storeLogin, logout as storeLogout } from "../store/authSlice";
 import { Button, Input, ImageInput } from "./index";
 import accountService from "../services/accounts";
 import studentService from "../services/students";
+import instructorService from "../services/instructors";
 
 const ProfileCard = ({ userData }) => {
   const dispatch = useDispatch();
 
   const [studentData, setStudentData] = useState(null);
+  const [instructorData, setInstructorData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdateImageClicked, setIsUpdateImageClicked] = useState(false);
   const [isUpdatePasswordClicked, setIsUpdatePasswordClicked] = useState(false);
@@ -22,18 +25,27 @@ const ProfileCard = ({ userData }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (userData.accountType === "student") {
-        const response = await studentService.getCurrent();
-        console.log(response);
+      try {
+        if (userData.accountType === "student") {
+          const response = await studentService.getCurrent();
 
-        if (response.statusCode === 200) {
-          setStudentData(response.data);
+          if (response.statusCode === 200) {
+            setStudentData(response.data);
+          }
+        } else if (userData.accountType === "instructor") {
+          const response = await instructorService.getCurrent();
+
+          if (response.statusCode === 200) {
+            setInstructorData(response.data);
+          }
         }
+      } catch {
+        dispatch(storeLogout());
       }
     };
 
     fetchData();
-  }, [userData]);
+  }, [userData, dispatch]);
 
   const updatePassword = async (event) => {
     event.preventDefault();
@@ -91,19 +103,42 @@ const ProfileCard = ({ userData }) => {
     );
   };
 
+  const renderInstructorDetails = () => {
+    if (!instructorData) return null;
+
+    return (
+      <>
+        <p className="text-lg 2xl:text-2xl font-bold">Your Courses</p>
+        <div className="flex gap-x-4 mt-2 overflow-x-auto scrollbar-hide">
+          {instructorData.courses.map((course) => (
+            <Link key={course._id} to={`/courses/${course.courseSlug}`}>
+              <div className="w-40 h-20 2xl:w-48 2xl:h-28 flex justify-center items-center bg-opacity-60 bg-slate-700 hover:bg-slate-900 rounded-md">
+                <p className="text-center 2xl:text-xl font-bold">
+                  {course.courseName}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </>
+    );
+  };
+
   return (
     <div
       className={`w-4/5 mx-auto px-12 py-8 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
         isUpdateImageClicked
-          ? "h-56 2xl:h-64"
+          ? "h-64 2xl:h-72"
           : isUpdatePasswordClicked
-          ? "h-72 2xl:h-80"
+          ? "h-72 2xl:h-96"
+          : userData.accountType === "instructor"
+          ? "h-64 2xl:h-72"
           : "h-48 2xl:h-56"
       }`}
     >
       <div className="flex justify-between items-start">
         {/* TOP SECTION */}
-        <div>
+        <div className="w-1/2">
           <div className="flex gap-x-4 items-center">
             <h3 className="font-fira font-bold text-2xl 2xl:text-4xl">
               {userData.fullName}
@@ -122,14 +157,14 @@ const ProfileCard = ({ userData }) => {
 
           {/* BOTTOM SECTION */}
           <div className="mt-4">
-            {userData.accountType === "instructor"
-              ? ""
-              : renderStudentDetails()}
+            {userData.accountType === "student"
+              ? renderStudentDetails()
+              : renderInstructorDetails()}
           </div>
         </div>
 
         {/* UPDATE BUTTONS */}
-        <div className="flex gap-x-4 w-80 2xl:w-96">
+        <div className="flex justify-end gap-x-4 w-1/2">
           {/* UPDATE PASSWORD */}
           {isUpdatePasswordClicked ? (
             <form
