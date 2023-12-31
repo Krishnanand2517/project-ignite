@@ -20,9 +20,11 @@ app.use(cookieParser());
 import accountRouter from "./routes/account.routes.js";
 import courseRouter from "./routes/course.routes.js";
 import questionRouter from "./routes/question.routes.js";
+import studentRouter from "./routes/student.routes.js";
 
 app.use("/api/v1/accounts", accountRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/questions", questionRouter);
+app.use("/api/v1/students", studentRouter);
 
 export default app;
