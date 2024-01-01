@@ -1,18 +1,12 @@
 import mongoose from "mongoose";
 
-const authorSchema = new mongoose.Schema({
-  authorName: {
-    type: String,
-    required: true,
-  },
-  account: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Account",
-  },
-});
-
 const articleSchema = new mongoose.Schema({
   articleTitle: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  articleSlug: {
     type: String,
     required: true,
     trim: true,
@@ -21,11 +15,12 @@ const articleSchema = new mongoose.Schema({
     type: String, // Link
   },
   author: {
-    type: authorSchema,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Account",
     required: true,
   },
   content: {
-    type: String,
+    type: String, // Link
     required: true,
   },
   tags: [

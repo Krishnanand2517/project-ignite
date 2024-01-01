@@ -22,11 +22,13 @@ import courseRouter from "./routes/course.routes.js";
 import questionRouter from "./routes/question.routes.js";
 import studentRouter from "./routes/student.routes.js";
 import instructorRouter from "./routes/instructor.routes.js";
+import articleRouter from "./routes/article.routes.js";
 
 app.use("/api/v1/accounts", accountRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/questions", questionRouter);
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/instructors", instructorRouter);
+app.use("/api/v1/articles", articleRouter);
 
 export default app;

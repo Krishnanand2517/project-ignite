@@ -17,6 +17,7 @@
   "author": "Krishnanand Yadav",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.484.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
     "cloudinary-build-url": "^0.2.4",
