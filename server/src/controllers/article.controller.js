@@ -1,9 +1,21 @@
-import { Article } from "../models/article.model.js";
 import { Account } from "../models/account.model.js";
+import { Article } from "../models/article.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+const getAllArticles = asyncHandler(async (req, res) => {
+  const accounts = await Article.find({}).populate("author", {
+    fullName: 1,
+    username: 1,
+    avatarImage: 1,
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, accounts, "Accounts fetched successfully"));
+});
 
 const getArticle = asyncHandler(async (req, res) => {
   const articleSlug = req.params.slug;
@@ -62,4 +74,4 @@ const createArticle = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, article, "Article created successfully"));
 });
 
-export { getArticle, createArticle };
+export { getAllArticles, getArticle, createArticle };
