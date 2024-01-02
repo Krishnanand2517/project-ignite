@@ -9,6 +9,8 @@ const articleSchema = new mongoose.Schema({
   articleSlug: {
     type: String,
     required: true,
+    unique: true,
+    lowercase: true,
     trim: true,
   },
   coverImage: {
