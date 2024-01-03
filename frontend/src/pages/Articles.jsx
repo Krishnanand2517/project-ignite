@@ -9,9 +9,9 @@ const Articles = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const articlesData = await articleService.getAll();
+        const articlesResponse = await articleService.getAll();
 
-        const articleObjects = articlesData.data.map((article) =>
+        const articleObjects = articlesResponse.data.map((article) =>
           Object({
             title: article.articleTitle,
             slug: article.articleSlug,
