@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import courseService from "../services/courses";
-import { CourseCard } from "../components";
-import { Loader } from "../components";
+import { Loader, CourseCard } from "../components";
 
 const Courses = () => {
   const [loading, setLoading] = useState(true);
