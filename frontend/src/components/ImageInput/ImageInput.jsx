@@ -5,9 +5,13 @@ import { dataURItoBlob } from "./dataUriToBlob";
 
 const ImageInput = ({
   defaultSrc = "/user_placeholder.png",
-  label,
+  label = "",
   className = "",
+  size = "h-14 w-14 2xl:h-16 2xl:w-16",
+  padding = "p-0",
+  rounded = "rounded-full",
   setOutputImage,
+  isSquare = true,
   ...props
 }) => {
   const imageUploader = useRef(null);
@@ -53,11 +57,11 @@ const ImageInput = ({
         className="hidden"
       />
       <div
-        className="h-14 w-14 2xl:h-16 2xl:w-16 rounded-full border-2 border-solid border-white hover:border-orange-500 cursor-pointer"
+        className={`${size} ${padding} border-2 border-solid border-white hover:border-orange-500 cursor-pointer ${rounded}`}
         onClick={() => imageUploader.current.click()}
         {...props}
       >
-        <img src={image} className="w-full h-full rounded-full" />
+        <img src={image} className={`w-full h-full ${rounded}`} />
       </div>
       {label}
 
@@ -88,7 +92,7 @@ const ImageInput = ({
         >
           &times;
         </div>
-        <ImageCropper image={image} getImage={getImage} />
+        <ImageCropper image={image} getImage={getImage} isSquare={isSquare} />
       </ReactModal>
     </div>
   );

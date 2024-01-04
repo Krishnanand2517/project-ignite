@@ -3,7 +3,7 @@ import ReactCropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Button } from "../index";
 
-const ImageCropper = ({ image, getImage }) => {
+const ImageCropper = ({ image, getImage, isSquare = true }) => {
   const cropperRef = createRef();
 
   const getCropData = () => {
@@ -25,7 +25,7 @@ const ImageCropper = ({ image, getImage }) => {
           zoomTo={0.1}
           preview=".img-preview"
           src={image}
-          aspectRatio={1}
+          aspectRatio={isSquare && 1}
           viewMode={1}
           minCropBoxHeight={10}
           minCropBoxWidth={10}

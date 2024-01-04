@@ -15,6 +15,7 @@ import Courses from "./pages/Courses.jsx";
 import Projects from "./pages/Projects.jsx";
 import Questions from "./pages/Questions.jsx";
 import Article from "./pages/Article.jsx";
+import ArticleAdd from "./pages/ArticleAdd.jsx";
 import ProjectCategory from "./pages/ProjectCategory.jsx";
 import QuestionAdd from "./pages/QuestionAdd.jsx";
 import QuestionEdit from "./pages/QuestionEdit.jsx";
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/articles/:slug",
         element: <Article />,
+      },
+      {
+        path: "/add-article",
+        element: <ArticleAdd />,
       },
       {
         path: "/courses",

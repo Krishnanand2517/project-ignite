@@ -23,7 +23,7 @@ const Contribution = () => {
         <Button
           textSize="text-xl 2xl:text-4xl"
           className="font-bold"
-          // onClick={() => navigate("/login")}
+          onClick={() => navigate("/add-article")}
         >
           Contribute Article
         </Button>

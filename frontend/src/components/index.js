@@ -21,12 +21,14 @@ import LoginForm from "./Auth/LoginForm";
 import RegisterForm from "./Auth/RegisterForm";
 import QuestionAddForm from "./QuestionAddForm";
 import QuestionEditForm from "./QuestionEditForm";
+import ArticleAddForm from "./ArticleAddForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
 import ProjectCard from "./ProjectCard";
 import CourseCard from "./CourseCard";
 import ArticleViewer from "./ArticleViewer";
+import ArticleEditor from "./ArticleEditor";
 import Likes from "./Likes";
 import Footer from "./Footer/Footer";
 
@@ -54,12 +56,14 @@ export {
   RegisterForm,
   QuestionAddForm,
   QuestionEditForm,
+  ArticleAddForm,
   ArticleCard,
   QuestionCard,
   ProjectCategoryCard,
   ProjectCard,
   CourseCard,
   ArticleViewer,
+  ArticleEditor,
   Likes,
   Footer,
 };

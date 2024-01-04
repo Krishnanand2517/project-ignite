@@ -23,6 +23,20 @@ export const companiesListInitial = [
   "Google",
 ];
 
+export const articleTagsList = [
+  "react",
+  "frontend",
+  "nodejs",
+  "javascript",
+  "web development",
+  "business",
+  "game development",
+  "computer science",
+  "app development",
+  "professional",
+  "jobs",
+];
+
 export const navItems = [
   {
     name: "Home",
