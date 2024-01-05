@@ -3,7 +3,10 @@ import { Article } from "../models/article.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} from "../utils/cloudinary.js";
 
 const getAllArticles = asyncHandler(async (req, res) => {
   const accounts = await Article.find({}).populate("author", {
@@ -74,4 +77,27 @@ const createArticle = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, article, "Article created successfully"));
 });
 
-export { getAllArticles, getArticle, createArticle };
+const deleteArticle = asyncHandler(async (req, res) => {
+  const account = await Account.findById(req.account?._id);
+  const articleSlug = req.params.slug;
+  const article = await Article.findOne({ articleSlug });
+  const oldCoverImage = article.coverImage;
+
+  if (article.author.toString() !== account._id.toString()) {
+    throw new ApiError(403, "This account cannot delete this article");
+  }
+
+  await article.deleteOne();
+
+  const isOldImageDeleted = await deleteFromCloudinary(oldCoverImage);
+
+  if (!isOldImageDeleted) {
+    throw new ApiError(500, "Could not delete the old image");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Article deleted successfully!"));
+});
+
+export { getAllArticles, getArticle, createArticle, deleteArticle };

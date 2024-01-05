@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createArticle,
+  deleteArticle,
   getAllArticles,
   getArticle,
 } from "../controllers/article.controller.js";
@@ -21,5 +22,7 @@ router.route("/create").post(
   ]),
   createArticle
 );
+
+router.route("/delete/:slug").delete(verifyJWT, deleteArticle);
 
 export default router;
