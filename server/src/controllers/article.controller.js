@@ -82,6 +82,7 @@ const deleteArticle = asyncHandler(async (req, res) => {
   const articleSlug = req.params.slug;
   const article = await Article.findOne({ articleSlug });
   const oldCoverImage = article.coverImage;
+  const oldContentFile = article.content;
 
   if (article.author.toString() !== account._id.toString()) {
     throw new ApiError(403, "This account cannot delete this article");
@@ -90,9 +91,17 @@ const deleteArticle = asyncHandler(async (req, res) => {
   await article.deleteOne();
 
   const isOldImageDeleted = await deleteFromCloudinary(oldCoverImage);
+  const isOldContentFileDeleted = await deleteFromCloudinary(
+    oldContentFile,
+    true
+  );
 
   if (!isOldImageDeleted) {
     throw new ApiError(500, "Could not delete the old image");
+  }
+
+  if (!isOldContentFileDeleted) {
+    throw new ApiError(500, "Could not delete the old content file");
   }
 
   return res

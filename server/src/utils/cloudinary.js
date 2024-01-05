@@ -26,14 +26,18 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-const deleteFromCloudinary = async (remoteFileUrl) => {
+const deleteFromCloudinary = async (remoteFileUrl, isMdFile = false) => {
   try {
     if (!remoteFileUrl) return false;
 
     const remoteFilePublicId = extractPublicId(remoteFileUrl);
+    console.log(
+      isMdFile ? remoteFilePublicId.toString() + ".md" : remoteFilePublicId
+    );
 
     const response = await cloudinary.uploader.destroy(
-      remoteFilePublicId,
+      isMdFile ? remoteFilePublicId.toString() + ".md" : remoteFilePublicId,
+      { resource_type: isMdFile ? "raw" : "image" },
       (err, result) => {
         console.log(result, err);
       }
