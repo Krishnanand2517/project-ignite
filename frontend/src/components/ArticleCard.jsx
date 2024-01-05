@@ -34,7 +34,7 @@ const ArticleCard = ({
   };
 
   return (
-    <div className="relative p-6 flex gap-x-4 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
+    <div className="relative w-full h-36 2xl:h-40 p-6 flex gap-x-4 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
       {renderDeleteOption()}
 
       <div className="w-40 2xl:w-48 flex justify-center items-center rounded-md">

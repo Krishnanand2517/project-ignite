@@ -44,7 +44,7 @@ const Article = () => {
           className="rounded-lg"
         />
       </div>
-      <h1 className="mb-16 text-6xl 2xl:text-8xl font-fira font-bold text-primary">
+      <h1 className="mt-32 mb-12 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         {articleObject.articleTitle}
       </h1>
       <div className="w-full 2xl:text-xl">
