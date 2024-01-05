@@ -24,9 +24,11 @@ const ArticleAddForm = () => {
   const [mdContent, setMdContent] = useState("### Write your article here...");
   const [contentFile, setContentFile] = useState(null);
 
-  const makeArticleFile = (contents) => {
-    const dataBlob = new Blob([contents], { type: "text/plain" });
-    const file = new File([dataBlob], "output.md", { type: "text/markdown" });
+  const makeArticleFile = async (contents) => {
+    const dataBlob = await new Blob([contents], { type: "text/plain" });
+    const file = await new File([dataBlob], "output.md", {
+      type: "text/markdown",
+    });
     setContentFile(file);
   };
 
@@ -40,10 +42,13 @@ const ArticleAddForm = () => {
     articleFormData.append("articleSlug", articleSlug);
     articleFormData.append("coverImage", coverImage);
     articleFormData.append("content", contentFile);
-    articleFormData.append(
-      "tags",
-      articleTags.map((tag) => tag.value)
-    );
+    // articleFormData.append(
+    //   "tags",
+    //   articleTags.map((tag) => tag.value)
+    // );
+    articleTags.forEach((tag) => {
+      articleFormData.append("tags", tag.value);
+    });
 
     setIsLoading(true);
 

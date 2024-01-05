@@ -26,4 +26,9 @@ const createOne = async (formData) => {
   return response.data;
 };
 
-export default { getAll, getOne, getContent, createOne };
+const deleteOne = async (slug) => {
+  const response = await axios.delete(`${baseUrl}/delete/${slug}`);
+  return response.data;
+};
+
+export default { getAll, getOne, getContent, createOne, deleteOne };

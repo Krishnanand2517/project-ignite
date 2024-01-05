@@ -31,6 +31,18 @@ const Articles = () => {
     fetchData();
   }, []);
 
+  const deleteArticle = async (slug) => {
+    try {
+      const response = await articleService.deleteOne(slug);
+
+      if (response.statusCode === 200) {
+        setArticles(articles.filter((article) => article.slug !== slug));
+      }
+    } catch (error) {
+      console.log("Error deleting the article:", error);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
@@ -57,7 +69,9 @@ const Articles = () => {
               slug={article.slug}
               imgPath={article.imgPath}
               authorName={article.addedBy.fullName}
+              authorId={article.addedBy._id}
               tags={article.tags}
+              deleteArticle={deleteArticle}
             />
           </li>
         ))}
