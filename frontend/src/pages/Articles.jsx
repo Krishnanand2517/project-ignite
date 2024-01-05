@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import articleService from "../services/articles";
-import { Loader, ArticleCard } from "../components";
+import { Loader, ArticleCard, Button } from "../components";
 
 const Articles = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [articles, setArticles] = useState([]);
 
@@ -76,6 +80,16 @@ const Articles = () => {
           </li>
         ))}
       </ul>
+
+      <div className="py-4 mt-10">
+        <Button
+          textSize="text-lg 2xl:text-2xl"
+          className="font-bold"
+          onClick={() => navigate("/add-article")}
+        >
+          Contribute Article
+        </Button>
+      </div>
     </div>
   );
 };

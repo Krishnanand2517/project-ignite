@@ -30,7 +30,7 @@ const ArticleViewer = ({ link }) => {
     <div>
       <MDEditor.Markdown
         source={mdContent}
-        className="whitespace-pre-wrap bg-transparent font-inconsolata 2xl:text-xl"
+        className="whitespace-pre-wrap bg-transparent font-inconsolata 2xl:text-xl text-primary"
       />
     </div>
   );
