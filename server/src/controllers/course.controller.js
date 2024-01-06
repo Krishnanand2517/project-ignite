@@ -64,7 +64,7 @@ const createCourse = asyncHandler(async (req, res) => {
   const courseImage = await uploadOnCloudinary(courseImageLocalPath);
 
   if (!courseImage) {
-    throw new ApiError(400, "Course Image file upload failed");
+    throw new ApiError(500, "Course Image file upload failed");
   }
 
   // create course object for DB
@@ -206,6 +206,51 @@ const deleteCourse = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Course deleted successfully!"));
 });
 
+const addContent = asyncHandler(async (req, res) => {
+  const { contentTitle, contentType } = req.body;
+
+  if ([contentTitle, contentType].some((field) => field.trim() === "")) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const contentFileLocalPath = req.file?.path;
+
+  if (!contentFileLocalPath) {
+    throw new ApiError(400, "Content file is missing");
+  }
+
+  const contentFile = await uploadOnCloudinary(contentFileLocalPath);
+
+  if (!contentFile) {
+    throw new ApiError(500, "Content file upload failed");
+  }
+
+  const instructor = await Instructor.findOne({ account: req.account?._id });
+  const course = await Course.findOne({ courseSlug: req.params.slug });
+
+  if (course.instructor.toString() !== instructor._id.toString()) {
+    throw new ApiError(403, "This instructor cannot modify this course");
+  }
+
+  const content = await Content.create({
+    contentTitle,
+    contentType,
+    contentUrl: contentFile.url,
+    course: course._id,
+  });
+
+  if (!content) {
+    throw new ApiError(500, "Something went wrong while creating the content");
+  }
+
+  course.contents = course.contents.concat(content._id);
+  await course.save({ validateBeforeSave: false });
+
+  return res
+    .status(201)
+    .json(new ApiResponse(201, content, "Content added successfully"));
+});
+
 export {
   getAllCourses,
   getCourse,
@@ -213,4 +258,5 @@ export {
   updateCourseDetails,
   updateCourseImage,
   deleteCourse,
+  addContent,
 };
