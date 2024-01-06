@@ -44,9 +44,17 @@ const Article = () => {
           className="rounded-lg"
         />
       </div>
-      <h1 className="mt-32 mb-12 text-4xl 2xl:text-6xl font-bold text-primary">
+      <h1 className="mt-32 mb-4 text-5xl 2xl:text-7xl text-center font-bold text-primary">
         {articleObject.articleTitle}
       </h1>
+      <h2 className="mb-16 text-2xl 2xl:text-4xl text-center font-semibold text-primary">
+        by {articleObject.author.fullName}
+        <img
+          src={articleObject.author.avatarImage}
+          alt="Profile Picture"
+          className="w-16 2xl:w-20 inline ml-10 rounded-full border-2 border-white hover:border-orange-400"
+        />
+      </h2>
       <div className="w-full 2xl:text-xl">
         <ArticleViewer link={articleObject.content} />
       </div>
