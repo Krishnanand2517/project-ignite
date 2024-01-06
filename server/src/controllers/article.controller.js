@@ -78,13 +78,12 @@ const createArticle = asyncHandler(async (req, res) => {
 });
 
 const deleteArticle = asyncHandler(async (req, res) => {
-  const account = await Account.findById(req.account?._id);
   const articleSlug = req.params.slug;
   const article = await Article.findOne({ articleSlug });
   const oldCoverImage = article.coverImage;
   const oldContentFile = article.content;
 
-  if (article.author.toString() !== account._id.toString()) {
+  if (article.author.toString() !== req.account?._id.toString()) {
     throw new ApiError(403, "This account cannot delete this article");
   }
 
@@ -109,4 +108,60 @@ const deleteArticle = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Article deleted successfully!"));
 });
 
-export { getAllArticles, getArticle, createArticle, deleteArticle };
+const updateArticle = asyncHandler(async (req, res) => {
+  const { articleTitle, tags } = req.body;
+  console.log("articleTitle:", articleTitle);
+
+  if (!articleTitle) {
+    throw new ApiError(400, "Article Title is required");
+  }
+
+  const contentLocalPath = req.file?.path;
+
+  if (!contentLocalPath) {
+    throw new ApiError(400, "Content file is missing");
+  }
+
+  const content = await uploadOnCloudinary(contentLocalPath);
+
+  if (!content) {
+    throw new ApiError(500, "Content file upload failed");
+  }
+
+  const article = await Article.findOne({ articleSlug: req.params.slug });
+
+  if (article.author.toString() !== req.account?._id.toString()) {
+    throw new ApiError(403, "This account cannot update this article");
+  }
+
+  const oldContentFile = article.content;
+
+  await article.updateOne({
+    $set: {
+      articleTitle,
+      content: content.url,
+      tags,
+    },
+  });
+
+  const isOldContentFileDeleted = await deleteFromCloudinary(
+    oldContentFile,
+    true
+  );
+
+  if (!isOldContentFileDeleted) {
+    throw new ApiError(500, "Could not delete the old content file");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Article updated successfully!"));
+});
+
+export {
+  getAllArticles,
+  getArticle,
+  createArticle,
+  deleteArticle,
+  updateArticle,
+};

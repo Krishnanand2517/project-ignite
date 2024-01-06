@@ -4,6 +4,7 @@ import {
   deleteArticle,
   getAllArticles,
   getArticle,
+  updateArticle,
 } from "../controllers/article.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -24,5 +25,8 @@ router.route("/create").post(
 );
 
 router.route("/delete/:slug").delete(verifyJWT, deleteArticle);
+router
+  .route("/update/:slug")
+  .post(verifyJWT, upload.single("content"), updateArticle);
 
 export default router;
