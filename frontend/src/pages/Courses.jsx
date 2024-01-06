@@ -14,7 +14,7 @@ const Courses = () => {
         const courseObjects = coursesData.map((course) =>
           Object({
             title: course.courseName,
-            slug: course._id, // TO BE CHANGED IN DATABASE AND BACKEND
+            slug: course.courseSlug,
             duration: course.duration,
             difficulty:
               course.difficulty[0].toUpperCase() + course.difficulty.slice(1),

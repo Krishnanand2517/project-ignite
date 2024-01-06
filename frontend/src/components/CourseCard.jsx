@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 
 const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
   return (
-    <div className="w-72 2xl:w-96 h-96 flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
+    <div className="w-72 2xl:w-96 h-96 2xl:h-[28rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
       <Link
         to={`/courses/${slug}`}
         className="flex justify-center items-center"
       >
-        <div className="h-36 flex justify-center items-center">
-          <img src={imgPath} alt={title} className="h-36 w-72 rounded-md" />
+        <div className="h-36 2xl:h-44 flex justify-center items-center">
+          <img
+            src={imgPath}
+            alt={title}
+            className="h-36 2xl:h-44 w-72 2xl:w-96 rounded-md"
+          />
         </div>
       </Link>
       <hr />
