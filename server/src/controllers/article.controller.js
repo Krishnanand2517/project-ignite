@@ -92,7 +92,8 @@ const deleteArticle = asyncHandler(async (req, res) => {
   const isOldImageDeleted = await deleteFromCloudinary(oldCoverImage);
   const isOldContentFileDeleted = await deleteFromCloudinary(
     oldContentFile,
-    true
+    true,
+    "raw"
   );
 
   if (!isOldImageDeleted) {
@@ -146,7 +147,8 @@ const updateArticle = asyncHandler(async (req, res) => {
 
   const isOldContentFileDeleted = await deleteFromCloudinary(
     oldContentFile,
-    true
+    true,
+    "raw"
   );
 
   if (!isOldContentFileDeleted) {

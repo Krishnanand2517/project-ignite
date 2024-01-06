@@ -207,6 +207,13 @@ const deleteCourse = asyncHandler(async (req, res) => {
 });
 
 const addContent = asyncHandler(async (req, res) => {
+  if (req.account?.accountType !== "instructor") {
+    throw new ApiError(
+      403,
+      "Permission denied. Only instructors can add content to a course"
+    );
+  }
+
   const { contentTitle, contentType } = req.body;
 
   if ([contentTitle, contentType].some((field) => field.trim() === "")) {
