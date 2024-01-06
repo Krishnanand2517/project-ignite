@@ -17,6 +17,20 @@ const getAllContents = asyncHandler(async (_req, res) => {
     .json(new ApiResponse(200, contents, "Contents fetched successfully"));
 });
 
+const getAllContentsFromCourse = asyncHandler(async (req, res) => {
+  const contents = await Content.find({ course: req.params.courseId }).populate(
+    "course",
+    {
+      courseName: 1,
+      courseSlug: 1,
+    }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, contents, "Contents fetched successfully"));
+});
+
 const getContent = asyncHandler(async (req, res) => {
   const content = await Content.findById(req.params.id).populate("course", {
     courseName: 1,
@@ -93,4 +107,10 @@ const deleteContent = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Content deleted successfully!"));
 });
 
-export { getAllContents, getContent, editContentTitle, deleteContent };
+export {
+  getAllContents,
+  getAllContentsFromCourse,
+  getContent,
+  editContentTitle,
+  deleteContent,
+};
