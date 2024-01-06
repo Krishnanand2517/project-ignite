@@ -27,3 +27,18 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.md-viewer p {
+    margin-bottom: 10px;
+}
+
+.md-viewer ul, ol {
+    list-style-type: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.md-viewer h1, h2, h3, h4, h5, h6 {
+    border-bottom-color: white !important;
+}
