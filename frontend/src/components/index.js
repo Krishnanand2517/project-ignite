@@ -28,6 +28,7 @@ import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
 import ProjectCard from "./ProjectCard";
 import CourseCard from "./CourseCard";
+import ContentCard from "./ContentCard";
 import ArticleViewer from "./ArticleViewer";
 import ArticleEditor from "./ArticleEditor";
 import Likes from "./Likes";
@@ -64,6 +65,7 @@ export {
   ProjectCategoryCard,
   ProjectCard,
   CourseCard,
+  ContentCard,
   ArticleViewer,
   ArticleEditor,
   Likes,

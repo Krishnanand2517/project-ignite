@@ -12,4 +12,9 @@ const getAllFromCourse = async (id) => {
   return response.data;
 };
 
-export default { getAll, getAllFromCourse };
+const getOne = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
+export default { getAll, getAllFromCourse, getOne };
