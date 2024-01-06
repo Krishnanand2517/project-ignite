@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "./index";
 
@@ -12,12 +12,23 @@ const ArticleCard = ({
   tags,
   deleteArticle,
 }) => {
+  const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.userData?._id);
 
-  const renderDeleteOption = () => {
+  const renderEditOptions = () => {
     if (userId === authorId) {
       return (
         <div className="absolute top-0 right-0 m-2 z-50">
+          <Button
+            bgColor="bg-blue-500"
+            hoverBgColor="hover:bg-black"
+            textColor="text-white"
+            textSize="text-xs"
+            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+            onClick={() => navigate(`/edit-article/${slug}`)}
+          >
+            Edit
+          </Button>
           <Button
             bgColor="bg-red-500"
             hoverBgColor="hover:bg-black"
@@ -35,7 +46,7 @@ const ArticleCard = ({
 
   return (
     <div className="relative w-full h-36 2xl:h-40 p-6 flex gap-x-4 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
-      {renderDeleteOption()}
+      {renderEditOptions()}
 
       <div className="w-40 2xl:w-48 flex justify-center items-center rounded-md">
         <img src={imgPath} alt={title} className="w-full rounded-md" />

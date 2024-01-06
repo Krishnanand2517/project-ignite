@@ -22,6 +22,7 @@ import RegisterForm from "./Auth/RegisterForm";
 import QuestionAddForm from "./QuestionAddForm";
 import QuestionEditForm from "./QuestionEditForm";
 import ArticleAddForm from "./ArticleAddForm";
+import ArticleEditForm from "./ArticleEditForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
@@ -57,6 +58,7 @@ export {
   QuestionAddForm,
   QuestionEditForm,
   ArticleAddForm,
+  ArticleEditForm,
   ArticleCard,
   QuestionCard,
   ProjectCategoryCard,
