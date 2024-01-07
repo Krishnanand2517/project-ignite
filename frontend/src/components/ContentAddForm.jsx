@@ -11,7 +11,7 @@ const ContentAddForm = ({ slug }) => {
 
   const [contentTitle, setContentTitle] = useState("");
   const [contentType, setContentType] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState(null);
   const [mdContent, setMdContent] = useState("### Write your article here...");
 
   const makeArticleFile = (contents) => {
@@ -68,8 +68,7 @@ const ContentAddForm = ({ slug }) => {
             <Input
               type="file"
               className="text-primary px-0"
-              value={videoUrl}
-              onChange={({ target }) => setVideoUrl(target.value)}
+              onChange={({ target }) => setVideoUrl(target.files[0])}
               accept="video/mp4, video/mkv"
             />
           </>
