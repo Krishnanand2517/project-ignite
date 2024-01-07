@@ -1,19 +1,37 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import articleService from "../services/articles";
 import { ArticleViewer, Loader, Likes } from "../components";
 
 const Article = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userId = useSelector((state) => state.auth.userData?._id);
 
   const [isLoading, setIsLoading] = useState(true);
   const [articleObject, setArticleObject] = useState(null);
+
+  const [likesCount, setLikesCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const articleResponse = await articleService.getOne(slug);
         setArticleObject(articleResponse.data);
+        setLikesCount(articleResponse.data.likedBy?.length);
+
+        if (
+          articleResponse.data.likedBy?.find(
+            (account) => account._id.toString() === userId
+          )
+        ) {
+          setIsLiked(true);
+        }
+
         setIsLoading(false);
       } catch (error) {
         console.log("Error fetching article data:", error);
@@ -21,7 +39,18 @@ const Article = () => {
     };
 
     fetchData();
-  }, [slug]);
+  }, [slug, userId]);
+
+  const handleLike = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+
+    setLikesCount((prev) => prev + 1);
+    setIsLiked(true);
+
+    await articleService.likeOne(slug);
+  };
 
   if (isLoading) {
     return (
@@ -58,7 +87,12 @@ const Article = () => {
       <div className="w-full 2xl:text-xl">
         <ArticleViewer link={articleObject.content} />
       </div>
-      <Likes likesCount={23} className="mt-12" />
+      <Likes
+        likesCount={likesCount}
+        handleLike={handleLike}
+        isLiked={isLiked}
+        className="mt-12"
+      />
     </div>
   );
 };

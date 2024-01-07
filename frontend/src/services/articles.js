@@ -40,4 +40,17 @@ const updateOne = async (slug, formData) => {
   return response.data;
 };
 
-export default { getAll, getOne, getContent, createOne, deleteOne, updateOne };
+const likeOne = async (slug) => {
+  const response = await axios.post(`${baseUrl}/like/${slug}`);
+  return response.data;
+};
+
+export default {
+  getAll,
+  getOne,
+  getContent,
+  createOne,
+  deleteOne,
+  updateOne,
+  likeOne,
+};

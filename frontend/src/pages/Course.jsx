@@ -10,6 +10,7 @@ const Course = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [courseTitle, setCourseTitle] = useState("");
+  const [courseImage, setCourseImage] = useState("");
   const [courseContents, setCourseContents] = useState([]);
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const Course = () => {
       try {
         const courseResponse = await courseService.getOne(slug);
         setCourseTitle(courseResponse.courseName);
+        setCourseImage(courseResponse.courseImage);
 
         const contentResponse = await contentService.getAllFromCourse(
           courseResponse._id
@@ -45,6 +47,12 @@ const Course = () => {
 
   return (
     <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <img
+        src={courseImage}
+        alt={courseTitle}
+        className="my-4 mx-auto max-w-xs lg:max-w-lg 2xl:max-w-2xl rounded-md"
+      />
+
       <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         {courseTitle}
       </h1>
