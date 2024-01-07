@@ -54,7 +54,6 @@ const Content = () => {
         {contentObject.contentTitle}
       </h1>
 
-      {/* TODO: RenderVideoContent */}
       {contentObject.contentType === "article"
         ? renderArticleContent()
         : renderVideoContent()}

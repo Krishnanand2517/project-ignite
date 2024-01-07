@@ -24,6 +24,7 @@ import Course from "./pages/Course.jsx";
 import Content from "./pages/Content.jsx";
 import CourseAdd from "./pages/CourseAdd.jsx";
 import CourseEdit from "./pages/CourseEdit.jsx";
+import ContentAdd from "./pages/ContentAdd.jsx";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "/contents/:id",
         element: <Content />,
+      },
+      {
+        path: "/add-content/:slug",
+        element: <ContentAdd />,
       },
       {
         path: "/projects",

@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { Loader, ContentCard } from "../components";
+import { Loader, ContentCard, Button } from "../components";
 import courseService from "../services/courses";
 import contentService from "../services/contents";
+import instructorService from "../services/instructors";
 
 const Course = () => {
   const { slug } = useParams();
+  const accountType = useSelector((state) => state.auth.userData?.accountType);
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [courseTitle, setCourseTitle] = useState("");
   const [courseImage, setCourseImage] = useState("");
   const [courseContents, setCourseContents] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const courseResponse = await courseService.getOne(slug);
+        const instructorData =
+          accountType === "instructor"
+            ? await instructorService.getCurrent()
+            : null;
+
         setCourseTitle(courseResponse.courseName);
         setCourseImage(courseResponse.courseImage);
 
@@ -24,6 +34,14 @@ const Course = () => {
           courseResponse._id
         );
         setCourseContents(contentResponse.data);
+
+        if (
+          courseResponse.instructor._id.toString() ===
+          instructorData?.data._id.toString()
+        ) {
+          setIsOwner(true);
+        }
+
         setIsLoading(false);
       } catch (error) {
         console.log("Error fetching contents:", error);
@@ -31,7 +49,7 @@ const Course = () => {
     };
 
     fetchData();
-  }, [slug]);
+  }, [slug, accountType]);
 
   if (isLoading) {
     return (
@@ -50,7 +68,7 @@ const Course = () => {
       <img
         src={courseImage}
         alt={courseTitle}
-        className="my-4 mx-auto max-w-xs lg:max-w-lg 2xl:max-w-2xl rounded-md"
+        className="my-4 mx-auto max-w-xs max-h-80 lg:max-w-lg 2xl:max-w-2xl rounded-md"
       />
 
       <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
@@ -68,6 +86,18 @@ const Course = () => {
           </li>
         ))}
       </ul>
+
+      {isOwner && (
+        <div className="mt-12">
+          <Button
+            textSize="text-sm 2xl:text-lg"
+            className="font-bold"
+            onClick={() => navigate(`/add-content/${slug}`)}
+          >
+            Add Content
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

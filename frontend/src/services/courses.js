@@ -35,4 +35,17 @@ const deleteOne = async (slug) => {
   return response.data;
 };
 
-export default { getAll, getOne, createOne, updateOne, deleteOne };
+const addContent = async (slug, formData) => {
+  const response = await axios.post(
+    `${baseUrl}/add-content/${slug}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return response.data;
+};
+
+export default { getAll, getOne, createOne, updateOne, deleteOne, addContent };
