@@ -31,6 +31,7 @@ import CourseCard from "./CourseCard";
 import ContentCard from "./ContentCard";
 import ArticleViewer from "./ArticleViewer";
 import ArticleEditor from "./ArticleEditor";
+import VideoPlayer from "./VideoPlayer";
 import Likes from "./Likes";
 import Footer from "./Footer/Footer";
 
@@ -68,6 +69,7 @@ export {
   ContentCard,
   ArticleViewer,
   ArticleEditor,
+  VideoPlayer,
   Likes,
   Footer,
 };

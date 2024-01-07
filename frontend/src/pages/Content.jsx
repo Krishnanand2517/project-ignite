@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { ArticleViewer, Loader } from "../components";
+import { ArticleViewer, Loader, VideoPlayer } from "../components";
 import contentService from "../services/contents";
 
 const Content = () => {
@@ -32,6 +32,10 @@ const Content = () => {
     );
   };
 
+  const renderVideoContent = () => {
+    return <VideoPlayer contentObject={contentObject} />;
+  };
+
   if (isLoading) {
     return (
       <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
@@ -46,12 +50,14 @@ const Content = () => {
 
   return (
     <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <h1 className="my-16 text-4xl 2xl:text-6xl text-center font-bold text-primary">
+      <h1 className="mt-8 mb-16 text-4xl 2xl:text-6xl text-center font-bold text-primary">
         {contentObject.contentTitle}
       </h1>
 
       {/* TODO: RenderVideoContent */}
-      {contentObject.contentType === "article" ? renderArticleContent() : ""}
+      {contentObject.contentType === "article"
+        ? renderArticleContent()
+        : renderVideoContent()}
     </div>
   );
 };
