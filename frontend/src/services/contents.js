@@ -17,4 +17,9 @@ const getOne = async (id) => {
   return response.data;
 };
 
-export default { getAll, getAllFromCourse, getOne };
+const deleteOne = async (id) => {
+  const response = await axios.delete(`${baseUrl}/delete-content/${id}`);
+  return response.data;
+};
+
+export default { getAll, getAllFromCourse, getOne, deleteOne };

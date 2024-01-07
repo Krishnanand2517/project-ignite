@@ -51,6 +51,15 @@ const Course = () => {
     fetchData();
   }, [slug, accountType]);
 
+  const deleteContent = async (id) => {
+    try {
+      setCourseContents(courseContents.filter((content) => content._id !== id));
+      await contentService.deleteOne(id);
+    } catch (error) {
+      console.log("Error deleting the content:", error);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
@@ -82,7 +91,11 @@ const Course = () => {
       <ul className="flex flex-col gap-y-8 text-primary">
         {courseContents.map((content) => (
           <li key={content._id}>
-            <ContentCard content={content} />
+            <ContentCard
+              content={content}
+              deleteContent={deleteContent}
+              isOwner={isOwner}
+            />
           </li>
         ))}
       </ul>
