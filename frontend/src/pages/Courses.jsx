@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import courseService from "../services/courses";
+import instructorService from "../services/instructors";
 import { Button, Loader, CourseCard } from "../components";
 
 const Courses = () => {
@@ -16,6 +17,10 @@ const Courses = () => {
     const fetchData = async () => {
       try {
         const coursesData = await courseService.getAll();
+        const instructorData =
+          accountType === "instructor"
+            ? await instructorService.getCurrent()
+            : null;
 
         const courseObjects = coursesData.map((course) =>
           Object({
@@ -25,6 +30,9 @@ const Courses = () => {
             difficulty:
               course.difficulty[0].toUpperCase() + course.difficulty.slice(1),
             imgPath: course.courseImage,
+            editable:
+              course.instructor._id.toString() ===
+              instructorData?.data._id.toString(),
           })
         );
 
@@ -36,7 +44,7 @@ const Courses = () => {
     };
 
     fetchData();
-  }, []);
+  }, [accountType]);
 
   if (loading) {
     return (

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import courseService from "../services/courses";
-import { Input, ImageInput, Button, SelectInput } from "./index";
+import { Input, Button, SelectInput } from "./index";
 
-const CourseAddForm = () => {
+const CourseEditForm = ({ slug }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -14,29 +14,46 @@ const CourseAddForm = () => {
   const [courseDuration, setCourseDuration] = useState(1);
   const [courseCategory, setCourseCategory] = useState("");
   const [courseDifficulty, setCourseDifficulty] = useState("");
-  const [courseImage, setCourseImage] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const courseData = await courseService.getOne(slug);
+
+        setCourseName(courseData.courseName);
+        setCourseSlug(courseData.courseSlug);
+        setCourseDuration(courseData.duration.split(" ")[0]);
+        setCourseCategory(courseData.category);
+        setCourseDifficulty(courseData.difficulty);
+      } catch (error) {
+        console.log("Error fetching course data:", error);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const courseFormData = new FormData();
-    courseFormData.append("courseName", courseName);
-    courseFormData.append("courseSlug", courseSlug);
-    courseFormData.append("duration", Number(courseDuration) + " months");
-    courseFormData.append("category", courseCategory);
-    courseFormData.append("difficulty", courseDifficulty);
-    courseFormData.append("courseImage", courseImage);
+    const newCourseObject = {
+      courseName,
+      courseSlug,
+      duration: courseDuration.toString() + " months",
+      category: courseCategory,
+      difficulty: courseDifficulty,
+    };
 
     setIsLoading(true);
 
     try {
-      const response = await courseService.createOne(courseFormData);
+      const response = await courseService.updateOne(slug, newCourseObject);
 
-      if (response.statusCode === 201) {
+      if (response.statusCode === 200) {
         navigate("/courses");
       }
     } catch (error) {
-      console.log("Error while creating course:", error);
+      console.log("Error while updating course:", error);
       setIsLoading(false);
     }
   };
@@ -47,21 +64,9 @@ const CourseAddForm = () => {
       className="pt-4 px-24 pb-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
     >
       <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
-        Add Course
+        Edit Course
       </h2>
 
-      <div>
-        <ImageInput
-          label="Course Image"
-          defaultSrc="/article_placeholder.png"
-          className="text-primary my-8"
-          size="w-3/5"
-          padding="p-2"
-          rounded="rounded-md"
-          setOutputImage={setCourseImage}
-          isSquare={false}
-        />
-      </div>
       <div>
         <Input
           label="Course Name"
@@ -134,10 +139,10 @@ const CourseAddForm = () => {
           ].some((field) => field?.toString().trim() === "")
         }
       >
-        {isLoading ? "Creating..." : "Create Course"}
+        {isLoading ? "Updating..." : "Update Course"}
       </Button>
     </form>
   );
 };
 
-export default CourseAddForm;
+export default CourseEditForm;

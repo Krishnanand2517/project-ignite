@@ -24,6 +24,7 @@ import QuestionEditForm from "./QuestionEditForm";
 import ArticleAddForm from "./ArticleAddForm";
 import ArticleEditForm from "./ArticleEditForm";
 import CourseAddForm from "./CourseAddForm";
+import CourseEditForm from "./CourseEditForm";
 import ArticleCard from "./ArticleCard";
 import QuestionCard from "./QuestionCard";
 import ProjectCategoryCard from "./ProjectCategoryCard";
@@ -63,6 +64,7 @@ export {
   ArticleAddForm,
   ArticleEditForm,
   CourseAddForm,
+  CourseEditForm,
   ArticleCard,
   QuestionCard,
   ProjectCategoryCard,

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { CourseAddForm } from "../components";
+import { CourseEditForm } from "../components";
 
-const CourseAdd = () => {
+const CourseEdit = () => {
   const navigate = useNavigate();
+  const { slug } = useParams();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -17,9 +18,9 @@ const CourseAdd = () => {
 
   return (
     <div className="w-full min-h-screen pt-36 pb-16 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <CourseAddForm />
+      <CourseEditForm slug={slug} />
     </div>
   );
 };
 
-export default CourseAdd;
+export default CourseEdit;

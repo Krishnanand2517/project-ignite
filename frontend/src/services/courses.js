@@ -21,4 +21,13 @@ const createOne = async (formData) => {
   return response.data;
 };
 
-export default { getAll, getOne, createOne };
+const updateOne = async (slug, obj) => {
+  const response = await axios.post(`${baseUrl}/update-details/${slug}`, obj, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
+export default { getAll, getOne, createOne, updateOne };

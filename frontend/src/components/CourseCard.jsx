@@ -1,9 +1,50 @@
-import { Button } from "./index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
+import { Button } from "./index";
+
+const CourseCard = ({
+  slug,
+  title,
+  imgPath,
+  duration,
+  difficulty,
+  editable,
+}) => {
+  const navigate = useNavigate();
+
+  const renderEditOptions = () => {
+    if (editable) {
+      return (
+        <div className="absolute top-0 right-0 m-2">
+          <Button
+            bgColor="bg-blue-500"
+            hoverBgColor="hover:bg-black"
+            textColor="text-white"
+            textSize="text-xs"
+            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+            onClick={() => navigate(`/edit-course/${slug}`)}
+          >
+            Edit
+          </Button>
+          <Button
+            bgColor="bg-red-500"
+            hoverBgColor="hover:bg-black"
+            textColor="text-white"
+            textSize="text-xs"
+            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100"
+            // onClick={() => deleteQuestion(id)}
+          >
+            Delete
+          </Button>
+        </div>
+      );
+    }
+  };
+
   return (
-    <div className="w-60 2xl:w-72 h-96 2xl:h-[28rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
+    <div className="relative w-60 2xl:w-72 h-96 2xl:h-[28rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
+      {renderEditOptions()}
+
       <Link
         to={`/courses/${slug}`}
         className="flex justify-center items-center"
