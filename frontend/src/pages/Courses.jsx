@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import courseService from "../services/courses";
-import { Loader, CourseCard } from "../components";
+import { Button, Loader, CourseCard } from "../components";
 
 const Courses = () => {
+  const navigate = useNavigate();
+  const accountType = useSelector((state) => state.auth.userData?.accountType);
+
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
 
@@ -57,6 +63,18 @@ const Courses = () => {
           </li>
         ))}
       </ul>
+
+      {accountType === "instructor" && (
+        <div className="mt-12">
+          <Button
+            textSize="text-sm 2xl:text-lg"
+            className="font-bold"
+            onClick={() => navigate("/add-course")}
+          >
+            Create Course
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

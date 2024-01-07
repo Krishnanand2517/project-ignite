@@ -22,6 +22,7 @@ import QuestionEdit from "./pages/QuestionEdit.jsx";
 import ArticleEdit from "./pages/ArticleEdit.jsx";
 import Course from "./pages/Course.jsx";
 import Content from "./pages/Content.jsx";
+import CourseAdd from "./pages/CourseAdd.jsx";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/courses/:slug",
         element: <Course />,
+      },
+      {
+        path: "/add-course",
+        element: <CourseAdd />,
       },
       {
         path: "/contents/:id",
