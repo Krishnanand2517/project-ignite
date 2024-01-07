@@ -30,4 +30,9 @@ const updateOne = async (slug, obj) => {
   return response.data;
 };
 
-export default { getAll, getOne, createOne, updateOne };
+const deleteOne = async (slug) => {
+  const response = await axios.delete(`${baseUrl}/delete/${slug}`);
+  return response.data;
+};
+
+export default { getAll, getOne, createOne, updateOne, deleteOne };

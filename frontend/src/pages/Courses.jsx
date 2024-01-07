@@ -46,6 +46,15 @@ const Courses = () => {
     fetchData();
   }, [accountType]);
 
+  const deleteCourse = async (slug) => {
+    try {
+      setCourses(courses.filter((course) => course.slug !== slug));
+      await courseService.deleteOne(slug);
+    } catch (error) {
+      console.log("Error deleting the article:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="w-full line-numbers pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
@@ -67,7 +76,7 @@ const Courses = () => {
       <ul className="flex flex-wrap gap-8">
         {courses.map((course) => (
           <li key={course.slug}>
-            <CourseCard {...course} />
+            <CourseCard deleteCourse={deleteCourse} {...course} />
           </li>
         ))}
       </ul>

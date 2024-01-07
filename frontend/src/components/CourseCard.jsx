@@ -9,6 +9,7 @@ const CourseCard = ({
   duration,
   difficulty,
   editable,
+  deleteCourse,
 }) => {
   const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ const CourseCard = ({
             textColor="text-white"
             textSize="text-xs"
             className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100"
-            // onClick={() => deleteQuestion(id)}
+            onClick={() => deleteCourse(slug)}
           >
             Delete
           </Button>
