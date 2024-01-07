@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
   return (
-    <div className="w-72 2xl:w-96 h-96 2xl:h-[28rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
+    <div className="w-60 2xl:w-72 h-96 2xl:h-[28rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
       <Link
         to={`/courses/${slug}`}
         className="flex justify-center items-center"
@@ -12,7 +12,7 @@ const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
           <img
             src={imgPath}
             alt={title}
-            className="h-36 2xl:h-44 w-72 2xl:w-96 rounded-md"
+            className="h-36 2xl:h-44 w-60 2xl:w-72 rounded-md"
           />
         </div>
       </Link>
@@ -23,7 +23,7 @@ const CourseCard = ({ slug, title, imgPath, duration, difficulty }) => {
             {title}
           </h3>
           <p className="text-sm 2xl:text-base opacity-70">{duration}</p>
-          <p className="2xl:text-xl opacity-80">Difficulty: {difficulty}</p>
+          <p className="2xl:text-xl opacity-80">{difficulty}</p>
         </div>
 
         <Link
