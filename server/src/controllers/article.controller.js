@@ -183,7 +183,9 @@ const likeArticle = asyncHandler(async (req, res) => {
     throw new ApiError(400, "This account has already liked the article");
   }
 
-  await article.updateOne({ $set: { likedBy: req.account?._id } });
+  await article.updateOne({
+    $set: { likedBy: article.likedBy.concat(req.account?._id) },
+  });
 
   return res
     .status(200)
