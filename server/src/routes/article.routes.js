@@ -4,6 +4,7 @@ import {
   deleteArticle,
   getAllArticles,
   getArticle,
+  likeArticle,
   updateArticle,
 } from "../controllers/article.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -28,5 +29,7 @@ router.route("/delete/:slug").delete(verifyJWT, deleteArticle);
 router
   .route("/update/:slug")
   .post(verifyJWT, upload.single("content"), updateArticle);
+
+router.route("/like/:slug").post(verifyJWT, likeArticle);
 
 export default router;

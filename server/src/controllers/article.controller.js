@@ -9,11 +9,17 @@ import {
 } from "../utils/cloudinary.js";
 
 const getAllArticles = asyncHandler(async (req, res) => {
-  const accounts = await Article.find({}).populate("author", {
-    fullName: 1,
-    username: 1,
-    avatarImage: 1,
-  });
+  const accounts = await Article.find({})
+    .populate("author", {
+      fullName: 1,
+      username: 1,
+      avatarImage: 1,
+    })
+    .populate("likedBy", {
+      fullName: 1,
+      username: 1,
+      avatarImage: 1,
+    });
 
   return res
     .status(200)
@@ -22,11 +28,17 @@ const getAllArticles = asyncHandler(async (req, res) => {
 
 const getArticle = asyncHandler(async (req, res) => {
   const articleSlug = req.params.slug;
-  const article = await Article.findOne({ articleSlug }).populate("author", {
-    fullName: 1,
-    username: 1,
-    avatarImage: 1,
-  });
+  const article = await Article.findOne({ articleSlug })
+    .populate("author", {
+      fullName: 1,
+      username: 1,
+      avatarImage: 1,
+    })
+    .populate("likedBy", {
+      fullName: 1,
+      username: 1,
+      avatarImage: 1,
+    });
 
   if (!article) {
     throw new ApiError(404, "Article not found");
@@ -160,10 +172,29 @@ const updateArticle = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Article updated successfully!"));
 });
 
+const likeArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findOne({ articleSlug: req.params.slug });
+
+  if (
+    article.likedBy.find(
+      (account) => account.toString() === req.account?._id.toString()
+    )
+  ) {
+    throw new ApiError(400, "This account has already liked the article");
+  }
+
+  await article.updateOne({ $set: { likedBy: req.account?._id } });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Article liked successfully!"));
+});
+
 export {
   getAllArticles,
   getArticle,
   createArticle,
   deleteArticle,
   updateArticle,
+  likeArticle,
 };

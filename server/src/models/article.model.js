@@ -30,6 +30,13 @@ const articleSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  likedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+      required: true,
+    },
+  ],
 });
 
 export const Article = mongoose.model("Article", articleSchema);
