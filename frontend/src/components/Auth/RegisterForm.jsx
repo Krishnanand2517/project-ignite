@@ -109,9 +109,15 @@ const RegisterForm = () => {
       onSubmit={handleRegister}
       className="p-14 my-32 2xl:my-48 w-full max-w-lg 2xl:max-w-2xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center">
         Create New Account
       </h2>
+      <p className="text-secondary text-center mb-8">
+        <Link to="/login" className="hover:text-orange-400 2xl:text-lg">
+          Already have an account? Log In
+        </Link>
+      </p>
+
       <div>
         <Input
           label="Full Name"
@@ -186,11 +192,6 @@ const RegisterForm = () => {
       >
         {isLoading ? "Creating Account..." : "Create New Account"}
       </Button>
-      <p className="text-secondary text-center">
-        <Link to="/login" className="hover:text-orange-400 2xl:text-lg">
-          Already have an account? Log In
-        </Link>
-      </p>
     </form>
   );
 };
