@@ -1,5 +1,6 @@
-import { Logo } from "../index";
 import { Link } from "react-router-dom";
+import { Logo } from "../index";
+import { navItems } from "../../constants";
 
 const Footer = () => {
   return (
@@ -13,21 +14,11 @@ const Footer = () => {
 
         <div>
           <ul className="flex space-x-4">
-            <li className="hover:text-orange-300">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:text-orange-300">
-              <Link to="/articles">Articles</Link>
-            </li>
-            <li className="hover:text-orange-300">
-              <Link to="/projects">Projects</Link>
-            </li>
-            <li className="hover:text-orange-300">
-              <Link to="/courses">Courses</Link>
-            </li>
-            <li className="hover:text-orange-300">
-              <Link to="/questions">Questions</Link>
-            </li>
+            {navItems.map((item) => (
+              <li key={item.name} className="hover:text-orange-300">
+                <Link to={item.path}>{item.name}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

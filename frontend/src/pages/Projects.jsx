@@ -29,18 +29,22 @@ const Projects = () => {
   ];
 
   return (
-    <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+    <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
       <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         Projects
       </h1>
 
-      <ul className="flex flex-wrap gap-8">
+      {/* <ul className="flex flex-wrap gap-8">
         {projects.map((project) => (
           <li key={project.slug}>
             <ProjectCategoryCard slug={project.slug} title={project.title} />
           </li>
         ))}
-      </ul>
+      </ul> */}
+
+      <h4 className="text-3xl 2xl:text-5xl font-fira font-bold text-secondary">
+        Under construction 🚧🏗️
+      </h4>
     </div>
   );
 };

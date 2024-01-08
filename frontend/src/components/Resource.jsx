@@ -11,11 +11,11 @@ const Resource = () => {
     },
     {
       imagePath: "/dev.png",
-      buttonText: "Projects ->",
-      imageAlt: "projects",
-      slug: "projects",
+      buttonText: "Courses ->",
+      imageAlt: "courses",
+      slug: "courses",
       paraText:
-        "Discover real-world projects to apply and reinforce your coding skills.",
+        "Enroll in comprehensive courses to deepen your understanding and expertise.",
     },
     {
       imagePath: "/questions.png",
