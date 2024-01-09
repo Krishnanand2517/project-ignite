@@ -62,8 +62,8 @@ const Course = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-        <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+      <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mb-8 2xl:mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
           Contents
         </h1>
 
@@ -73,22 +73,22 @@ const Course = () => {
   }
 
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+    <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
       <img
         src={courseImage}
         alt={courseTitle}
-        className="my-4 mx-auto max-w-xs max-h-80 lg:max-w-lg 2xl:max-w-2xl rounded-md"
+        className="my-4 2xl:my-8 mx-auto max-w-xs max-h-80 lg:max-w-lg 2xl:max-w-2xl rounded-md"
       />
 
-      <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+      <h1 className="mb-16 2xl:mb-20 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         {courseTitle}
       </h1>
 
-      <h2 className="mb-6 text-2xl 2xl:text-4xl font-fira font-bold text-secondary">
+      <h2 className="mb-6 2xl:mb-10 text-2xl 2xl:text-4xl font-fira font-bold text-secondary">
         Contents
       </h2>
 
-      <ul className="flex flex-col gap-y-8 text-primary">
+      <ul className="flex flex-col gap-y-8 2xl:gap-y-10 text-primary">
         {courseContents.map((content) => (
           <li key={content._id}>
             <ContentCard
@@ -101,10 +101,10 @@ const Course = () => {
       </ul>
 
       {isOwner && (
-        <div className="mt-12">
+        <div className="mt-12 2xl:mt-20">
           <Button
             textSize="text-sm 2xl:text-lg"
-            className="font-bold"
+            className="font-black"
             onClick={() => navigate(`/add-content/${slug}`)}
           >
             Add Content

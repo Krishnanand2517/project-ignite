@@ -87,7 +87,7 @@ const VideoPlayer = ({ contentObject }) => {
 
   return (
     <div
-      className="relative w-full max-w-screen-md mx-auto rounded-md overflow-hidden shadow-lg"
+      className="relative w-full max-w-screen-md 2xl:max-w-screen-lg mx-auto rounded-md overflow-hidden shadow-lg"
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
       onClick={handlePlayerClick}
@@ -97,6 +97,7 @@ const VideoPlayer = ({ contentObject }) => {
         controls
         title={contentObject.contentTitle}
         className="rounded-md w-full"
+        onPlay={() => setIsPlaying(() => true)}
       >
         <source src={contentObject.contentUrl} type="video/mp4" />
         <source src={contentObject.contentUrl} type="video/mkv" />

@@ -38,8 +38,8 @@ const Content = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-        <h1 className="mt-32 mb-4 text-5xl 2xl:text-7xl text-center font-bold text-primary">
+      <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mt-32 2xl:mt-36 mb-4 text-5xl 2xl:text-7xl text-center font-bold text-primary">
           Loading
         </h1>
 
@@ -49,8 +49,8 @@ const Content = () => {
   }
 
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <h1 className="mt-8 mb-16 text-4xl 2xl:text-6xl text-center font-bold text-primary">
+    <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <h1 className="mt-8 2xl:mt-16 mb-16 2xl:mb-24 text-4xl 2xl:text-6xl text-center font-bold text-primary">
         {contentObject.contentTitle}
       </h1>
 

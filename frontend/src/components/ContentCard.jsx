@@ -6,13 +6,13 @@ const ContentCard = ({ content, deleteContent, isOwner }) => {
   const renderEditOptions = () => {
     if (isOwner) {
       return (
-        <div className="absolute top-0 right-0 m-2">
+        <div className="absolute top-0 right-0 m-2 2xl:m-4">
           <Button
             bgColor="bg-red-500"
             hoverBgColor="hover:bg-black"
             textColor="text-white"
-            textSize="text-xs"
-            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100"
+            textSize="text-xs 2xl:text-sm"
+            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
             onClick={() => deleteContent(content._id)}
           >
             Delete
@@ -23,7 +23,7 @@ const ContentCard = ({ content, deleteContent, isOwner }) => {
   };
 
   return (
-    <div className="relative px-8 py-4 flex justify-between items-center font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
+    <div className="relative px-8 2xl:px-12 py-4 2xl:py-6 flex justify-between items-center font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
       {renderEditOptions()}
 
       <div className="flex flex-wrap">

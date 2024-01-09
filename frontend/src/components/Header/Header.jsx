@@ -50,7 +50,7 @@ const Header = () => {
         </ul>
 
         {isAuthenticated ? (
-          <div className="flex justify-around items-center gap-x-6">
+          <div className="flex justify-around items-center gap-x-6 2xl:gap-x-8">
             <AvatarIcon image={userImg} />
             <LogoutBtn />
           </div>
