@@ -52,8 +52,8 @@ const Questions = () => {
 
   if (loading) {
     return (
-      <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-        <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+      <div className="w-full min-h-screen pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mb-8 2xl:mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
           Questions
         </h1>
 
@@ -63,12 +63,12 @@ const Questions = () => {
   }
 
   return (
-    <div className="w-full pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+    <div className="w-full min-h-screen pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <h1 className="mb-8 2xl:mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         Questions
       </h1>
 
-      <ul className="flex flex-col gap-y-4">
+      <ul className="flex flex-col gap-y-4 2xl:gap-y-6">
         {questions.map((question) => (
           <li key={question.title}>
             <QuestionCard
@@ -89,7 +89,7 @@ const Questions = () => {
       <div className="mt-12">
         <Button
           textSize="text-sm 2xl:text-lg"
-          className="font-bold"
+          className="font-black"
           onClick={() => navigate("/add-question")}
         >
           Contribute Question

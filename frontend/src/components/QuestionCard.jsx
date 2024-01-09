@@ -20,13 +20,13 @@ const QuestionCard = ({
   const renderEditOptions = () => {
     if (userId === addedById) {
       return (
-        <div className="absolute top-0 right-0 m-2">
+        <div className="absolute top-0 right-0 m-2 2xl:m-4">
           <Button
             bgColor="bg-blue-500"
             hoverBgColor="hover:bg-black"
             textColor="text-white"
-            textSize="text-xs"
-            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+            textSize="text-xs 2xl:text-sm"
+            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2"
             onClick={() => navigate(`/edit-question/${id}`)}
           >
             Edit
@@ -35,8 +35,8 @@ const QuestionCard = ({
             bgColor="bg-red-500"
             hoverBgColor="hover:bg-black"
             textColor="text-white"
-            textSize="text-xs"
-            className="py-[2px] px-[3px] rounded-sm opacity-70 hover:opacity-100"
+            textSize="text-xs 2xl:text-sm"
+            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
             onClick={() => deleteQuestion(id)}
           >
             Delete
@@ -47,7 +47,7 @@ const QuestionCard = ({
   };
 
   return (
-    <div className="relative px-8 py-4 flex justify-between items-center font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
+    <div className="relative px-8 2xl:px-12 py-4 2xl:py-6 flex justify-between items-center font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
       {renderEditOptions()}
 
       {/* Contents */}
@@ -56,22 +56,22 @@ const QuestionCard = ({
           {title}
         </h3>
         <p className="w-full text-sm 2xl:text-lg">{difficulty}</p>
-        <div className="w-full flex gap-2 mt-1 text-sm 2xl:text-lg">
+        <div className="w-full flex gap-2 2xl:gap-3 mt-1 2xl:mt-2 text-sm 2xl:text-lg">
           {topics.map((topic) => (
             <span
               key={topic}
-              className="border-[1px] px-1 border-orange-400 hover:bg-orange-400 hover:text-black rounded-md"
+              className="border-[1px] px-1 2xl:px-2 border-orange-400 hover:bg-orange-400 hover:text-black rounded-md"
             >
               {topic}
             </span>
           ))}
         </div>
-        <div className="w-full flex gap-2 mt-2 text-sm 2xl:text-lg">
+        <div className="w-full flex gap-2 2xl:gap-3 mt-2 2xl:mt-3 text-sm 2xl:text-lg">
           Companies Asked:{" "}
           {companyTags.map((company) => (
             <span
               key={company}
-              className="border-[1px] px-1 border-white hover:bg-white hover:text-black rounded-md"
+              className="border-[1px] px-1 2xl:px-2 border-white hover:bg-white hover:text-black rounded-md"
             >
               {company}
             </span>
