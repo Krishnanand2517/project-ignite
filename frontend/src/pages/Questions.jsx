@@ -86,7 +86,7 @@ const Questions = () => {
         ))}
       </ul>
 
-      <div className="mt-12">
+      <div className="mt-12 2xl:mt-16">
         <Button
           textSize="text-sm 2xl:text-lg"
           className="font-black"

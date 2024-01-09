@@ -42,7 +42,7 @@ const LoginForm = () => {
       onSubmit={handleLogin}
       className="p-14 my-32 2xl:my-48 w-full max-w-md 2xl:max-w-xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
         Login
       </h2>
       <div>
@@ -73,7 +73,10 @@ const LoginForm = () => {
         {isLoading ? "Logging In..." : "Log In"}
       </Button>
       <p className="text-secondary text-center">
-        <Link to="/register" className="hover:text-orange-400 2xl:text-lg">
+        <Link
+          to="/register"
+          className="hover:text-orange-400 2xl:text-xl font-bold"
+        >
           Are you new here? Create a New Account
         </Link>
       </p>

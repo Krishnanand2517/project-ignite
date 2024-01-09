@@ -57,7 +57,7 @@ const ImageInput = ({
         className="hidden"
       />
       <div
-        className={`${size} ${padding} border-2 border-solid border-white hover:border-orange-500 cursor-pointer ${rounded}`}
+        className={`${size} ${padding} border-2 border-solid border-white hover:border-orange-500 cursor-pointer ${rounded} 2xl:mb-4`}
         onClick={() => imageUploader.current.click()}
         {...props}
       >

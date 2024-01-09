@@ -76,7 +76,7 @@ const RegisterForm = () => {
 
     return (
       <>
-        <div className="mt-6">
+        <div className="mt-6 2xl:mt-8">
           <Input
             label="Name of Your Institution"
             value={institutionName}
@@ -112,8 +112,11 @@ const RegisterForm = () => {
       <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center">
         Create New Account
       </h2>
-      <p className="text-secondary text-center mb-8">
-        <Link to="/login" className="hover:text-orange-400 2xl:text-lg">
+      <p className="text-secondary text-center mb-8 2xl:mb-16">
+        <Link
+          to="/login"
+          className="hover:text-orange-400 2xl:text-xl font-bold"
+        >
           Already have an account? Log In
         </Link>
       </p>
@@ -156,7 +159,7 @@ const RegisterForm = () => {
       <div>
         <ImageInput
           label="Profile Picture"
-          className="text-primary mt-6"
+          className="text-primary mt-6 2xl:mt-8"
           setOutputImage={setAvatar}
         />
       </div>
