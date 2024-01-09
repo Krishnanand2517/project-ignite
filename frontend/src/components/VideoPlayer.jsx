@@ -14,6 +14,7 @@ const PlayButton = ({ onPlayerClick }) => {
       xmlSpace="preserve"
       stroke="#ffffff"
       className="overflow-visible"
+      onClick={onPlayerClick}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
@@ -42,6 +43,7 @@ const PauseButton = ({ onPlayerClick }) => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       stroke="#ffffff"
       xmlSpace="preserve"
+      onClick={onPlayerClick}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
@@ -67,22 +69,38 @@ const PauseButton = ({ onPlayerClick }) => {
 
 const VideoPlayer = ({ contentObject }) => {
   const videoPlayerRef = useRef(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isFirstClick, setIsFirstClick] = useState(true);
 
-  const handlePlayerClick = () => {
+  const handlePlayerClick = (event) => {
+    event.stopPropagation();
+
     const video = videoPlayerRef.current;
 
     if (isFirstClick) {
       setIsFirstClick(false);
-    }
 
-    if (video) {
+      const playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            video.play();
+            setIsPlaying(true);
+          })
+          .catch(() => {
+            video.addEventListener("loadeddata", () => {
+              video.play();
+              setIsPlaying(true);
+            });
+          });
+      }
+    } else {
       isPlaying ? video.pause() : video.play();
+      setIsPlaying((prev) => !prev);
     }
-
-    setIsPlaying((prev) => !prev);
   };
 
   return (
@@ -97,7 +115,6 @@ const VideoPlayer = ({ contentObject }) => {
         controls
         title={contentObject.contentTitle}
         className="rounded-md w-full"
-        onPlay={() => setIsPlaying(() => true)}
       >
         <source src={contentObject.contentUrl} type="video/mp4" />
         <source src={contentObject.contentUrl} type="video/mkv" />
@@ -109,13 +126,11 @@ const VideoPlayer = ({ contentObject }) => {
           (showControls || !isPlaying) && "bg-black"
         }`}
       >
-        {!isFirstClick &&
-          (isPlaying && showControls ? (
-            <PauseButton />
-          ) : (
-            !isPlaying && <PlayButton />
-          ))}
-        {isFirstClick && <PlayButton />}
+        {isPlaying && showControls ? (
+          <PauseButton onPlayerClick={handlePlayerClick} />
+        ) : (
+          !isPlaying && <PlayButton onPlayerClick={handlePlayerClick} />
+        )}
       </div>
     </div>
   );
