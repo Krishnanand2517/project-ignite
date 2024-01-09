@@ -7,12 +7,12 @@ const Hero = () => {
   return (
     <div className="font-fira flex justify-evenly">
       <div className="flex flex-col justify-evenly">
-        <h1 className="text-7xl 2xl:text-9xl font-black text-primary">
+        <h1 className="text-7xl 2xl:text-8xl font-black text-primary">
           Project
           <br />
           IGNITE
         </h1>
-        <h3 className="text-2xl 2xl:text-4xl font-semibold text-secondary">
+        <h3 className="text-2xl 2xl:text-3xl font-semibold text-secondary">
           Of the coders.
           <br />
           By the coders.

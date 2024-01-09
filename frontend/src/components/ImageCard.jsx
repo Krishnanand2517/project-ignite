@@ -1,6 +1,6 @@
 const ImageCard = ({ path, alt = "", className = "", ...props }) => {
   return (
-    <div className="p-8 rounded-lg border border-white w-full max-w-[240px] mb-8">
+    <div className="p-8 rounded-lg border border-white w-full max-w-[240px] 2xl:max-w-[360px] mb-8 2xl:mb-10">
       <img
         src={path}
         alt={alt}

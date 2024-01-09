@@ -28,7 +28,7 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <header className="w-full py-4 px-10 font-fira bg-black bg-opacity-20 backdrop-blur-lg fixed z-10">
+    <header className="w-full py-4 2xl:py-6 px-10 font-fira bg-black bg-opacity-20 backdrop-blur-lg fixed z-10">
       <nav className="flex justify-between items-center">
         <div>
           <Link to="/">
@@ -36,7 +36,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <ul className="flex gap-x-4 text-secondary 2xl:text-xl">
+        <ul className="flex gap-x-4 text-secondary 2xl:text-2xl">
           {navItems.map((item) => (
             <li key={item.name}>
               <button
@@ -55,11 +55,7 @@ const Header = () => {
             <LogoutBtn />
           </div>
         ) : (
-          <Button
-            textSize="text-xl 2xl:text-4xl"
-            className="font-bold"
-            onClick={() => navigate("/register")}
-          >
+          <Button className="font-bold" onClick={() => navigate("/register")}>
             Register
           </Button>
         )}

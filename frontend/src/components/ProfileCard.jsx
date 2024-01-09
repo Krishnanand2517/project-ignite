@@ -257,7 +257,7 @@ const ProfileCard = ({ userData }) => {
                 bgColor="bg-orange-400"
                 hoverBgColor="hover:bg-orange-500"
                 textSize="text-sm 2xl:text-lg"
-                className={`my-1 py-1 font-bold rounded-2xl ${
+                className={`my-1 2xl:my-2 py-1 2xl:py-[2] 2xl:px-14 font-bold rounded-2xl ${
                   (isLoading || !avatar) && "bg-orange-800 hover:bg-orange-800"
                 }`}
                 type="submit"
