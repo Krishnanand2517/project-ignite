@@ -54,8 +54,8 @@ const Article = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-        <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+      <div className="w-full min-h-screen pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+        <h1 className="mb-8 2xl:mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
           Articles
         </h1>
 
@@ -65,8 +65,8 @@ const Article = () => {
   }
 
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <div className="w-3/4 mx-auto border border-white rounded-lg shadow-xl shadow-white mb-20">
+    <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <div className="w-3/4 mx-auto border border-white rounded-lg shadow-xl shadow-white mb-20 2xl:mb-24">
         <img
           src={articleObject.coverImage}
           alt={articleObject.articleTitle}
@@ -81,7 +81,7 @@ const Article = () => {
         <img
           src={articleObject.author.avatarImage}
           alt="Profile Picture"
-          className="w-16 2xl:w-20 inline ml-10 rounded-full border-2 border-white hover:border-orange-400"
+          className="w-16 2xl:w-20 inline ml-10 2xl:ml-14 rounded-full border-2 border-white hover:border-orange-400"
         />
       </h2>
       <div className="w-full 2xl:text-xl">
@@ -91,7 +91,7 @@ const Article = () => {
         likesCount={likesCount}
         handleLike={handleLike}
         isLiked={isLiked}
-        className="mt-12"
+        className="mt-12 2xl:mt-16"
       />
     </div>
   );

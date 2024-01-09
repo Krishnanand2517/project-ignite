@@ -49,7 +49,7 @@ const Articles = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <div className="w-full min-h-screen pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
         <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
           Articles
         </h1>
@@ -60,12 +60,12 @@ const Articles = () => {
   }
 
   return (
-    <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
-      <h1 className="mb-8 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
+    <div className="w-full min-h-screen pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+      <h1 className="mb-8 2xl:mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         Articles
       </h1>
 
-      <ul className="flex flex-col gap-y-8">
+      <ul className="flex flex-col gap-y-8 2xl:gap-y-12">
         {articles.map((article) => (
           <li key={article.slug}>
             <ArticleCard
@@ -81,7 +81,7 @@ const Articles = () => {
         ))}
       </ul>
 
-      <div className="py-4 mt-10">
+      <div className="py-4 mt-10 2xl:mt-16">
         <Button
           textSize="text-lg 2xl:text-2xl"
           className="font-bold"

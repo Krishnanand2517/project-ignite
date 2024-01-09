@@ -126,13 +126,13 @@ const ProfileCard = ({ userData }) => {
 
   return (
     <div
-      className={`w-4/5 mx-auto px-12 py-8 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
+      className={`w-4/5 mx-auto px-12 2xl:px-16 py-8 2xl:py-10 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
         isUpdateImageClicked
-          ? "h-64 2xl:h-72"
+          ? "h-64 2xl:h-80"
           : isUpdatePasswordClicked
           ? "h-72 2xl:h-96"
           : userData.accountType === "instructor"
-          ? "h-64 2xl:h-72"
+          ? "h-64 2xl:h-80"
           : "h-48 2xl:h-56"
       }`}
     >
