@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { login as storeLogin } from "../../store/authSlice";
 import { Button, Input, ImageInput } from "../index";
@@ -10,8 +10,10 @@ import accountService from "../../services/accounts";
 const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [isStudent, setIsStudent] = useState(true);
 
@@ -26,8 +28,15 @@ const RegisterForm = () => {
   const [institutionCourse, setInstitutionCourse] = useState("");
   const [institutionYear, setInstitutionYear] = useState("");
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleRegister = async (event) => {
     event.preventDefault();
+    setError("");
 
     const registerFormData = new FormData();
     registerFormData.append("username", username);
@@ -50,25 +59,26 @@ const RegisterForm = () => {
 
     setIsLoading(true);
 
-    const response = await accountService.register(registerFormData);
+    try {
+      const response = await accountService.register(registerFormData);
 
-    if (response.statusCode === 201) {
-      const loginObject = {
-        username: username,
-        password: password,
-      };
+      if (response.statusCode === 201) {
+        const loginObject = {
+          username: username,
+          password: password,
+        };
 
-      const loginResponse = await accountService.login(loginObject);
+        const loginResponse = await accountService.login(loginObject);
 
-      setIsLoading(false);
-
-      if (loginResponse.statusCode === 200) {
-        dispatch(storeLogin(loginResponse.data.account));
-        navigate("/");
+        if (loginResponse.statusCode === 200) {
+          dispatch(storeLogin(loginResponse.data.account));
+          navigate("/");
+        }
       }
+    } catch (error) {
+      setError("Something went wrong!");
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   const renderStudentInputFields = () => {
@@ -187,14 +197,33 @@ const RegisterForm = () => {
       <Button
         textSize="text-lg 2xl:text-2xl"
         className={`font-bold my-5 py-3 ${
-          (!password || isLoading || password !== confirmPassword) &&
+          (!password ||
+            !fullName ||
+            !username ||
+            !email ||
+            (isStudent &&
+              (!institutionName || !institutionCourse || !institutionYear)) ||
+            isLoading ||
+            password !== confirmPassword) &&
           "bg-green-800 hover:bg-green-800"
         }`}
         type="submit"
-        disabled={!password || isLoading || password !== confirmPassword}
+        disabled={
+          !password ||
+          !fullName ||
+          !username ||
+          !email ||
+          (isStudent &&
+            (!institutionName || !institutionCourse || !institutionYear)) ||
+          isLoading ||
+          password !== confirmPassword
+        }
       >
         {isLoading ? "Creating Account..." : "Create New Account"}
       </Button>
+
+      {/* ERROR NOTIFICATION */}
+      <p className="text-red-500 text-center 2xl:text-xl font-black">{error}</p>
     </form>
   );
 };

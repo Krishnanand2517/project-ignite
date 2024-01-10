@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { login as storeLogin } from "../../store/authSlice";
 import { Input, Button } from "../index";
@@ -10,14 +10,23 @@ import accountService from "../../services/accounts";
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError("");
 
     const loginObject = {
       email: emailOrUsername.includes("@") ? emailOrUsername : null,
@@ -27,13 +36,24 @@ const LoginForm = () => {
 
     setIsLoading(true);
 
-    const response = await accountService.login(loginObject);
+    try {
+      const response = await accountService.login(loginObject);
 
-    setIsLoading(false);
+      if (response.statusCode === 200) {
+        dispatch(storeLogin(response.data.account));
+        navigate("/");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError("This email or username is not registered");
+      } else if (error.response.status === 401) {
+        setError("Wrong password");
+      } else {
+        setError("Something went wrong!");
+      }
 
-    if (response.statusCode === 200) {
-      dispatch(storeLogin(response.data.account));
-      navigate("/");
+      setIsLoading(false);
     }
   };
 
@@ -65,13 +85,18 @@ const LoginForm = () => {
         hoverBgColor="hover:bg-orange-500"
         textSize="text-lg 2xl:text-2xl"
         className={`font-bold my-5 py-3 ${
-          isLoading && "bg-orange-800 hover:bg-orange-800"
+          (isLoading || !emailOrUsername || !password) &&
+          "bg-orange-800 hover:bg-orange-800"
         }`}
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || !emailOrUsername || !password}
       >
         {isLoading ? "Logging In..." : "Log In"}
       </Button>
+
+      {/* ERROR NOTIFICATION */}
+      <p className="text-red-500 text-center 2xl:text-xl font-black">{error}</p>
+
       <p className="text-secondary text-center">
         <Link
           to="/register"
