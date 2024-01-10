@@ -19,6 +19,7 @@ const createOne = async (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
   return response.data;
 };
@@ -28,12 +29,15 @@ const updateOne = async (slug, obj) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
   return response.data;
 };
 
 const deleteOne = async (slug) => {
-  const response = await axios.delete(`${baseUrl}/delete/${slug}`);
+  const response = await axios.delete(`${baseUrl}/delete/${slug}`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -45,6 +49,7 @@ const addContent = async (slug, formData) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      withCredentials: true,
     }
   );
   return response.data;

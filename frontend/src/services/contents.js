@@ -20,7 +20,9 @@ const getOne = async (id) => {
 };
 
 const deleteOne = async (id) => {
-  const response = await axios.delete(`${baseUrl}/delete-content/${id}`);
+  const response = await axios.delete(`${baseUrl}/delete-content/${id}`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 

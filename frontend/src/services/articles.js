@@ -24,12 +24,15 @@ const createOne = async (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
   return response.data;
 };
 
 const deleteOne = async (slug) => {
-  const response = await axios.delete(`${baseUrl}/delete/${slug}`);
+  const response = await axios.delete(`${baseUrl}/delete/${slug}`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -38,12 +41,15 @@ const updateOne = async (slug, formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
   return response.data;
 };
 
 const likeOne = async (slug) => {
-  const response = await axios.post(`${baseUrl}/like/${slug}`);
+  const response = await axios.post(`${baseUrl}/like/${slug}`, null, {
+    withCredentials: true,
+  });
   return response.data;
 };
 

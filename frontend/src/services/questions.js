@@ -19,12 +19,15 @@ const addOne = async (obj) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
   return response.data;
 };
 
 const deleteOne = async (id) => {
-  const response = await axios.delete(`${baseUrl}/delete/${id}`);
+  const response = await axios.delete(`${baseUrl}/delete/${id}`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -33,6 +36,7 @@ const updateOne = async (id, obj) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
   return response.data;
 };
