@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import connectDB from "./db/index.js";
-import app from "./api";
+import app from "./app.js";
 
 dotenv.config({
   path: "./env",
@@ -11,6 +11,10 @@ connectDB()
     app.on("error", (err) => {
       console.log("Error:", err);
       throw err;
+    });
+
+    app.get("/", (_req, res) => {
+      res.send("<h1>Project IGNITE</h1>");
     });
 
     app.listen(process.env.PORT || 3001, () => {

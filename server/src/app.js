@@ -17,13 +17,13 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // ROUTES
-import accountRouter from "../routes/account.routes.js";
-import courseRouter from "../routes/course.routes.js";
-import questionRouter from "../routes/question.routes.js";
-import studentRouter from "../routes/student.routes.js";
-import instructorRouter from "../routes/instructor.routes.js";
-import articleRouter from "../routes/article.routes.js";
-import contentRouter from "../routes/content.routes.js";
+import accountRouter from "./routes/account.routes.js";
+import courseRouter from "./routes/course.routes.js";
+import questionRouter from "./routes/question.routes.js";
+import studentRouter from "./routes/student.routes.js";
+import instructorRouter from "./routes/instructor.routes.js";
+import articleRouter from "./routes/article.routes.js";
+import contentRouter from "./routes/content.routes.js";
 
 app.use("/api/v1/accounts", accountRouter);
 app.use("/api/v1/courses", courseRouter);
