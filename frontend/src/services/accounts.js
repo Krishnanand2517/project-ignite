@@ -30,7 +30,9 @@ const logout = async () => {
 };
 
 const getCurrent = async () => {
-  const response = await axios.get(`${baseUrl}/get-account`);
+  const response = await axios.get(`${baseUrl}/get-account`, {
+    withCredentials: true,
+  });
   return response;
 };
 
@@ -39,6 +41,7 @@ const updatePassword = async (obj) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
   return response.data;
 };
@@ -48,6 +51,7 @@ const updateAvatar = async (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
   return response.data;
 };
