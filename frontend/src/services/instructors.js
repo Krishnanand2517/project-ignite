@@ -5,7 +5,9 @@ const baseUrl = import.meta.env.PROD
   : "/api/instructors";
 
 const getCurrent = async () => {
-  const response = await axios.get(`${baseUrl}/get-instructor`);
+  const response = await axios.get(`${baseUrl}/get-instructor`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
