@@ -9,6 +9,7 @@ const register = async (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
   return response.data;
 };
@@ -18,6 +19,7 @@ const login = async (obj) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
   return response.data;
 };
