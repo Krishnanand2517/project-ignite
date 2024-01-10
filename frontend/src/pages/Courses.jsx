@@ -85,7 +85,7 @@ const Courses = () => {
         <div className="mt-12 2xl:mt-24">
           <Button
             textSize="text-sm 2xl:text-lg"
-            className="font-bold 2xl:font-black"
+            className="font-bold 2xl:font-black 2xl:px-12"
             onClick={() => navigate("/add-course")}
           >
             Create Course

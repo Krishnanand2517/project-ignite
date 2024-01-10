@@ -44,9 +44,9 @@ const CourseAddForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="pt-4 px-24 pb-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
+      className="pt-4 2xl:pt-8 px-24 pb-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
         Add Course
       </h2>
 
@@ -54,8 +54,8 @@ const CourseAddForm = () => {
         <ImageInput
           label="Course Image"
           defaultSrc="/article_placeholder.png"
-          className="text-primary my-8"
-          size="w-3/5"
+          className="text-primary my-8 2xl:my-12"
+          size="w-3/5 2xl:w-1/2"
           padding="p-2"
           rounded="rounded-md"
           setOutputImage={setCourseImage}
@@ -111,7 +111,7 @@ const CourseAddForm = () => {
 
       <Button
         textSize="text-lg 2xl:text-2xl"
-        className={`font-bold my-8 py-3 ${
+        className={`font-bold 2xl:font-black my-8 2xl:my-12 py-3 2xl:py-6 ${
           (isLoading ||
             [
               courseName,

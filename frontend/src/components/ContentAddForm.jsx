@@ -67,7 +67,7 @@ const ContentAddForm = ({ slug }) => {
             </span>
             <Input
               type="file"
-              className="text-primary px-0"
+              className="text-primary"
               onChange={({ target }) => setVideoUrl(target.files[0])}
               accept="video/mp4, video/mkv"
             />
@@ -82,9 +82,9 @@ const ContentAddForm = ({ slug }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
+      className="p-14 2xl:p-20 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
         Add Content
       </h2>
 
@@ -112,7 +112,7 @@ const ContentAddForm = ({ slug }) => {
 
       <Button
         textSize="text-lg 2xl:text-2xl"
-        className={`font-bold my-8 py-3 ${
+        className={`font-bold 2xl:font-black my-8 2xl:my-12 py-3 2xl:py-6 ${
           (isLoading ||
             [contentTitle, contentType].some(
               (field) => field?.toString().trim() === ""
