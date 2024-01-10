@@ -168,6 +168,7 @@ const loginAccount = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: false,
   };
 
   return res
@@ -203,6 +204,7 @@ const logoutAccount = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: false,
   };
 
   return res
@@ -239,6 +241,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: false,
     };
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -370,6 +373,7 @@ const deleteAccount = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: false,
   };
 
   res.clearCookie("accessToken", options).clearCookie("refreshToken", options);
