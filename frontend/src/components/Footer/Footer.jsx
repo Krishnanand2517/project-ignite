@@ -24,7 +24,7 @@ const Footer = () => {
       </div>
 
       <p className="text-center mt-4 hover:text-orange-300 2xl:text-xl">
-        &copy; 2023 Project IGNITE. All rights reserved.
+        &copy; 2024 Project IGNITE. All rights reserved.
       </p>
     </footer>
   );
