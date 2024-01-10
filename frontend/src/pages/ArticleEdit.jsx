@@ -17,7 +17,7 @@ const ArticleEdit = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="w-full min-h-screen pt-36 pb-16 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+    <div className="w-full min-h-screen pt-36 2xl:pt-40 pb-16 2xl:pb-24 px-20 2xl:px-28 bg-gradient-to-b from-primary via-slate-800 to-secondary">
       <ArticleEditForm id={id} />
     </div>
   );

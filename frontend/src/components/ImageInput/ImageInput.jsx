@@ -48,7 +48,9 @@ const ImageInput = ({
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center 2xl:text-xl ${className}`}
+    >
       <input
         type="file"
         ref={imageUploader}

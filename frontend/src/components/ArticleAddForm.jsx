@@ -64,7 +64,7 @@ const ArticleAddForm = () => {
       onSubmit={handleSubmit}
       className="p-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
         Add Article
       </h2>
       <div>
@@ -85,8 +85,8 @@ const ArticleAddForm = () => {
         <ImageInput
           label="Cover Image"
           defaultSrc="/article_placeholder.png"
-          className="text-primary my-8"
-          size="w-3/5"
+          className="text-primary my-8 2xl:my-12"
+          size="w-3/5 2xl:w-1/2"
           padding="p-2"
           rounded="rounded-md"
           setOutputImage={setCoverImage}
@@ -101,6 +101,11 @@ const ArticleAddForm = () => {
           value={articleTags}
           options={articleTagsOptions}
           onChange={(selectedOptions) => setArticleTags(selectedOptions)}
+          classNames={{
+            control: () => "py-1 2xl:py-2 px-2 2xl:px-4 2xl:text-2xl",
+            option: () => "2xl:text-2xl",
+            menuList: () => "2xl:text-xl",
+          }}
         />
       </div>
       <div>
@@ -108,7 +113,7 @@ const ArticleAddForm = () => {
       </div>
       <Button
         textSize="text-lg 2xl:text-2xl"
-        className={`font-bold my-8 py-3 ${
+        className={`font-bold 2xl:font-black my-8 2xl:my-12 py-3 2xl:py-6 ${
           (isLoading || !articleTitle || !articleSlug || !coverImage) &&
           "bg-green-800 hover:bg-green-800"
         }`}

@@ -26,7 +26,7 @@ const QuestionCard = ({
             hoverBgColor="hover:bg-black"
             textColor="text-white"
             textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2"
             onClick={() => navigate(`/edit-question/${id}`)}
           >
             Edit
@@ -36,7 +36,7 @@ const QuestionCard = ({
             hoverBgColor="hover:bg-black"
             textColor="text-white"
             textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
+            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
             onClick={() => deleteQuestion(id)}
           >
             Delete

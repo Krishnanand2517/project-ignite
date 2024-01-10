@@ -12,7 +12,7 @@ const ContentCard = ({ content, deleteContent, isOwner }) => {
             hoverBgColor="hover:bg-black"
             textColor="text-white"
             textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-1 px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
+            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
             onClick={() => deleteContent(content._id)}
           >
             Delete

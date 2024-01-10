@@ -58,9 +58,9 @@ const QuestionAddForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-14 my-32 2xl:my-48 w-full max-w-md 2xl:max-w-xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
+      className="p-14 2xl:p-20 my-32 2xl:my-48 w-full max-w-md 2xl:max-w-2xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
     >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
+      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
         Add Question
       </h2>
       <div>
@@ -90,6 +90,11 @@ const QuestionAddForm = () => {
           value={topics}
           options={topicsOptions}
           onChange={(selectedOptions) => setTopics(selectedOptions)}
+          classNames={{
+            control: () => "py-1 2xl:py-2 px-2 2xl:px-4 2xl:text-2xl",
+            option: () => "2xl:text-2xl",
+            menuList: () => "2xl:text-xl",
+          }}
         />
       </div>
       <div>
@@ -114,11 +119,16 @@ const QuestionAddForm = () => {
           value={companyTags}
           options={companiesOptions}
           onChange={(selectedOptions) => setCompanyTags(selectedOptions)}
+          classNames={{
+            control: () => "py-1 2xl:py-2 px-2 2xl:px-4 2xl:text-2xl",
+            option: () => "2xl:text-2xl",
+            menuList: () => "2xl:text-xl",
+          }}
         />
       </div>
       <Button
         textSize="text-lg 2xl:text-2xl"
-        className={`font-bold my-5 py-3 ${
+        className={`font-bold 2xl:font-black my-5 2xl:my-8 py-3 2xl:py-6 ${
           isLoading && "bg-green-800 hover:bg-green-800"
         }`}
         type="submit"

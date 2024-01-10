@@ -14,7 +14,7 @@
 }
 
 .circle {
-    @apply w-4 h-4 rounded-full my-12 mx-1 bg-orange-500
+    @apply w-4 h-4 2xl:w-6 2xl:h-6 rounded-full my-12 2xl:my-20 mx-1 2xl:mx-2 bg-orange-500
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
