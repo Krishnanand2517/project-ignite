@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
+import streamifier from "streamifier";
+// import fs from "fs";
 import { extractPublicId } from "cloudinary-build-url";
 
 cloudinary.config({
@@ -8,20 +9,54 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadOnCloudinary = async (localFilePath) => {
-  try {
-    if (!localFilePath) return null;
+// ***************** USING LOCAL PATH ********************* //
 
-    const response = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "auto",
+// const uploadOnCloudinary = async (localFilePath) => {
+//   try {
+//     if (!localFilePath) return null;
+
+//     const response = await cloudinary.uploader.upload(localFilePath, {
+//       resource_type: "auto",
+//     });
+
+//     console.log("File is uploaded on cloudinary", response.url);
+
+//     fs.unlinkSync(localFilePath);
+//     return response;
+//   } catch (error) {
+//     fs.unlinkSync(localFilePath);
+//     return null;
+//   }
+// };
+
+// ***************** USING FILE BUFFER ********************* //
+
+const uploadOnCloudinary = async (fileBuffer) => {
+  try {
+    if (!fileBuffer) return null;
+
+    const stream = streamifier.createReadStream(fileBuffer);
+
+    const response = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { resource_type: "auto" },
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+
+      stream.pipe(uploadStream);
     });
 
-    console.log("File is uploaded on cloudinary", response.url);
+    console.log("File is uploaded on Cloudinary", response.url);
 
-    fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
-    fs.unlinkSync(localFilePath);
+    console.log("Cloudinary Error:", error.message || "Upload failed");
     return null;
   }
 };

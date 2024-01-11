@@ -59,7 +59,8 @@ const registerAccount = asyncHandler(async (req, res) => {
   }
 
   // handle images
-  const avatarLocalPath = req.file?.path;
+  const avatarLocalPath = req.file?.buffer;
+  console.log(avatarLocalPath);
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
