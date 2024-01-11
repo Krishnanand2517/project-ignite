@@ -15,7 +15,8 @@ const getOne = async (slug) => {
 };
 
 const getContent = async (link) => {
-  const response = await axios.get(link);
+  const cloudinaryUrl = link.replace(/^http:/, "https:");
+  const response = await axios.get(cloudinaryUrl);
   return response.data;
 };
 
