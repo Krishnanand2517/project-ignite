@@ -20,6 +20,7 @@ You can check out the live demo of Project IGNITE [here](https://project-ignite-
 ![](imgs/screen-2.png)
 ![](imgs/screen-3.png)
 ![](imgs/screen-4.png)
+![](imgs/screen-5.png)
 
 ## Features
 
