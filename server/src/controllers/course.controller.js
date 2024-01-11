@@ -54,7 +54,7 @@ const createCourse = asyncHandler(async (req, res) => {
   }
 
   // handle image
-  const courseImageLocalPath = req.files?.courseImage[0]?.path;
+  const courseImageLocalPath = req.files?.courseImage[0]?.buffer;
 
   if (!courseImageLocalPath) {
     throw new ApiError(400, "Course Image file is required");
@@ -141,7 +141,7 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
 });
 
 const updateCourseImage = asyncHandler(async (req, res) => {
-  const courseImageLocalPath = req.files?.courseImage[0]?.path;
+  const courseImageLocalPath = req.files?.courseImage[0]?.buffer;
 
   if (!courseImageLocalPath) {
     throw new ApiError(400, "Course image file is missing");
@@ -220,7 +220,7 @@ const addContent = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
-  const contentFileLocalPath = req.file?.path;
+  const contentFileLocalPath = req.file?.buffer;
 
   if (!contentFileLocalPath) {
     throw new ApiError(400, "Content file is missing");

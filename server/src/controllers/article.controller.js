@@ -57,8 +57,8 @@ const createArticle = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
-  const contentLocalPath = req.files?.content[0]?.path;
+  const coverImageLocalPath = req.files?.coverImage[0]?.buffer;
+  const contentLocalPath = req.files?.content[0]?.buffer;
 
   if (!contentLocalPath) {
     throw new ApiError(400, "Content file is required");
@@ -129,7 +129,7 @@ const updateArticle = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Article Title is required");
   }
 
-  const contentLocalPath = req.file?.path;
+  const contentLocalPath = req.file?.buffer;
 
   if (!contentLocalPath) {
     throw new ApiError(400, "Content file is missing");
