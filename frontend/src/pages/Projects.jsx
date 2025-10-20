@@ -29,7 +29,7 @@ const Projects = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-slate-800 to-secondary">
+    <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
       <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
         Projects
       </h1>

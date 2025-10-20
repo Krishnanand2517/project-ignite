@@ -112,7 +112,7 @@ const ProfileCard = ({ userData }) => {
         <div className="flex gap-x-4 mt-2 overflow-x-auto scrollbar-hide">
           {instructorData.courses.map((course) => (
             <Link key={course._id} to={`/courses/${course.courseSlug}`}>
-              <div className="w-40 h-20 2xl:w-48 2xl:h-28 flex justify-center items-center bg-opacity-60 bg-slate-700 hover:bg-slate-900 rounded-md">
+              <div className="w-40 h-20 2xl:w-48 2xl:h-28 flex justify-center items-center bg-opacity-60 bg-neutral-700 hover:bg-neutral-900 rounded-md">
                 <p className="text-center 2xl:text-xl font-bold">
                   {course.courseName}
                 </p>
@@ -126,7 +126,7 @@ const ProfileCard = ({ userData }) => {
 
   return (
     <div
-      className={`w-4/5 mx-auto px-12 2xl:px-16 py-8 2xl:py-10 flex flex-col bg-slate-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
+      className={`w-4/5 mx-auto px-12 2xl:px-16 py-8 2xl:py-10 flex flex-col bg-neutral-800 font-inconsolata text-secondary border border-white rounded-md transition-height ease-linear ${
         isUpdateImageClicked
           ? "h-64 2xl:h-80"
           : isUpdatePasswordClicked

@@ -43,7 +43,7 @@ const CourseCard = ({
   };
 
   return (
-    <div className="relative w-60 2xl:w-80 h-96 2xl:h-[30rem] flex flex-col justify-center bg-opacity-60 bg-slate-700 font-inconsolata text-secondary border border-white rounded-md">
+    <div className="relative w-60 2xl:w-80 h-96 2xl:h-[30rem] flex flex-col justify-center bg-opacity-60 bg-neutral-700 font-inconsolata text-secondary border border-white rounded-md">
       {renderEditOptions()}
 
       <Link
