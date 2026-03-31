@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import courseService from "../services/courses";
 import instructorService from "../services/instructors";
-import { Button, Loader, CourseCard } from "../components";
+import { Loader, CourseCard } from "../components";
 
 const Courses = () => {
   const navigate = useNavigate();
   const accountType = useSelector((state) => state.auth.userData?.accountType);
-
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
 
@@ -21,77 +19,74 @@ const Courses = () => {
           accountType === "instructor"
             ? await instructorService.getCurrent()
             : null;
-
-        const courseObjects = coursesData.map((course) =>
-          Object({
-            title: course.courseName,
-            slug: course.courseSlug,
-            duration: course.duration,
-            difficulty:
-              course.difficulty[0].toUpperCase() + course.difficulty.slice(1),
-            imgPath: course.courseImage,
-            editable:
-              course.instructor._id.toString() ===
-              instructorData?.data._id.toString(),
-          })
-        );
-
+        const courseObjects = coursesData.map((course) => ({
+          title: course.courseName,
+          slug: course.courseSlug,
+          duration: course.duration,
+          difficulty:
+            course.difficulty[0].toUpperCase() + course.difficulty.slice(1),
+          imgPath: course.courseImage,
+          editable:
+            course.instructor._id.toString() ===
+            instructorData?.data._id.toString(),
+        }));
         setCourses(courseObjects);
         setLoading(false);
       } catch (error) {
-        console.log("Error fetching course data:", error);
+        console.log("Error fetching courses:", error);
       }
     };
-
     fetchData();
   }, [accountType]);
 
   const deleteCourse = async (slug) => {
     try {
-      setCourses(courses.filter((course) => course.slug !== slug));
+      setCourses(courses.filter((c) => c.slug !== slug));
       await courseService.deleteOne(slug);
     } catch (error) {
-      console.log("Error deleting the article:", error);
+      console.log("Error deleting course:", error);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-        <h1 className="mb-16 2xl:mb-20 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
-          Courses
-        </h1>
-
-        <Loader />
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-      <h1 className="mb-16 2xl:mb-20 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
-        Courses
-      </h1>
-
-      <ul className="flex flex-wrap gap-8 2xl:gap-14">
-        {courses.map((course) => (
-          <li key={course.slug}>
-            <CourseCard deleteCourse={deleteCourse} {...course} />
-          </li>
-        ))}
-      </ul>
-
-      {accountType === "instructor" && (
-        <div className="mt-12 2xl:mt-24">
-          <Button
-            textSize="text-sm 2xl:text-lg"
-            className="font-bold 2xl:font-black 2xl:px-12"
-            onClick={() => navigate("/add-course")}
-          >
-            Create Course
-          </Button>
+    <div className="min-h-screen bg-[#0a0a0b] pt-24">
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <span className="section-line mb-4" />
+            <h1 className="font-syne font-bold text-3xl text-neutral-100 mt-4">
+              Courses
+            </h1>
+            {!loading && (
+              <p className="text-sm font-mono text-neutral-500 mt-1">
+                {courses.length} courses available
+              </p>
+            )}
+          </div>
+          {accountType === "instructor" && (
+            <button
+              onClick={() => navigate("/add-course")}
+              className="font-syne font-semibold text-sm px-5 py-2.5 rounded-xl bg-accent text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-200 active:scale-[0.98]"
+            >
+              + Create course
+            </button>
+          )}
         </div>
-      )}
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {courses.map((course) => (
+              <CourseCard
+                key={course.slug}
+                deleteCourse={deleteCourse}
+                {...course}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { logout as storeLogout } from "../../store/authSlice";
-import { Button } from "../index";
 import accountService from "../../services/accounts";
 
 const LogoutBtn = () => {
@@ -32,17 +31,13 @@ const LogoutBtn = () => {
   };
 
   return (
-    <Button
-      bgColor="bg-orange-400"
-      hoverBgColor="hover:bg-orange-500"
-      textSize="text-lg 2xl:text-2xl"
-      className={`py-1 px-6 font-bold rounded-2xl ${
-        isLoading && "bg-orange-800 hover:bg-orange-800"
-      }`}
+    <button
+      disabled={isLoading}
       onClick={handleLogout}
+      className="text-xs font-mono text-neutral-500 hover:text-[#a8a89e] transition-colors duration-200"
     >
-      Logout
-    </Button>
+      Log out
+    </button>
   );
 };
 

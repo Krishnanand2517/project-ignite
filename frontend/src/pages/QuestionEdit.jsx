@@ -1,24 +1,21 @@
-import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { QuestionEditForm } from "../components";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { QuestionEditForm } from "../components";
 
 const QuestionEdit = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
+    if (!isAuthenticated) navigate("/login");
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="w-full py-4 2xl:py-8 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-      <QuestionEditForm id={id} />
+    <div className="min-h-screen bg-[#0a0a0b] pt-24">
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        <QuestionEditForm />
+      </div>
     </div>
   );
 };

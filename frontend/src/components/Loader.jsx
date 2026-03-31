@@ -1,9 +1,11 @@
 const Loader = () => {
   return (
-    <div className="flex justify-center">
-      <span className="circle animate-loader"></span>
-      <span className="circle animate-loader animation-delay-200"></span>
-      <span className="circle animate-loader animation-delay-400"></span>
+    <div className="flex justify-center items-center py-16">
+      <div className="dot-loader flex gap-2">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   );
 };

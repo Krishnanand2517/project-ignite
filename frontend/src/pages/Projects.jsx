@@ -1,50 +1,35 @@
 import { ProjectCategoryCard } from "../components";
 
+const projects = [
+  { title: "AI & ML", slug: "ai-ml" },
+  { title: "Blockchain", slug: "blockchain" },
+  { title: "Flutter", slug: "flutter" },
+  { title: "NodeJS", slug: "nodejs" },
+  { title: "ReactJS", slug: "reactjs" },
+  { title: "React Native", slug: "react-native" },
+];
+
 const Projects = () => {
-  const projects = [
-    {
-      title: "AI & ML",
-      slug: "ai-ml",
-    },
-    {
-      title: "Blockchain",
-      slug: "blockchain",
-    },
-    {
-      title: "Flutter",
-      slug: "flutter",
-    },
-    {
-      title: "NodeJS",
-      slug: "nodejs",
-    },
-    {
-      title: "ReactJS",
-      slug: "reactjs",
-    },
-    {
-      title: "React Native",
-      slug: "react-native",
-    },
-  ];
-
   return (
-    <div className="w-full min-h-screen pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-      <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
-        Projects
-      </h1>
+    <div className="min-h-screen bg-[#0a0a0b] pt-24">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-12">
+          <span className="section-line mb-4" />
+          <h1 className="font-syne font-bold text-3xl text-neutral-100 mt-4">
+            Projects
+          </h1>
+        </div>
 
-      {/* <ul className="flex flex-wrap gap-8">
-        {projects.map((project) => (
-          <li key={project.slug}>
-            <ProjectCategoryCard slug={project.slug} title={project.title} />
-          </li>
-        ))}
-      </ul> */}
-
-      <h4 className="text-3xl 2xl:text-5xl font-fira font-bold text-secondary">
-        Under construction 🚧🏗️
-      </h4>
+        <div className="flex flex-col items-center justify-center py-24 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(17,17,20,0.4)]">
+          <div className="text-4xl mb-4">🚧</div>
+          <h4 className="font-syne font-bold text-xl text-neutral-100 mb-2">
+            Under Construction
+          </h4>
+          <p className="text-sm font-mono text-neutral-600">
+            This section is coming soon. Check back later.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

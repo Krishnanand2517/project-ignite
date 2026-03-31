@@ -1,58 +1,25 @@
 import { ProjectCard } from "../components";
 
 const ProjectCategory = () => {
-  const page = {
-    title: "Blockchain",
-    projects: [
-      {
-        title: "NFT Store",
-        duration: "30 hours",
-        difficulty: "Beginner",
-        slug: "blockchain/project-1",
-      },
-      {
-        title: "NFT Store",
-        duration: "30 hours",
-        difficulty: "Beginner",
-        slug: "blockchain/project-2",
-      },
-      {
-        title: "NFT Store",
-        duration: "30 hours",
-        difficulty: "Beginner",
-        slug: "blockchain/project-3",
-      },
-      {
-        title: "NFT Store",
-        duration: "30 hours",
-        difficulty: "Beginner",
-        slug: "blockchain/project-4",
-      },
-    ],
-  };
-
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 pb-4 px-20 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-      {/* <h1 className="mb-16 text-4xl 2xl:text-6xl font-fira font-bold text-primary">
-        {page.title} Projects
-      </h1>
-
-      <ul className="flex flex-wrap gap-8">
-        {page.projects.map((project) => (
-          <li key={project.slug}>
-            <ProjectCard
-              slug={project.slug}
-              title={project.title}
-              difficulty={project.difficulty}
-              duration={project.duration}
-            />
-          </li>
-        ))}
-      </ul> */}
-
-      <h2 className="text-3xl 2xl:text-5xl font-fira font-bold text-secondary">
-        Under construction 🚧🏗️
-      </h2>
+    <div className="min-h-screen bg-[#0a0a0b] pt-24">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-12">
+          <span className="section-line mb-4" />
+          <h1 className="font-syne font-bold text-3xl text-neutral-100 mt-4">
+            Projects
+          </h1>
+        </div>
+        <div className="flex flex-col items-center justify-center py-24 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(17,17,20,0.4)]">
+          <div className="text-4xl mb-4">🚧</div>
+          <h4 className="font-syne font-bold text-xl text-neutral-100 mb-2">
+            Under Construction
+          </h4>
+          <p className="text-sm font-mono text-neutral-600">
+            This section is coming soon.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

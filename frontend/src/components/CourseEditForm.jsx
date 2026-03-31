@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import courseService from "../services/courses";
-import { Input, Button, SelectInput } from "./index";
+import { Input } from "./index";
 
-const CourseEditForm = ({ slug }) => {
+const CourseEditForm = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [courseName, setCourseName] = useState("");
   const [courseSlug, setCourseSlug] = useState("");
   const [courseDuration, setCourseDuration] = useState(1);
@@ -19,128 +17,115 @@ const CourseEditForm = ({ slug }) => {
     const fetchData = async () => {
       try {
         const courseData = await courseService.getOne(slug);
-
         setCourseName(courseData.courseName);
         setCourseSlug(courseData.courseSlug);
         setCourseDuration(courseData.duration.split(" ")[0]);
         setCourseCategory(courseData.category);
         setCourseDifficulty(courseData.difficulty);
       } catch (error) {
-        console.log("Error fetching course data:", error);
+        console.log("Error fetching course:", error);
       }
     };
-
     fetchData();
   }, [slug]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const newCourseObject = {
-      courseName,
-      courseSlug,
-      duration: courseDuration.toString() + " months",
-      category: courseCategory,
-      difficulty: courseDifficulty,
-    };
-
     setIsLoading(true);
-
     try {
-      const response = await courseService.updateOne(slug, newCourseObject);
-
-      if (response.statusCode === 200) {
-        navigate("/courses");
-      }
+      const response = await courseService.updateOne(slug, {
+        courseName,
+        courseSlug,
+        duration: courseDuration.toString() + " months",
+        category: courseCategory,
+        difficulty: courseDifficulty,
+      });
+      if (response.statusCode === 200) navigate("/courses");
     } catch (error) {
-      console.log("Error while updating course:", error);
+      console.log("Error updating course:", error);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="pt-4 2xl:pt-8 px-24 pb-14 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
-    >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
-        Edit Course
-      </h2>
+  const disabled =
+    isLoading ||
+    [courseName, courseSlug, courseCategory, courseDifficulty].some(
+      (f) => !f?.toString().trim()
+    );
 
-      <div>
+  const selectCls =
+    "w-full py-2.5 px-4 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-sm font-mono text-[#a8a89e] focus:border-amber-500 outline-none appearance-none cursor-pointer transition-all";
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="mb-8">
+        <span className="section-line mb-4" />
+        <h2 className="font-syne font-bold text-2xl text-neutral-100 mt-4">
+          Edit Course
+        </h2>
+      </div>
+      <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(17,17,20,0.7)] backdrop-blur-xl p-6 space-y-4">
         <Input
-          label="Course Name"
+          label="Course name"
           value={courseName}
           onChange={({ target }) => setCourseName(target.value)}
         />
-      </div>
-      <div>
         <Input
-          label="Course Slug"
+          label="Slug"
           value={courseSlug}
           onChange={({ target }) => setCourseSlug(target.value)}
         />
-      </div>
-      <div>
         <Input
           type="number"
-          label="Course Duration (in months)"
+          label="Duration (months)"
           value={courseDuration}
           onChange={({ target }) => setCourseDuration(target.value)}
         />
-      </div>
-      <div>
-        <SelectInput
+        <select
           value={courseCategory}
           onChange={({ target }) => setCourseCategory(target.value)}
-          label="Category"
-          options={[
-            { name: "Programming", value: "Programming" },
-            { name: "Future Technology", value: "Future Technology" },
-            { name: "Foundational Theory", value: "Foundational Theory" },
-          ]}
-        />
-      </div>
-      <div>
-        <SelectInput
+          className={selectCls}
+        >
+          <option value="" disabled>
+            Select category
+          </option>
+          <option value="Programming" className="bg-[#111114]">
+            Programming
+          </option>
+          <option value="Future Technology" className="bg-[#111114]">
+            Future Technology
+          </option>
+          <option value="Foundational Theory" className="bg-[#111114]">
+            Foundational Theory
+          </option>
+        </select>
+        <select
           value={courseDifficulty}
           onChange={({ target }) => setCourseDifficulty(target.value)}
-          label="Difficulty"
-          options={[
-            { name: "Beginner", value: "beginner" },
-            { name: "Intermediate", value: "intermediate" },
-            { name: "Expert", value: "expert" },
-          ]}
-        />
+          className={selectCls}
+        >
+          <option value="" disabled>
+            Select difficulty
+          </option>
+          <option value="beginner" className="bg-[#111114]">
+            Beginner
+          </option>
+          <option value="intermediate" className="bg-[#111114]">
+            Intermediate
+          </option>
+          <option value="expert" className="bg-[#111114]">
+            Expert
+          </option>
+        </select>
       </div>
-
-      <Button
-        textSize="text-lg 2xl:text-2xl"
-        className={`font-bold 2xl:font-black my-8 2xl:my-12 py-3 2xl:py-6 ${
-          (isLoading ||
-            [
-              courseName,
-              courseSlug,
-              courseCategory,
-              courseDifficulty,
-              courseDuration,
-            ].some((field) => field?.toString().trim() === "")) &&
-          "bg-green-800 hover:bg-green-800"
-        }`}
+      <button
         type="submit"
-        disabled={
-          isLoading ||
-          [
-            courseName,
-            courseSlug,
-            courseCategory,
-            courseDifficulty,
-            courseDuration,
-          ].some((field) => field?.toString().trim() === "")
-        }
+        disabled={disabled}
+        className="w-full py-3 rounded-xl font-syne font-semibold text-sm bg-accent text-black hover:bg-amber-400 hover:shadow-[0_0_24px_rgba(245,158,11,0.3)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.99]"
       >
-        {isLoading ? "Updating..." : "Update Course"}
-      </Button>
+        {isLoading ? "Saving..." : "Save Changes →"}
+      </button>
     </form>
   );
 };

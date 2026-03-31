@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import { ArticleViewer, Loader, VideoPlayer } from "../components";
 import contentService from "../services/contents";
 
 const Content = () => {
-  const { id } = useParams();
-
+  const { courseSlug, id } = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [contentObject, setContentObject] = useState(null);
 
@@ -17,46 +16,47 @@ const Content = () => {
         setContentObject(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log("Error fetching content data:", error);
+        console.log("Error fetching content:", error);
       }
     };
-
     fetchData();
   }, [id]);
 
-  const renderArticleContent = () => {
+  if (isLoading)
     return (
-      <div className="w-full 2xl:text-xl">
-        <ArticleViewer link={contentObject.contentUrl} />
-      </div>
-    );
-  };
-
-  const renderVideoContent = () => {
-    return <VideoPlayer contentObject={contentObject} />;
-  };
-
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-        <h1 className="mt-32 2xl:mt-36 mb-4 text-5xl 2xl:text-7xl text-center font-bold text-primary">
-          Loading
-        </h1>
-
+      <div className="min-h-screen bg-[#0a0a0b] pt-24 flex items-center justify-center">
         <Loader />
       </div>
     );
-  }
 
   return (
-    <div className="w-full min-h-screen line-numbers pt-32 2xl:pt-40 pb-4 2xl:pb-6 px-48 bg-gradient-to-b from-primary via-neutral-800 to-secondary">
-      <h1 className="mt-8 2xl:mt-16 mb-16 2xl:mb-24 text-4xl 2xl:text-6xl text-center font-bold text-primary">
-        {contentObject.contentTitle}
-      </h1>
+    <div className="min-h-screen bg-[#0a0a0b] pt-24">
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Breadcrumb */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-xs font-mono text-neutral-600 hover:text-[#a8a89e] transition-colors duration-200 mb-8 group"
+        >
+          <span className="transform group-hover:-translate-x-0.5 transition-transform duration-200">
+            ←
+          </span>
+          Back to course
+        </button>
 
-      {contentObject.contentType === "article"
-        ? renderArticleContent()
-        : renderVideoContent()}
+        <h1 className="font-syne font-bold text-2xl text-neutral-100 mb-8 leading-snug">
+          {contentObject.contentTitle}
+        </h1>
+
+        <div className="border-t border-[rgba(255,255,255,0.06)] mb-8" />
+
+        {contentObject.contentType === "article" ? (
+          <div className="font-mono text-[#a8a89e] text-sm leading-relaxed">
+            <ArticleViewer link={contentObject.contentUrl} />
+          </div>
+        ) : (
+          <VideoPlayer contentObject={contentObject} />
+        )}
+      </div>
     </div>
   );
 };

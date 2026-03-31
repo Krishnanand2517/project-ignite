@@ -63,14 +63,14 @@ export const navItems = [
 export const resourceItems = [
   {
     imagePath: "/article.png",
-    buttonText: "Articles ->",
+    buttonText: "Articles",
     imageAlt: "articles",
     slug: "articles",
     paraText: "Explore insightful articles to enhance your coding knowledge.",
   },
   {
     imagePath: "/dev.png",
-    buttonText: "Courses ->",
+    buttonText: "Courses",
     imageAlt: "courses",
     slug: "courses",
     paraText:
@@ -78,7 +78,7 @@ export const resourceItems = [
   },
   {
     imagePath: "/questions.png",
-    buttonText: "Questions ->",
+    buttonText: "Questions",
     imageAlt: "questions",
     slug: "questions",
     paraText:

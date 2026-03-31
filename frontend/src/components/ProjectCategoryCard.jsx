@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const ProjectCategoryCard = ({ slug, title }) => {
   return (
     <Link to={`/projects/${slug}`}>
-      <div className="w-72 h-48 flex items-center bg-neutral-700 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
-        <h3 className="w-full text-center font-fira font-semibold text-2xl 2xl:text-4xl">
+      <div className="group w-64 h-40 flex items-center justify-center rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(17,17,20,0.6)] hover:border-[rgba(245,158,11,0.2)] hover:bg-[rgba(245,158,11,0.02)] transition-all duration-300">
+        <h3 className="font-syne font-bold text-neutral-100 text-xl group-hover:text-accent transition-colors">
           {title}
         </h3>
       </div>

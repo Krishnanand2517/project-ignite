@@ -3,36 +3,42 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        base: "#0a0a0b",
+        surface: "#111114",
+        elevated: "#17171b",
+        overlay: "#1e1e24",
+        accent: "#f59e0b",
+        "accent-dim": "rgba(245,158,11,0.12)",
+      },
       backgroundColor: {
-        primary: "#282C34",
-        secondary: "#2D3E50",
+        primary: "#0a0a0b",
+        secondary: "#111114",
       },
       textColor: {
-        primary: "#FFFFFF",
-        secondary: "#ECF0F1",
+        primary: "#f5f5f0",
+        secondary: "#a8a89e",
+        muted: "#5a5a54",
+        accent: "#f59e0b",
       },
       fontFamily: {
-        fira: ["Fira Code", "monospace"],
-        inconsolata: ["Inconsolata", "monospace"],
+        syne: ["Syne", "sans-serif"],
+        mono: ["DM Mono", "monospace"],
+        fira: ["DM Mono", "monospace"],
+        inconsolata: ["DM Mono", "monospace"],
       },
-      gradientColorStops: {
-        primary: "#282C34",
-        secondary: "#202C34",
+      borderColor: {
+        subtle: "rgba(255,255,255,0.06)",
+        default: "rgba(255,255,255,0.10)",
+        strong: "rgba(255,255,255,0.18)",
       },
       animation: {
         loader: "loader 0.6s infinite alternate",
       },
       keyframes: {
         loader: {
-          to: {
-            opacity: 0.1,
-            transform: "translate3d(0, -1rem, 0)",
-          },
+          to: { opacity: 0.1, transform: "translate3d(0, -1rem, 0)" },
         },
-      },
-      transitionProperty: {
-        width: "width",
-        height: "height",
       },
     },
   },

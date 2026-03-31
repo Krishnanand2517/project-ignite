@@ -11,26 +11,24 @@ const ArticleViewer = ({ link }) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const articleContentData = await articleService.getContent(link);
+        const data = await articleService.getContent(link);
+        setMdContent(data);
         setIsLoading(false);
-        setMdContent(articleContentData);
       } catch (error) {
         console.log("Couldn't fetch file:", error);
       }
     };
-
     fetchData();
   }, [link]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
 
   return (
-    <div>
+    <div data-color-mode="dark">
       <MDEditor.Markdown
         source={mdContent}
-        className="whitespace-pre-wrap px-6 bg-transparent text-lg 2xl:text-2xl text-primary"
+        className="!bg-transparent !text-[#a8a89e] whitespace-pre-wrap font-mono text-sm leading-relaxed"
+        style={{ background: "transparent" }}
       />
     </div>
   );

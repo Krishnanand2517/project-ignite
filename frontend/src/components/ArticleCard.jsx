@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Button } from "./index";
-
 const ArticleCard = ({
   slug,
   imgPath,
@@ -14,58 +12,55 @@ const ArticleCard = ({
 }) => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.userData?._id);
-
-  const renderEditOptions = () => {
-    if (userId === authorId) {
-      return (
-        <div className="absolute top-0 right-0 m-2 2xl:m-4 z-50">
-          <Button
-            bgColor="bg-blue-500"
-            hoverBgColor="hover:bg-black"
-            textColor="text-white"
-            textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2 2xl:mr-4"
-            onClick={() => navigate(`/edit-article/${slug}`)}
-          >
-            Edit
-          </Button>
-          <Button
-            bgColor="bg-red-500"
-            hoverBgColor="hover:bg-black"
-            textColor="text-white"
-            textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2 2xl:mr-4"
-            onClick={() => deleteArticle(slug)}
-          >
-            Delete
-          </Button>
-        </div>
-      );
-    }
-  };
+  const isOwner = userId === authorId;
 
   return (
-    <div className="relative w-full h-36 2xl:h-48 p-6 2xl:p-8 flex gap-x-4 2xl:gap-x-12 font-inconsolata text-secondary border border-white rounded-md hover:bg-black hover:bg-opacity-20 hover:backdrop-blur-3xl">
-      {renderEditOptions()}
+    <div className="group relative flex gap-5 p-5 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(17,17,20,0.5)] hover:border-[rgba(245,158,11,0.15)] hover:bg-[rgba(245,158,11,0.015)] transition-all duration-300">
+      {/* Owner actions */}
+      {isOwner && (
+        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button
+            onClick={() => navigate(`/edit-article/${slug}`)}
+            className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[rgba(59,130,246,0.1)] border border-[rgba(59,130,246,0.25)] text-blue-400 hover:bg-[rgba(59,130,246,0.2)] transition-all duration-150"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              if (window.confirm("Delete this article?")) {
+                deleteArticle(slug);
+              }
+            }}
+            className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.25)] text-red-400 hover:bg-[rgba(239,68,68,0.2)] transition-all duration-150"
+          >
+            Delete
+          </button>
+        </div>
+      )}
 
-      <div className="w-40 2xl:w-52 flex justify-center items-center rounded-md">
-        <img src={imgPath} alt={title} className="w-full rounded-md" />
+      {/* Thumbnail */}
+      <div className="w-28 h-20 flex-shrink-0 rounded-xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+        <img
+          src={imgPath}
+          alt={title}
+          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+        />
       </div>
-      <div className="flex flex-wrap">
+
+      {/* Content */}
+      <div className="flex flex-col justify-between flex-1 min-w-0 pr-16">
         <Link to={`/articles/${slug}`}>
-          <h3 className="w-full font-fira font-bold text-xl 2xl:text-3xl hover:text-orange-400">
+          <h3 className="font-syne font-bold text-neutral-200 text-base leading-snug hover:text-accent transition-colors duration-200 line-clamp-2 mb-1">
             {title}
           </h3>
         </Link>
-        <p className="w-full 2xl:text-xl">by {authorName}</p>
+        <p className="text-xs font-mono text-neutral-500 mb-3">
+          by {authorName}
+        </p>
 
-        <div className="w-full flex gap-2 mt-2 text-sm 2xl:text-lg">
-          Tags:{" "}
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="border-[1px] px-1 2xl:px-2 border-white hover:bg-white hover:text-black rounded-md"
-            >
+        <div className="flex flex-wrap gap-1.5">
+          {tags?.map((tag, index) => (
+            <span key={`${tag}-${index}`} className="tag">
               {tag}
             </span>
           ))}

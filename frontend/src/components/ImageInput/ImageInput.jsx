@@ -7,7 +7,7 @@ const ImageInput = ({
   defaultSrc = "/user_placeholder.png",
   label = "",
   className = "",
-  size = "h-14 w-14 2xl:h-16 2xl:w-16",
+  size = "h-14 w-14",
   padding = "p-0",
   rounded = "rounded-full",
   setOutputImage,
@@ -21,7 +21,6 @@ const ImageInput = ({
   const getImage = (url) => {
     setImage(url);
     setIsCropperOpen(false);
-
     const blob = dataURItoBlob(url);
     const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
     setOutputImage(file);
@@ -29,28 +28,16 @@ const ImageInput = ({
 
   const onInputChange = (e) => {
     e.preventDefault();
-
-    let files;
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files;
-    } else if (e.target) {
-      files = e.target.files;
-    }
-
+    const files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
     const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result);
-    };
+    reader.onload = () => setImage(reader.result);
     reader.readAsDataURL(files[0]);
-
     setIsCropperOpen(true);
     e.target.value = null;
   };
 
   return (
-    <div
-      className={`flex flex-col items-center justify-center 2xl:text-xl ${className}`}
-    >
+    <div className={`flex flex-col items-center gap-3 ${className}`}>
       <input
         type="file"
         ref={imageUploader}
@@ -58,14 +45,25 @@ const ImageInput = ({
         onChange={onInputChange}
         className="hidden"
       />
+
       <div
-        className={`${size} ${padding} border-2 border-solid border-white hover:border-orange-500 cursor-pointer ${rounded} 2xl:mb-4`}
+        className={`${size} ${padding} relative border-2 border-[rgba(255,255,255,0.12)] hover:border-amber-500 cursor-pointer transition-all duration-200 overflow-hidden ${rounded} group`}
         onClick={() => imageUploader.current.click()}
         {...props}
       >
-        <img src={image} className={`w-full h-full ${rounded}`} />
+        <img
+          src={image}
+          className={`w-full h-full object-cover ${rounded}`}
+          alt="upload"
+        />
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-inherit">
+          <span className="text-xs font-mono text-white">Change</span>
+        </div>
       </div>
-      {label}
+
+      {label && (
+        <span className="text-xs font-mono text-neutral-500">{label}</span>
+      )}
 
       <ReactModal
         isOpen={isCropperOpen}
@@ -75,24 +73,36 @@ const ImageInput = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "rgba(0, 0, 0, 0.5)",
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(8px)",
+            zIndex: 1000,
           },
           content: {
             width: 480,
-            height: 480,
+            height: 500,
             position: "relative",
+            background: "#17171b",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "16px",
+            padding: "20px",
+            inset: "auto",
           },
         }}
       >
-        <div
-          className="w-full flex justify-end cursor-pointer"
-          onClick={(e) => {
-            e.preventDefault();
-            setImage(defaultSrc);
-            setIsCropperOpen(false);
-          }}
-        >
-          &times;
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm font-syne font-semibold text-neutral-100">
+            Crop image
+          </span>
+          <button
+            className="text-neutral-500 hover:text-neutral-100 transition-colors text-xl leading-none"
+            onClick={(e) => {
+              e.preventDefault();
+              setImage(defaultSrc);
+              setIsCropperOpen(false);
+            }}
+          >
+            ×
+          </button>
         </div>
         <ImageCropper image={image} getImage={getImage} isSquare={isSquare} />
       </ReactModal>

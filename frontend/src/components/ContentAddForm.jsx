@@ -1,136 +1,108 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import courseService from "../services/courses";
-import { Input, SelectInput, Button, ArticleEditor } from "./index";
+import { Input, ArticleEditor } from "./index";
 
 const ContentAddForm = ({ slug }) => {
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [contentTitle, setContentTitle] = useState("");
   const [contentType, setContentType] = useState("");
   const [videoUrl, setVideoUrl] = useState(null);
-  const [mdContent, setMdContent] = useState("### Write your article here...");
+  const [mdContent, setMdContent] = useState("### Write your lesson here...");
 
   const makeArticleFile = (contents) => {
-    const dataBlob = new Blob([contents], { type: "text/plain" });
-    const file = new File([dataBlob], "output.md", {
-      type: "text/markdown",
-    });
-    return file;
+    const blob = new Blob([contents], { type: "text/plain" });
+    return new File([blob], "output.md", { type: "text/markdown" });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const contentFile =
-      contentType === "article" ? makeArticleFile(mdContent) : null;
-
-    const contentFormData = new FormData();
-    contentFormData.append("contentTitle", contentTitle);
-    contentFormData.append("contentType", contentType);
-
-    if (contentType === "article") {
-      contentFormData.append("content", contentFile);
-    } else if (contentType === "video") {
-      contentFormData.append("content", videoUrl);
-    }
-
+    const formData = new FormData();
+    formData.append("contentTitle", contentTitle);
+    formData.append("contentType", contentType);
+    if (contentType === "article")
+      formData.append("content", makeArticleFile(mdContent));
+    else if (contentType === "video") formData.append("content", videoUrl);
     setIsLoading(true);
-
     try {
-      const response = await courseService.addContent(slug, contentFormData);
-
-      if (response.statusCode === 201) {
-        navigate(`/courses/${slug}`);
-      }
+      const response = await courseService.addContent(slug, formData);
+      if (response.statusCode === 201) navigate(`/courses/${slug}`);
     } catch (error) {
-      console.log("Error while adding content:", error);
+      console.log("Error adding content:", error);
       setIsLoading(false);
     }
   };
 
-  const renderContentInputFields = () => {
-    switch (contentType) {
-      case "article":
-        return (
-          <ArticleEditor mdContent={mdContent} setMdContent={setMdContent} />
-        );
-
-      case "video":
-        return (
-          <>
-            <span className="text-lg 2xl:text-2xl text-primary">
-              Upload Video
-            </span>
-            <Input
-              type="file"
-              className="text-primary"
-              onChange={({ target }) => setVideoUrl(target.files[0])}
-              accept="video/mp4, video/mkv"
-            />
-          </>
-        );
-
-      default:
-        break;
-    }
-  };
+  const disabled =
+    isLoading ||
+    !contentTitle.trim() ||
+    !contentType ||
+    (!videoUrl && !mdContent);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-14 2xl:p-20 flex flex-col gap-y-5 2xl:gap-y-10 font-inconsolata"
-    >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8 2xl:mb-12">
-        Add Content
-      </h2>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="mb-8">
+        <span className="section-line mb-4" />
+        <h2 className="font-syne font-bold text-2xl text-neutral-100 mt-4">
+          Add Lesson
+        </h2>
+        <p className="text-sm font-mono text-neutral-500 mt-1">
+          Add a new lesson to this course
+        </p>
+      </div>
 
-      <div>
+      <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(17,17,20,0.7)] backdrop-blur-xl p-6 space-y-4">
         <Input
-          label="Content Title"
+          label="Lesson title"
           value={contentTitle}
           onChange={({ target }) => setContentTitle(target.value)}
         />
-      </div>
-      <div>
-        <SelectInput
+
+        <select
           value={contentType}
           onChange={({ target }) => setContentType(target.value)}
-          label="Content Type"
-          options={[
-            { name: "Article", value: "article" },
-            { name: "Video", value: "video" },
-            // { name: "Exercise", value: "exercise" },
-          ]}
-        />
+          className="w-full py-2.5 px-4 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-sm font-mono text-[#a8a89e] focus:border-amber-500 outline-none appearance-none cursor-pointer transition-all"
+        >
+          <option value="" disabled>
+            Select content type
+          </option>
+          <option value="article" className="bg-[#111114]">
+            Article / Text
+          </option>
+          <option value="video" className="bg-[#111114]">
+            Video
+          </option>
+        </select>
       </div>
 
-      <div>{contentType && renderContentInputFields()}</div>
+      {contentType === "article" && (
+        <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(17,17,20,0.7)] backdrop-blur-xl overflow-hidden">
+          <ArticleEditor mdContent={mdContent} setMdContent={setMdContent} />
+        </div>
+      )}
 
-      <Button
-        textSize="text-lg 2xl:text-2xl"
-        className={`font-bold 2xl:font-black my-8 2xl:my-12 py-3 2xl:py-6 ${
-          (isLoading ||
-            [contentTitle, contentType].some(
-              (field) => field?.toString().trim() === ""
-            ) ||
-            (!videoUrl && !mdContent)) &&
-          "bg-green-800 hover:bg-green-800"
-        }`}
+      {contentType === "video" && (
+        <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(17,17,20,0.7)] p-6 space-y-3">
+          <p className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+            Upload video
+          </p>
+          <Input
+            type="file"
+            className="text-[#a8a89e]"
+            onChange={({ target }) => setVideoUrl(target.files[0])}
+            accept="video/mp4,video/mkv"
+          />
+        </div>
+      )}
+
+      <button
         type="submit"
-        disabled={
-          isLoading ||
-          [contentTitle, contentType].some(
-            (field) => field?.toString().trim() === ""
-          ) ||
-          (!videoUrl && !mdContent)
-        }
+        disabled={disabled}
+        className="w-full py-3 rounded-xl font-syne font-semibold text-sm bg-accent text-black hover:bg-amber-400 hover:shadow-[0_0_24px_rgba(245,158,11,0.3)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.99]"
       >
-        {isLoading ? "Adding..." : "Add Content"}
-      </Button>
+        {isLoading ? "Adding..." : "Add Lesson →"}
+      </button>
     </form>
   );
 };

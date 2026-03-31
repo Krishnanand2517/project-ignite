@@ -1,6 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import { Button } from "./index";
+const difficultyColor = (d) => {
+  const lower = (d || "").toLowerCase();
+  if (lower.includes("beginner") || lower.includes("easy")) return "badge-easy";
+  if (lower.includes("intermediate") || lower.includes("medium"))
+    return "badge-medium";
+  if (lower.includes("advanced") || lower.includes("hard")) return "badge-hard";
+  return "";
+};
 
 const CourseCard = ({
   slug,
@@ -13,72 +20,66 @@ const CourseCard = ({
 }) => {
   const navigate = useNavigate();
 
-  const renderEditOptions = () => {
-    if (editable) {
-      return (
-        <div className="absolute top-0 right-0 m-2 2xl:m-4">
-          <Button
-            bgColor="bg-blue-500"
-            hoverBgColor="hover:bg-black"
-            textColor="text-white"
-            textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100 mr-2"
+  return (
+    <div className="group relative rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(17,17,20,0.6)] hover:border-[rgba(245,158,11,0.2)] transition-all duration-300 overflow-hidden flex flex-col">
+      {/* Edit/Delete */}
+      {editable && (
+        <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button
             onClick={() => navigate(`/edit-course/${slug}`)}
+            className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[rgba(10,10,11,0.85)] border border-[rgba(59,130,246,0.3)] text-blue-400 hover:bg-[rgba(59,130,246,0.1)] transition-all duration-150 backdrop-blur-sm"
           >
             Edit
-          </Button>
-          <Button
-            bgColor="bg-red-500"
-            hoverBgColor="hover:bg-black"
-            textColor="text-white"
-            textSize="text-xs 2xl:text-sm"
-            className="py-[2px] 2xl:py-[4px] px-[3px] 2xl:px-[6px] rounded-sm opacity-70 hover:opacity-100"
+          </button>
+          <button
             onClick={() => deleteCourse(slug)}
+            className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[rgba(10,10,11,0.85)] border border-[rgba(239,68,68,0.3)] text-red-400 hover:bg-[rgba(239,68,68,0.1)] transition-all duration-150 backdrop-blur-sm"
           >
             Delete
-          </Button>
+          </button>
         </div>
-      );
-    }
-  };
+      )}
 
-  return (
-    <div className="relative w-60 2xl:w-80 h-96 2xl:h-[30rem] flex flex-col justify-center bg-opacity-60 bg-neutral-700 font-inconsolata text-secondary border border-white rounded-md">
-      {renderEditOptions()}
-
+      {/* Thumbnail */}
       <Link
         to={`/courses/${slug}`}
-        className="flex justify-center items-center"
+        className="block aspect-video overflow-hidden bg-[rgba(255,255,255,0.02)]"
       >
-        <div className="h-36 2xl:h-44 flex justify-center items-center">
-          <img
-            src={imgPath}
-            alt={title}
-            className="h-36 2xl:h-44 w-60 2xl:w-80 rounded-md"
-          />
-        </div>
+        <img
+          src={imgPath}
+          alt={title}
+          className="w-full h-full object-cover opacity-75 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-500"
+        />
       </Link>
-      <hr />
-      <div className="flex flex-1 flex-col justify-between items-center py-4">
-        <div className="px-4 2xl:px-8">
-          <h3 className="w-full font-fira font-semibold text-lg 2xl:text-2xl">
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        <Link to={`/courses/${slug}`}>
+          <h3 className="font-syne font-bold text-neutral-100 text-base leading-snug hover:text-accent transition-colors duration-200 mb-2">
             {title}
           </h3>
-          <p className="text-sm 2xl:text-lg opacity-70">{duration}</p>
-          <p className="2xl:text-2xl opacity-80">{difficulty}</p>
+        </Link>
+
+        <div className="flex items-center gap-3 mb-4">
+          {duration && (
+            <span className="text-xs font-mono text-neutral-400">
+              ⏱ {duration}
+            </span>
+          )}
+          {difficulty && (
+            <span className={`tag ${difficultyColor(difficulty)}`}>
+              {difficulty}
+            </span>
+          )}
         </div>
 
-        <Link
-          to={`/courses/${slug}`}
-          className="mx-12 2xl:mx-16 my-4 flex justify-center items-center self-stretch"
-        >
-          <Button
-            textSize="text-lg 2xl:text-2xl"
-            className="w-full font-fira font-bold"
-          >
-            Check
-          </Button>
-        </Link>
+        <div className="mt-auto">
+          <Link to={`/courses/${slug}`}>
+            <button className="w-full py-2.5 rounded-xl font-syne font-semibold text-sm border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] text-[#a8a89e] hover:border-amber-500 hover:text-accent hover:bg-[rgba(245,158,11,0.05)] transition-all duration-200">
+              View Course →
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

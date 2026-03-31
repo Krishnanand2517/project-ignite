@@ -1,30 +1,88 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-
-import { Input, Button, SelectInput } from "./index";
+import { Input } from "./index";
 import questionService from "../services/questions";
 import { topicsList, companiesListInitial } from "../constants";
 
-const topicsOptions = topicsList.map((topic) => ({
-  value: topic,
-  label: topic
+const topicsOptions = topicsList.map((t) => ({
+  value: t,
+  label: t
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((w) => w[0].toUpperCase() + w.slice(1))
     .join(" "),
 }));
-
-const companiesOptions = companiesListInitial.map((company) => ({
-  value: company,
-  label: company,
+const companiesOptions = companiesListInitial.map((c) => ({
+  value: c,
+  label: c,
 }));
 
-const QuestionEditForm = ({ id }) => {
+const selectStyles = {
+  control: (base, state) => ({
+    ...base,
+    background: "rgba(255,255,255,0.04)",
+    border: `1px solid ${
+      state.isFocused ? "#f59e0b" : "rgba(255,255,255,0.08)"
+    }`,
+    borderRadius: "8px",
+    boxShadow: "none",
+    "&:hover": { borderColor: "rgba(255,255,255,0.14)" },
+    padding: "2px 4px",
+  }),
+  menu: (base) => ({
+    ...base,
+    background: "#17171b",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: "8px",
+    overflow: "hidden",
+  }),
+  menuPortal: (base) => ({
+    ...base,
+    zIndex: 9999,
+  }),
+  option: (base, state) => ({
+    ...base,
+    background: state.isFocused ? "rgba(245,158,11,0.1)" : "transparent",
+    color: state.isFocused ? "#f59e0b" : "#a8a89e",
+    fontSize: "12px",
+    fontFamily: "'DM Mono', monospace",
+    cursor: "pointer",
+  }),
+  multiValue: (base) => ({
+    ...base,
+    background: "rgba(245,158,11,0.12)",
+    borderRadius: "99px",
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    color: "#f59e0b",
+    fontSize: "11px",
+    fontFamily: "'DM Mono', monospace",
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: "#f59e0b",
+    "&:hover": { background: "rgba(245,158,11,0.2)", color: "#f59e0b" },
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: "#5a5a54",
+    fontSize: "13px",
+    fontFamily: "'DM Mono', monospace",
+  }),
+  input: (base) => ({
+    ...base,
+    color: "#f5f5f0",
+    fontSize: "13px",
+    fontFamily: "'DM Mono', monospace",
+  }),
+};
+
+const QuestionEditForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [title, setTitle] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [topics, setTopics] = useState([]);
@@ -35,141 +93,113 @@ const QuestionEditForm = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const questionData = await questionService.getOne(id);
-
-        setTitle(questionData.questionTitle);
-        setDifficulty(questionData.difficulty);
-        setProblemLink(questionData.problemLink);
-        setSolutionLink(questionData?.solutionLink);
-
+        const q = await questionService.getOne(id);
+        setTitle(q.questionTitle);
+        setDifficulty(q.difficulty);
+        setProblemLink(q.problemLink);
+        setSolutionLink(q?.solutionLink);
         setTopics(
-          questionData.topics.map((topic) => ({
-            value: topic,
-            label: topic
+          q.topics.map((t) => ({
+            value: t,
+            label: t
               .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .map((w) => w[0].toUpperCase() + w.slice(1))
               .join(" "),
           }))
         );
-
-        setCompanyTags(
-          questionData.companyTags.map((company) => ({
-            value: company,
-            label: company,
-          }))
-        );
+        setCompanyTags(q.companyTags.map((c) => ({ value: c, label: c })));
       } catch (error) {
-        console.log("Error fetching question data:", error);
+        console.log("Error fetching question:", error);
       }
     };
-
     fetchData();
   }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const newQuestionObject = {
+    setIsLoading(true);
+    const response = await questionService.updateOne(id, {
       questionTitle: title,
       difficulty,
-      topics: topics.map((topic) => topic.value),
+      topics: topics.map((t) => t.value),
       problemLink,
       solutionLink,
-      companyTags: companyTags.map((tag) => tag.value),
-    };
-
-    setIsLoading(true);
-
-    const response = await questionService.updateOne(id, newQuestionObject);
-
+      companyTags: companyTags.map((t) => t.value),
+    });
     setIsLoading(false);
-
-    if (response.statusCode === 200) {
-      navigate("/questions");
-    }
+    if (response.statusCode === 200) navigate("/questions");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-14 2xl:p-20 my-32 2xl:my-48 w-full max-w-md 2xl:max-w-2xl rounded-lg flex flex-col gap-5 2xl:gap-10 font-inconsolata mx-auto bg-black bg-opacity-20 backdrop-blur-3xl"
-    >
-      <h2 className="text-2xl 2xl:text-4xl font-fira font-bold text-primary text-center mb-8">
-        Edit Question
-      </h2>
-      <div>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="mb-8">
+        <span className="section-line mb-4" />
+        <h2 className="font-syne font-bold text-2xl text-neutral-100 mt-4">
+          Edit Question
+        </h2>
+      </div>
+      <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(17,17,20,0.7)] backdrop-blur-xl p-6 space-y-4">
         <Input
-          label="Problem Title"
+          label="Problem title"
           value={title}
           onChange={({ target }) => setTitle(target.value)}
         />
-      </div>
-      <div>
-        <SelectInput
+        <select
           value={difficulty}
           onChange={({ target }) => setDifficulty(target.value)}
-          label="Difficulty"
-          options={[
-            { name: "Easy", value: "easy" },
-            { name: "Medium", value: "medium" },
-            { name: "Hard", value: "hard" },
-          ]}
-        />
-      </div>
-      <div>
+          className="w-full py-2.5 px-4 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-sm font-mono text-[#a8a89e] focus:border-amber-500 outline-none appearance-none cursor-pointer transition-all"
+        >
+          <option value="" disabled>
+            Select difficulty
+          </option>
+          <option value="easy" className="bg-[#111114]">
+            Easy
+          </option>
+          <option value="medium" className="bg-[#111114]">
+            Medium
+          </option>
+          <option value="hard" className="bg-[#111114]">
+            Hard
+          </option>
+        </select>
         <Select
           placeholder="Topics"
           isMulti
-          defaultValue={topics}
           value={topics}
           options={topicsOptions}
-          onChange={(selectedOptions) => setTopics(selectedOptions)}
-          classNames={{
-            control: () => "py-1 2xl:py-2 px-2 2xl:px-4 2xl:text-2xl",
-            option: () => "2xl:text-2xl",
-            menuList: () => "2xl:text-xl",
-          }}
+          onChange={setTopics}
+          styles={selectStyles}
+          menuPortalTarget={document.body}
+          menuPosition="fixed"
         />
-      </div>
-      <div>
         <Input
-          label="Problem Link"
+          label="Problem link"
           value={problemLink}
           onChange={({ target }) => setProblemLink(target.value)}
         />
-      </div>
-      <div>
         <Input
-          label="Solution Link"
+          label="Solution link"
           value={solutionLink}
           onChange={({ target }) => setSolutionLink(target.value)}
         />
-      </div>
-      <div>
         <CreatableSelect
-          placeholder="Companies Asked"
+          placeholder="Companies asked"
           isMulti
-          defaultValue={companyTags}
           value={companyTags}
           options={companiesOptions}
-          onChange={(selectedOptions) => setCompanyTags(selectedOptions)}
-          classNames={{
-            control: () => "py-1 2xl:py-2 px-2 2xl:px-4 2xl:text-2xl",
-            option: () => "2xl:text-2xl",
-            menuList: () => "2xl:text-xl",
-          }}
+          onChange={setCompanyTags}
+          styles={selectStyles}
+          menuPortalTarget={document.body}
+          menuPosition="fixed"
         />
       </div>
-      <Button
-        textSize="text-lg 2xl:text-2xl"
-        className={`font-bold 2xl:font-black my-5 2xl:my-8 py-3 2xl:py-6 ${
-          isLoading && "bg-green-800 hover:bg-green-800"
-        }`}
+      <button
         type="submit"
         disabled={isLoading}
+        className="w-full py-3 rounded-xl font-syne font-semibold text-sm bg-accent text-black hover:bg-amber-400 hover:shadow-[0_0_24px_rgba(245,158,11,0.3)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.99]"
       >
-        {isLoading ? "Editing..." : "Edit Question"}
-      </Button>
+        {isLoading ? "Saving..." : "Save Changes →"}
+      </button>
     </form>
   );
 };

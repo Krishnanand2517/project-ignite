@@ -10,14 +10,12 @@ const App = () => {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-wrap items-stretch">
-      <div className="w-full">
-        <Header />
-      </div>
-      <Outlet />
-      <div className="w-full pt-36 pb-10 px-20 bg-gradient-to-t from-primary via-neutral-800 to-secondary">
-        <Footer />
-      </div>
+    <div className="min-h-screen flex flex-col bg-[#0a0a0b]">
+      <Header />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 };
