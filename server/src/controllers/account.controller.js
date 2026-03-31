@@ -79,7 +79,7 @@ const registerAccount = asyncHandler(async (req, res) => {
     password,
     fullName,
     accountType,
-    avatarImage: avatar.url,
+    avatarImage: avatar.secure_url,
   });
 
   // remove password and refresh token field from response
@@ -342,7 +342,7 @@ const updateAccountAvatar = asyncHandler(async (req, res) => {
 
   await account.updateOne({
     $set: {
-      avatarImage: avatar.url,
+      avatarImage: avatar.secure_url,
     },
   });
 

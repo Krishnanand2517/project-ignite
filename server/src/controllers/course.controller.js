@@ -75,7 +75,7 @@ const createCourse = asyncHandler(async (req, res) => {
   const course = await Course.create({
     courseName,
     courseSlug,
-    courseImage: courseImage.url,
+    courseImage: courseImage.secure_url,
     duration,
     category,
     difficulty,
@@ -159,7 +159,7 @@ const updateCourseImage = asyncHandler(async (req, res) => {
 
   await course.updateOne({
     $set: {
-      courseImage: courseImage.url,
+      courseImage: courseImage.secure_url,
     },
   });
 
@@ -242,7 +242,7 @@ const addContent = asyncHandler(async (req, res) => {
   const content = await Content.create({
     contentTitle,
     contentType,
-    contentUrl: contentFile.url,
+    contentUrl: contentFile.secure_url,
     course: course._id,
   });
 

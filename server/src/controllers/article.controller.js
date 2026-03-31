@@ -74,9 +74,9 @@ const createArticle = asyncHandler(async (req, res) => {
   const article = await Article.create({
     articleTitle,
     articleSlug,
-    coverImage: coverImage?.url,
+    coverImage: coverImage?.secure_url,
     author: req.account?._id,
-    content: content.url,
+    content: content.secure_url,
     tags,
   });
 
@@ -152,7 +152,7 @@ const updateArticle = asyncHandler(async (req, res) => {
   await article.updateOne({
     $set: {
       articleTitle,
-      content: content.url,
+      content: content.secure_url,
       tags,
     },
   });

@@ -52,7 +52,7 @@ const uploadOnCloudinary = async (fileBuffer) => {
       stream.pipe(uploadStream);
     });
 
-    console.log("File is uploaded on Cloudinary", response.url);
+    console.log("File is uploaded on Cloudinary", response.secure_url);
 
     return response;
   } catch (error) {
