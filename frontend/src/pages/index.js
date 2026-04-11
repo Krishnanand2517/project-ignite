@@ -1,0 +1,20 @@
+import { lazy } from "react";
+
+export const Landing = lazy(() => import("./Landing.jsx"));
+export const Login = lazy(() => import("./Login.jsx"));
+export const Register = lazy(() => import("./Register.jsx"));
+export const Articles = lazy(() => import("./Articles.jsx"));
+export const Article = lazy(() => import("./Article.jsx"));
+export const ArticleAdd = lazy(() => import("./ArticleAdd.jsx"));
+export const ArticleEdit = lazy(() => import("./ArticleEdit.jsx"));
+export const Courses = lazy(() => import("./Courses.jsx"));
+export const Course = lazy(() => import("./Course.jsx"));
+export const CourseAdd = lazy(() => import("./CourseAdd.jsx"));
+export const CourseEdit = lazy(() => import("./CourseEdit.jsx"));
+export const Content = lazy(() => import("./Content.jsx"));
+export const ContentAdd = lazy(() => import("./ContentAdd.jsx"));
+export const Projects = lazy(() => import("./Projects.jsx"));
+export const ProjectCategory = lazy(() => import("./ProjectCategory.jsx"));
+export const Questions = lazy(() => import("./Questions.jsx"));
+export const QuestionAdd = lazy(() => import("./QuestionAdd.jsx"));
+export const QuestionEdit = lazy(() => import("./QuestionEdit.jsx"));
