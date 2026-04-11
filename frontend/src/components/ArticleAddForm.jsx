@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import articleService from "../services/articles";
-import { ArticleEditor, Input, ImageInput } from "./index";
+import { Input, ImageInput } from "./index";
 import { articleTagsList } from "../constants";
+
+const ArticleEditor = lazy(() => import("./ArticleEditor"));
 
 const articleTagsOptions = articleTagsList.map((tag) => ({
   value: tag,

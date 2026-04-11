@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import articleService from "../services/articles";
-import { ArticleViewer, Loader, Likes } from "../components";
+import { Loader, Likes } from "../components";
+
+const ArticleViewer = lazy(() => import("../components/ArticleViewer"));
 
 const Article = () => {
   const { slug } = useParams();

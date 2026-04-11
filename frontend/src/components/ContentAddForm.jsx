@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import courseService from "../services/courses";
-import { Input, ArticleEditor } from "./index";
+import { Input } from "./index";
+
+const ArticleEditor = lazy(() => import("./ArticleEditor"));
 
 const ContentAddForm = ({ slug }) => {
   const navigate = useNavigate();

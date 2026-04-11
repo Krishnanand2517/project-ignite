@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArticleViewer, Loader, VideoPlayer } from "../components";
+import { Loader, VideoPlayer } from "../components";
 import contentService from "../services/contents";
+
+const ArticleViewer = lazy(() => import("../components/ArticleViewer"));
 
 const Content = () => {
   const { courseSlug, id } = useParams();
