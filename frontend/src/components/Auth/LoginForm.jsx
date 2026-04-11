@@ -44,6 +44,11 @@ const LoginForm = () => {
     }
   };
 
+  const fillDemoCredentials = () => {
+    setEmailOrUsername("ironman");
+    setPassword("savepeter");
+  };
+
   const disabled = isLoading || !emailOrUsername || !password;
 
   return (
@@ -85,6 +90,16 @@ const LoginForm = () => {
           {error && (
             <p className="text-xs font-mono text-red-400 px-1">{error}</p>
           )}
+
+          <p className="text-right">
+            <button
+              type="button"
+              onClick={fillDemoCredentials}
+              className="text-xs font-mono text-neutral-500 hover:text-accent transition-colors duration-200 underline underline-offset-2"
+            >
+              Use demo credentials
+            </button>
+          </p>
 
           <button
             type="submit"
