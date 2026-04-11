@@ -29,13 +29,6 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left */}
           <div className="space-y-8">
-            {/* <div className="fade-up-1 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(245,158,11,0.25)] bg-[rgba(245,158,11,0.06)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              <span className="text-xs font-mono text-accent tracking-wider">
-                OPEN SOURCE LEARNING PLATFORM
-              </span>
-            </div> */}
-
             <div className="fade-up-2 space-y-3">
               <h1
                 className="font-syne font-bold leading-[1.05] tracking-tight text-neutral-100"
@@ -57,9 +50,10 @@ const Hero = () => {
               </p>
             </div>
 
-            <p className="fade-up-3 text-base font-mono text-[#a4a49f] max-w-md leading-relaxed">
-              Master data structures, explore in-depth courses, and sharpen
-              interview skills — all in one place, built by the community.
+            <p className="fade-up-3 text-base font-mono text-neutral-400 max-w-md leading-relaxed">
+              DSA. Courses. Articles.
+              <br />
+              By the community.
             </p>
 
             <div className="fade-up-4 flex items-center gap-4">
