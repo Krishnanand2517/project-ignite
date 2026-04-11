@@ -6,14 +6,14 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store/store.js";
 
 import "./index.css";
-import Loader from "./components/Loader.jsx";
+import { DelayedLoader } from "./components";
 import router from "./router";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<DelayedLoader />}>
           <RouterProvider router={router} />
         </Suspense>
       </PersistGate>

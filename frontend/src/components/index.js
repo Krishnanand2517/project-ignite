@@ -1,4 +1,5 @@
 import Loader from "./Loader";
+import DelayedLoader from "./DelayedLoader";
 import Button from "./Button";
 import Input from "./Input";
 import SelectInput from "./SelectInput";
@@ -40,6 +41,7 @@ import Footer from "./Footer/Footer";
 
 export {
   Loader,
+  DelayedLoader,
   Button,
   Input,
   SelectInput,
