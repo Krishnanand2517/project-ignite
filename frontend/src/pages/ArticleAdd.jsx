@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ArticleAddForm } from "../components";
+
+const ArticleAddForm = lazy(() => import("../components/ArticleAddForm"));
 
 const ArticleAdd = () => {
   const navigate = useNavigate();
@@ -14,7 +15,9 @@ const ArticleAdd = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0b] pt-24">
       <div className="max-w-3xl mx-auto px-6 py-12">
-        <ArticleAddForm />
+        <Suspense fallback={<div>Loading editor...</div>}>
+          <ArticleAddForm />
+        </Suspense>
       </div>
     </div>
   );

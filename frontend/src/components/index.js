@@ -22,8 +22,6 @@ import LoginForm from "./Auth/LoginForm";
 import RegisterForm from "./Auth/RegisterForm";
 import QuestionAddForm from "./QuestionAddForm";
 import QuestionEditForm from "./QuestionEditForm";
-import ArticleAddForm from "./ArticleAddForm";
-import ArticleEditForm from "./ArticleEditForm";
 import CourseAddForm from "./CourseAddForm";
 import CourseEditForm from "./CourseEditForm";
 import ContentAddForm from "./ContentAddForm";
@@ -62,8 +60,6 @@ export {
   RegisterForm,
   QuestionAddForm,
   QuestionEditForm,
-  ArticleAddForm,
-  ArticleEditForm,
   CourseAddForm,
   CourseEditForm,
   ContentAddForm,
