@@ -5,27 +5,18 @@ A Learning Management System (LMS) designed for programmers. Made using Node.js,
 ## Table of Contents
 
 - [Demo](#demo)
-  - [Screenshots](#screenshots)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Running the Project Locally](#running-the-project-locally)
 
 ## Demo
 
-You can check out the live demo of Project IGNITE [here](https://project-ignite-client.vercel.app/).
-
-### Screenshots
-
-![](imgs/screen-1.png)
-![](imgs/screen-2.png)
-![](imgs/screen-3.png)
-![](imgs/screen-4.png)
-![](imgs/screen-5.png)
+You can check out the live demo of Project IGNITE [here](https://project-ignite.krishnanand.info/).
 
 ## Features
 
-- Access, create, update, and delete learning resources like articles, questions, courses
-- User authentication and role-based access to certain features
+- Access and modify learning resources like articles, questions, courses
+- User authentication and role-based access control (RBAC) to certain features
   - Login using Access Tokens
 - Images crop and upload
 - Markdown Editor and Markdown Viewer
