@@ -1,5 +1,7 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App.jsx";
+
+import { withSuspense } from "../hooks/suspense.jsx";
 import {
   Article,
   ArticleAdd,
@@ -21,82 +23,84 @@ import {
   Register,
 } from "../pages";
 
+const App = lazy(() => import("../App.jsx"));
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: withSuspense(App),
     children: [
       {
         index: true,
-        element: <Landing />,
+        element: withSuspense(Landing),
       },
       {
         path: "login",
-        element: <Login />,
+        element: withSuspense(Login),
       },
       {
         path: "register",
-        element: <Register />,
+        element: withSuspense(Register),
       },
       {
         path: "articles",
-        element: <Articles />,
+        element: withSuspense(Articles),
       },
       {
         path: "articles/:slug",
-        element: <Article />,
+        element: withSuspense(Article),
       },
       {
         path: "add-article",
-        element: <ArticleAdd />,
+        element: withSuspense(ArticleAdd),
       },
       {
         path: "edit-article/:id",
-        element: <ArticleEdit />,
+        element: withSuspense(ArticleEdit),
       },
       {
         path: "courses",
-        element: <Courses />,
+        element: withSuspense(Courses),
       },
       {
         path: "courses/:slug",
-        element: <Course />,
+        element: withSuspense(Course),
       },
       {
         path: "add-course",
-        element: <CourseAdd />,
+        element: withSuspense(CourseAdd),
       },
       {
         path: "edit-course/:slug",
-        element: <CourseEdit />,
+        element: withSuspense(CourseEdit),
       },
       {
         path: "courses/:courseSlug/:id",
-        element: <Content />,
+        element: withSuspense(Content),
       },
       {
         path: "add-content/:slug",
-        element: <ContentAdd />,
+        element: withSuspense(ContentAdd),
       },
       {
         path: "projects",
-        element: <Projects />,
+        element: withSuspense(Projects),
       },
       {
         path: "projects/:slug",
-        element: <ProjectCategory />,
+        element: withSuspense(ProjectCategory),
       },
       {
         path: "questions",
-        element: <Questions />,
+        element: withSuspense(Questions),
       },
       {
         path: "add-question",
-        element: <QuestionAdd />,
+        element: withSuspense(QuestionAdd),
       },
       {
         path: "edit-question/:id",
-        element: <QuestionEdit />,
+        element: withSuspense(QuestionEdit),
       },
     ],
   },
